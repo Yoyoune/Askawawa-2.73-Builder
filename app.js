@@ -330,14 +330,20 @@ function statIcon(label) {
   return "";
 }
 
-const STORAGE_KEY = "populus-builder-equipped-v1";
-const STORAGE_KEY_CUSTOM = "populus-builder-customization-v1";
+// Namespaced "askawawa-273-..." (not "populus-builder-...") on purpose: this site and the
+// 2.51 builder are both hosted under the same yoyoune.github.io origin (only the path
+// differs - /Askawawa-Builder/ vs /Askawawa-2.73-Builder/), and localStorage is scoped per
+// ORIGIN, not per path. Reusing the 2.51 key names here made the two sites silently share
+// (and overwrite) each other's saved builds/equipment/etc. - keep these keys unique to avoid
+// that ever happening again.
+const STORAGE_KEY = "askawawa-273-builder-equipped-v1";
+const STORAGE_KEY_CUSTOM = "askawawa-273-builder-customization-v1";
 const BUILD_CATEGORIES = ["Feu", "Eau", "Air", "Terre", "Multi", "Bi-élément", "DoPou", "Tank", "Sagesse", "PP"];
 
-const STORAGE_KEY_BUILDS = "populus-builder-saved-builds-v1";
-const STORAGE_KEY_HIDDEN = "populus-builder-hidden-v1";
-const STORAGE_KEY_ATELIER = "populus-builder-atelier-v1";
-const STORAGE_KEY_MOBILE_MODE = "populus-builder-mobile-mode-v1";
+const STORAGE_KEY_BUILDS = "askawawa-273-builder-saved-builds-v1";
+const STORAGE_KEY_HIDDEN = "askawawa-273-builder-hidden-v1";
+const STORAGE_KEY_ATELIER = "askawawa-273-builder-atelier-v1";
+const STORAGE_KEY_MOBILE_MODE = "askawawa-273-builder-mobile-mode-v1";
 
 // Applied as soon as the script runs (before main()'s async data fetch resolves) so there's
 // no flash of the desktop layout on a phone that already had the mode turned on last visit.

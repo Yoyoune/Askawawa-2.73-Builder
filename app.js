@@ -2183,8 +2183,30 @@ function effectsGridHtml(effects, options) {
   return `<div class="effects-grid"><div class="effects-col">${col1.join("")}</div>${col2.length ? `<div class="effects-col">${col2.join("")}</div>` : ""}</div>`;
 }
 
+// Askawawa 2.73's effects_templates text uses the singular "Dommage"/"Invocation"/"Pod"/"Soin"
+// where this server's 2.51 data (and every hardcoded lookup below - STAT_ORDER, STAT_ICON_SVG,
+// EMOJI_FALLBACK, combinedStats.get(...) calls for push/critical damage, etc.) expects the
+// plural form. Canonicalizing here, at the one chokepoint every label lookup already goes
+// through, fixes icons AND the stat aggregation (push/critical damage bonuses) in one place
+// instead of duplicating this map at every call site.
+const LABEL_CANONICALIZE = {
+  "Dommage": "Dommages",
+  "Dommage Air": "Dommages Air",
+  "Dommage Eau": "Dommages Eau",
+  "Dommage Feu": "Dommages Feu",
+  "Dommage Neutre": "Dommages Neutre",
+  "Dommage Terre": "Dommages Terre",
+  "Dommage Critiques": "Dommages Critiques",
+  "Dommage Pièges": "Dommages Pièges",
+  "Dommage Poussée": "Dommages Poussée",
+  "Invocation": "Invocations",
+  "Pod": "Pods",
+  "Soin": "Soins",
+};
+
 function stripSign(label) {
-  return (label || "").replace(/^[+\-]\s*/, "").trim();
+  const stripped = (label || "").replace(/^[+\-]\s*/, "").trim();
+  return LABEL_CANONICALIZE[stripped] || stripped;
 }
 
 /** "PO" (Objet possédé) conditions reference another item by id - resolve that to its name instead of showing the raw id. */
@@ -2344,7 +2366,7 @@ function damageRollLines(effects, criticalEffects) {
     for (const e of list || []) {
       // "Dommages Poussée" is a flat, non-parenthesized stat effect (Category != 2), not
       // a "(dommages X)"-style roll - bypasses the bracketed-effect gate specifically.
-      const isPoussee = e.label === "Dommages Poussée";
+      const isPoussee = stripSign(e.label) === "Dommages Poussée";
       if (!isWeaponEffect(e.label) && !isPoussee) continue;
       let element = elements.find(el => e.label.includes(el));
       let kind;

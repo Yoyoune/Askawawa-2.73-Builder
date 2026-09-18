@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Askawawa 2.73 Builder</title>
+<link rel="stylesheet" href="styles.css?v=20260912">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-title-group">
+    <h1>Askawawa 2.73 Builder</h1>
+    <button id="showIdsBtn" type="button" title="Afficher les ID des objets/panoplies/sorts">ID</button>
+    <button id="mobileModeBtn" type="button" title="Basculer vers une ergonomie adaptée au mobile (gros boutons, panneaux empilés, fenêtres plein écran)">📱 Mobile</button>
+    <a id="resourceBtn" class="topbar-link-btn" href="https://dofus-map.com/" target="_blank" rel="noopener"><img class="topbar-btn-icon" src="icons/ui/ressource.png" alt=""> Ressource</a>
+  </div>
+  <div class="topbar-actions">
+    <button id="weaponDamageBtn" type="button"><img class="topbar-btn-icon" src="icons/5077.png" alt=""> Dégâts arme</button>
+    <button id="classSpellsBtn" type="button"><img class="topbar-btn-icon" src="icons/ui/classe.png" alt=""> Classe</button>
+    <button id="setsSearchBtn" type="button"><img class="topbar-btn-icon" src="icons/ui/panoplies.png" alt=""> Panoplies</button>
+    <label>Niveau perso <input type="number" id="charLevel" min="1" max="200" value="200"></label>
+    <button id="atelierBtn" type="button"><img class="topbar-btn-icon" src="icons/ui/atelier.png" alt=""> Atelier</button>
+    <button id="paPmBtn" type="button"><img class="topbar-btn-icon" src="icons/ui/papm.png" alt=""> Item PA-PM</button>
+    <button id="ladderBtn" type="button">🏆 Ladder</button>
+    <a id="wikiBtn" class="topbar-link-btn" href="docs/wiki-askawawa.pdf" target="_blank" rel="noopener"><img class="topbar-btn-icon" src="icons/ui/wiki.png" alt=""> Wiki</a>
+    <button id="resetBtn" title="Retirer tout l'équipement"><img class="topbar-btn-icon" src="icons/ui/reset.png" alt=""> Réinitialiser</button>
+  </div>
+</header>
+
+<main class="layout">
+  <div class="left-column">
+    <section class="builds-panel" id="buildsPanel">
+      <h2>Mes builds</h2>
+      <div class="builds-save-row">
+        <input type="text" id="buildNameInput" placeholder="Nom du build...">
+        <button id="saveBuildBtn" type="button">Enregistrer</button>
+      </div>
+    </section>
+
+    <section class="paperdoll" id="paperdoll" aria-label="Emplacements d'équipement"></section>
+
+    <section class="saved-builds-panel" id="savedBuildsPanel">
+      <div class="sets-filter-row" id="buildCategoryFilterRow"></div>
+      <button id="compareBuildsBtn" type="button" class="compare-builds-btn">⚖️ Comparer 2 builds</button>
+      <div id="savedBuildsList"></div>
+    </section>
+  </div>
+
+  <section class="browser" id="browser">
+    <div class="browser-empty" id="browserEmpty">
+      Cliquez sur un emplacement d'équipement pour voir les objets disponibles, ou sur ✎ pour régler le jet / la forgemagie d'un objet équipé.
+    </div>
+    <div class="browser-content hidden" id="browserContent">
+      <div class="browser-header">
+        <h2 id="browserTitle">—</h2>
+        <button id="hiddenItemsBtn" type="button" class="hidden-btn">Cachés</button>
+        <button id="browserClose" aria-label="Fermer">×</button>
+      </div>
+      <div class="currently-equipped hidden" id="currentlyEquipped"></div>
+      <div class="collapsible-section">
+        <div class="collapsible-header filter-panel-toggle">Recherche / Filtres <span class="collapse-chevron">▸</span></div>
+        <div class="collapsible-content">
+          <div class="browser-controls">
+            <input type="search" id="searchInput" placeholder="Rechercher un objet...">
+            <select id="sortSelect">
+              <option value="level-asc">Niveau croissant</option>
+              <option value="level-desc">Niveau décroissant</option>
+              <option value="name-asc">Nom (A-Z)</option>
+            </select>
+          </div>
+          <div class="level-range-row">
+            <label>Niv. min <input type="number" id="levelMinInput" min="1" max="200" placeholder="Min"></label>
+            <label>Niv. max <input type="number" id="levelMaxInput" min="1" max="200" placeholder="Max"></label>
+          </div>
+          <div class="sets-filter-row">
+            <button type="button" class="filter-chip" id="itemNoPanoFilterBtn">Item sans pano</button>
+            <button type="button" class="filter-chip" id="itemWithPanoFilterBtn">Item avec pano</button>
+          </div>
+          <div class="stat-toggle-chip-row" id="statFilterChipRow"></div>
+        </div>
+      </div>
+      <div class="item-list" id="itemList"></div>
+    </div>
+    <div class="detail-content hidden" id="detailContent">
+      <div class="browser-header">
+        <h2 id="detailTitle">—</h2>
+        <button id="detailClose" aria-label="Fermer">×</button>
+      </div>
+      <div class="detail-body" id="detailBody"></div>
+    </div>
+    <div class="sets-browser-content hidden" id="setsBrowserContent">
+      <div class="browser-header">
+        <h2>Panoplies</h2>
+        <button id="hiddenSetsBtn" type="button" class="hidden-btn">Cachées</button>
+        <button id="setsBrowserClose" aria-label="Fermer">×</button>
+      </div>
+      <div class="collapsible-section">
+        <div class="collapsible-header filter-panel-toggle">Recherche / Filtres <span class="collapse-chevron">▸</span></div>
+        <div class="collapsible-content">
+          <div class="browser-controls">
+            <input type="search" id="setsSearchInput" placeholder="Rechercher une panoplie...">
+            <select id="setsSortSelect">
+              <option value="level-asc">Niveau croissant</option>
+              <option value="level-desc">Niveau décroissant</option>
+              <option value="name-asc">Nom (A-Z)</option>
+            </select>
+          </div>
+          <div class="level-range-row">
+            <label>Niv. min <input type="number" id="setsLevelMinInput" min="1" max="200" placeholder="Min"></label>
+            <label>Niv. max <input type="number" id="setsLevelMaxInput" min="1" max="200" placeholder="Max"></label>
+          </div>
+          <div class="sets-filter-row" id="setsFilterRow"></div>
+          <div class="sets-filter-label">Contient au moins un(e) :</div>
+          <div class="sets-filter-row" id="setsSlotFilterRow"></div>
+          <div class="sets-filter-label">Ne contient pas de/d' :</div>
+          <div class="sets-filter-row" id="setsSlotExcludeFilterRow"></div>
+        </div>
+      </div>
+      <div class="item-list" id="setsList"></div>
+    </div>
+  </section>
+
+  <aside class="stats" id="stats">
+    <div class="collapsible-section collapsed">
+      <h2 class="collapsible-header">Personnage <span class="collapse-chevron">▸</span></h2>
+      <div class="collapsible-content"><div id="baseStatsContent"></div></div>
+    </div>
+
+    <div class="collapsible-section collapsed">
+      <h2 class="collapsible-header">Parchotage <span class="collapse-chevron">▸</span></h2>
+      <div class="collapsible-content">
+        <div class="parchotage-quick-row">
+          <button id="parchotage0Btn" type="button" class="parchotage-max-btn">0</button>
+          <button id="parchotage25Btn" type="button" class="parchotage-max-btn">25</button>
+          <button id="parchotage50Btn" type="button" class="parchotage-max-btn">50</button>
+          <button id="parchotage80Btn" type="button" class="parchotage-max-btn">80</button>
+          <button id="parchotage100Btn" type="button" class="parchotage-max-btn">100</button>
+          <button id="parchotageMaxBtn" type="button" class="parchotage-max-btn">Max</button>
+        </div>
+        <div class="parchotage-grid" id="parchotageGrid"></div>
+      </div>
+    </div>
+
+    <div class="collapsible-section collapsed">
+      <h2 class="collapsible-header">Points à répartir <span class="collapse-chevron">▸</span></h2>
+      <div class="collapsible-content"><div class="parchotage-grid" id="pointsGrid"></div></div>
+    </div>
+
+    <h2>Statistiques totales</h2>
+    <div id="statsContent"></div>
+
+    <h2>Panoplies</h2>
+    <div id="setsContent"></div>
+  </aside>
+</main>
+
+<div class="modal-overlay hidden" id="setModalOverlay">
+  <div class="modal" id="setModal">
+    <div class="browser-header">
+      <h2 id="setModalTitle">—</h2>
+      <button id="setModalCompatBtn" type="button" class="set-card-compat-btn">Panoplies compatibles</button>
+      <button id="setModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body" id="setModalBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="categoryPickerOverlay">
+  <div class="modal modal-narrow" id="categoryPickerModal">
+    <div class="browser-header">
+      <h2 id="categoryPickerTitle">—</h2>
+      <button id="categoryPickerClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body" id="categoryPickerBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="compareModalOverlay">
+  <div class="modal modal-wide" id="compareModal">
+    <div class="browser-header">
+      <h2>Comparer 2 builds</h2>
+      <button id="compareModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="compare-select-row">
+        <select id="compareSelectA"></select>
+        <span class="compare-vs">vs</span>
+        <select id="compareSelectB"></select>
+      </div>
+      <div id="compareResult"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="recipeModalOverlay">
+  <div class="modal modal-narrow" id="recipeModal">
+    <div class="browser-header">
+      <h2 id="recipeModalTitle">—</h2>
+      <button id="recipeModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body" id="recipeModalBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="classPickerModalOverlay">
+  <div class="modal modal-narrow" id="classPickerModal">
+    <div class="browser-header">
+      <h2>Classe</h2>
+      <button id="classPickerModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body" id="classPickerModalBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="classSpellsModalOverlay">
+  <div class="modal modal-xwide" id="classSpellsModal">
+    <div class="browser-header">
+      <h2 id="classSpellsModalTitle">—</h2>
+      <button id="classSpellsModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body" id="classSpellsModalBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="weaponDamageModalOverlay">
+  <div class="modal modal-medium" id="weaponDamageModal">
+    <div class="browser-header">
+      <h2>Dégâts arme</h2>
+      <button id="weaponDamageModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body" id="weaponDamageModalBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="paPmPickerModalOverlay">
+  <div class="modal modal-narrow" id="paPmPickerModal">
+    <div class="browser-header">
+      <h2>Item PA-PM</h2>
+      <button id="paPmPickerModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body" id="paPmPickerModalBody">
+      <button type="button" class="category-choice-btn" id="paPmPaBtn"><span>Item PA</span></button>
+      <button type="button" class="category-choice-btn" id="paPmPmBtn"><span>Item PM</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="paPmListModalOverlay">
+  <div class="modal modal-wide" id="paPmListModal">
+    <div class="browser-header">
+      <h2 id="paPmListModalTitle">—</h2>
+      <button id="paPmListModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="browser-controls">
+        <input type="search" id="paPmSearchInput" placeholder="Rechercher un objet...">
+        <select id="paPmSortSelect">
+          <option value="level-asc">Niveau croissant</option>
+          <option value="level-desc">Niveau décroissant</option>
+          <option value="name-asc">Nom (A-Z)</option>
+        </select>
+      </div>
+      <div class="level-range-row">
+        <label>Niv. min <input type="number" id="paPmLevelMinInput" min="1" max="200" placeholder="Min"></label>
+        <label>Niv. max <input type="number" id="paPmLevelMaxInput" min="1" max="200" placeholder="Max"></label>
+      </div>
+      <div class="sets-filter-row">
+        <button type="button" class="filter-chip" id="paPmNoPanoFilterBtn">Item sans pano</button>
+        <button type="button" class="filter-chip" id="paPmWithPanoFilterBtn">Item avec pano</button>
+      </div>
+      <div class="sets-filter-row" id="paPmSlotFilterRow"></div>
+      <div class="stat-filter-builder">
+        <div class="stat-filter-add-row">
+          <select id="paPmStatFilterSelect"></select>
+          <input type="number" id="paPmStatFilterValue" value="0" min="0" placeholder="Valeur mini">
+          <button id="paPmAddStatFilterBtn" type="button">+ Ajouter</button>
+        </div>
+        <div class="stat-filter-active" id="paPmActiveStatFilters"></div>
+      </div>
+      <div class="item-list" id="paPmListModalBody"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="allEquipModalOverlay">
+  <div class="modal modal-wide" id="allEquipModal">
+    <div class="browser-header">
+      <h2>Tout l'équipement</h2>
+      <button id="allEquipModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="browser-controls">
+        <input type="search" id="allEquipSearchInput" placeholder="Rechercher un objet...">
+        <select id="allEquipSortSelect">
+          <option value="level-asc">Niveau croissant</option>
+          <option value="level-desc">Niveau décroissant</option>
+          <option value="name-asc">Nom (A-Z)</option>
+        </select>
+      </div>
+      <div class="level-range-row">
+        <label>Niv. min <input type="number" id="allEquipLevelMinInput" min="1" max="200" placeholder="Min"></label>
+        <label>Niv. max <input type="number" id="allEquipLevelMaxInput" min="1" max="200" placeholder="Max"></label>
+      </div>
+      <div class="sets-filter-row">
+        <button type="button" class="filter-chip" id="allEquipNoPanoFilterBtn">Item sans pano</button>
+        <button type="button" class="filter-chip" id="allEquipWithPanoFilterBtn">Item avec pano</button>
+      </div>
+      <div class="sets-filter-row" id="allEquipSlotFilterRow"></div>
+      <div class="stat-filter-builder">
+        <div class="stat-filter-add-row">
+          <select id="allEquipStatFilterSelect"></select>
+          <input type="number" id="allEquipStatFilterValue" value="0" min="0" placeholder="Valeur mini">
+          <button id="allEquipAddStatFilterBtn" type="button">+ Ajouter</button>
+        </div>
+        <div class="stat-filter-active" id="allEquipActiveStatFilters"></div>
+      </div>
+      <div class="item-list" id="allEquipModalBody"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="atelierModalOverlay">
+  <div class="modal modal-xwide" id="atelierModal">
+    <div class="browser-header">
+      <div class="atelier-view-toggle">
+        <button type="button" class="filter-chip" id="atelierViewItemBtn">Affichage par item</button>
+        <button type="button" class="filter-chip active" id="atelierViewResourceBtn">Affichage par ressource</button>
+        <button type="button" class="filter-chip" id="atelierViewFamiliersBtn">Atelier des familiers</button>
+      </div>
+      <button id="atelierClearBtn" type="button" class="hidden-btn" title="Vider l'atelier"><img class="topbar-btn-icon" src="icons/ui/reset.png" alt=""> Vider</button>
+      <h2><img class="topbar-btn-icon" src="icons/ui/atelier.png" alt=""> Atelier</h2>
+      <button id="atelierModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body" id="atelierModalBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="hiddenModalOverlay">
+  <div class="modal modal-narrow" id="hiddenModal">
+    <div class="browser-header">
+      <h2 id="hiddenModalTitle">—</h2>
+      <button id="hiddenModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body">
+      <button id="unhideAllBtn" type="button" class="parchotage-max-btn">Démasquer tout</button>
+      <div id="hiddenModalBody"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="compatibleSetsModalOverlay">
+  <div class="modal modal-xwide" id="compatibleSetsModal">
+    <div class="browser-header">
+      <h2 id="compatibleSetsTitle">Panoplies compatibles</h2>
+      <button id="compatibleSetsClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body compatible-sets-body">
+      <div class="compatible-sets-column" id="compatiblePartialColumn"></div>
+      <div class="compatible-sets-column" id="compatibleFullColumn"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="buildCategoryModalOverlay">
+  <div class="modal modal-narrow" id="buildCategoryModal">
+    <div class="browser-header">
+      <h2>Catégorie du build</h2>
+      <button id="buildCategoryModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body" id="buildCategoryModalBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="ladderModalOverlay">
+  <div class="modal modal-medium" id="ladderModal">
+    <div class="browser-header">
+      <h2>🏆 Ladder</h2>
+      <button id="ladderModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="sets-filter-row">
+        <button type="button" class="filter-chip active" id="ladderTabXp">XP</button>
+        <button type="button" class="filter-chip" id="ladderTabSuccess">Succès</button>
+      </div>
+      <div class="ladder-updated" id="ladderUpdated"></div>
+      <div id="ladderList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="equipped-tooltip hidden" id="equippedTooltip"></div>
+
+<script src="app.js?v=20260912"></script>
+</body>
+</html>

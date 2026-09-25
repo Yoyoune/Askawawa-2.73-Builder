@@ -195,15 +195,10 @@ const FAMILIAR_EXCHANGES = {
 };
 
 
-// The dofus slot covers two distinct item pools that share the same equip location
-// in-game (dofus vs trophée). Clicking it opens a category picker before the item
-// browser.
-const SLOT_CATEGORY_CHOICES = {
-  dofus: [
-    { key: "dofus", label: "Dofus", icon: "icons/slot-placeholders/dofus.png" },
-    { key: "trophee", label: "Trophée", icon: "icons/slot-placeholders/trophee.png" },
-  ],
-};
+// Trophées were removed from the builder entirely (2026-09-25, no more trophée items
+// in the data) - clicking the dofus slot now opens its item list directly, no more
+// intermediate category picker.
+const SLOT_CATEGORY_CHOICES = {};
 const CATEGORY_LABELS = {
   familier: "Familier",
   dofus: "Dofus",
@@ -2090,6 +2085,19 @@ function isWeaponEffect(label) {
   return (label || "").trim().startsWith("(");
 }
 
+/**
+ * Like isWeaponEffect, but also true for "- PM" (effect id 127, Category=2 - the same
+ * weapon-roll bucket as the parenthesized ones, a weapon's own "costs -1 PM to use"
+ * malus that just never got the parens in its label). Used ONLY for the item-card
+ * tooltip's weapon-vs-stats divider placement (2026-09-25 user request) - NOT for
+ * isWeaponEffect's other call sites (Statistiques totales, build comparison), where
+ * "- PM" must keep counting as a real persistent stat, unlike a one-off damage roll.
+ */
+function isWeaponBlockEffect(label) {
+  const l = (label || "").trim();
+  return l.startsWith("(") || l === "- PM";
+}
+
 // Weapon/spell damage & lifesteal lines use the same icon as the matching elemental
 // characteristic instead of a distinct "damage" icon (e.g. Feu damage/vol -> the
 // Intelligence icon) - only in effect descriptions, not in "Statistiques totales"
@@ -2150,7 +2158,7 @@ function insertWeaponDivider(colLines, colStart, boundaryIndex) {
  */
 function weaponEffectsFirst(effects) {
   const weapon = [], rest = [];
-  for (const e of effects) (isWeaponEffect(e.label) ? weapon : rest).push(e);
+  for (const e of effects) (isWeaponBlockEffect(e.label) ? weapon : rest).push(e);
   return weapon.concat(rest);
 }
 
@@ -2175,7 +2183,7 @@ function effectsGridHtml(effects, options) {
 
   let weaponLineCount = 0;
   for (const e of effects) {
-    if (!isWeaponEffect(e.label)) break;
+    if (!isWeaponBlockEffect(e.label)) break;
     weaponLineCount++;
   }
 

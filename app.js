@@ -198,14 +198,34 @@ const FAMILIAR_EXCHANGES = {
 // Trophées were removed from the builder entirely (2026-09-25, no more trophée items
 // in the data) - clicking the dofus slot now opens its item list directly, no more
 // intermediate category picker.
-const SLOT_CATEGORY_CHOICES = {};
+// 2026-09-27: the familier slot got its own picker back, this time splitting "Montures"
+// (the converted Dragodinde/Muldo/Volkorne Montiliers, see MONTURE_ICON_MIN/MAX below)
+// from every other familier/Montilier.
+const SLOT_CATEGORY_CHOICES = {
+  familier: [
+    { key: "familier", label: "Familier / Montilier", icon: "icons/slot-placeholders/familier.png" },
+    { key: "monture", label: "Monture", icon: "icons/121200.png" },
+  ],
+};
 const CATEGORY_LABELS = {
-  familier: "Familier",
+  familier: "Familier / Montilier",
+  monture: "Monture",
   dofus: "Dofus",
   trophee: "Trophée",
 };
 // items_types.Id for the "Trophée" item type (superType 13, shared with real Dofus).
 const TROPHEE_TYPE_ID = 151;
+
+// Icon range injected by the 2026-09-25 Dragodinde/Muldo/Volkorne -> Montilier conversion
+// batch (project-montilier-conversion-batch: 121200-121465, one fresh sequential id per
+// converted certificate, never reused for anything else) - the only reliable, data-driven
+// way to tell "one of those 266 converted mounts" apart from every other familier/Montilier,
+// since they all share the same item.slot/typeId as ordinary Montiliers.
+const MONTURE_ICON_MIN = 121200;
+const MONTURE_ICON_MAX = 121465;
+function isMonture(item) {
+  return item.iconId >= MONTURE_ICON_MIN && item.iconId <= MONTURE_ICON_MAX;
+}
 
 /** " (id)" when the "ID" topbar toggle is on, "" otherwise - append to any item/panoplie/sort name. */
 function idSuffix(id) {
@@ -215,6 +235,8 @@ function idSuffix(id) {
 function itemMatchesCategory(item, category) {
   if (category === "trophee") return item.slot === "dofus" && item.typeId === TROPHEE_TYPE_ID;
   if (category === "dofus") return item.slot === "dofus" && item.typeId !== TROPHEE_TYPE_ID;
+  if (category === "monture") return item.slot === "familier" && isMonture(item);
+  if (category === "familier") return item.slot === "familier" && !isMonture(item);
   return item.slot === category;
 }
 
@@ -1669,6 +1691,8 @@ function renderItemList() {
   let list;
   if (activeCategory === "trophee") list = (ITEMS_BY_SLOT.get("dofus") || []).filter(i => i.typeId === TROPHEE_TYPE_ID);
   else if (activeCategory === "dofus") list = (ITEMS_BY_SLOT.get("dofus") || []).filter(i => i.typeId !== TROPHEE_TYPE_ID);
+  else if (activeCategory === "monture") list = (ITEMS_BY_SLOT.get("familier") || []).filter(isMonture);
+  else if (activeCategory === "familier") list = (ITEMS_BY_SLOT.get("familier") || []).filter(i => !isMonture(i));
   else list = (ITEMS_BY_SLOT.get(activeCategory) || []).slice();
   list = list.filter(i => !hiddenItemIds.has(i.id));
   if (search) list = list.filter(i => i.name.toLowerCase().includes(search));
@@ -4205,9 +4229,11 @@ function renderLadderList() {
 // "items" or "sets" - which list the modal's shared "Démasquer tout" button acts on.
 let hiddenModalMode = null;
 
-/** Hidden items belonging to the currently browsed category (dofus/trophée share one ITEMS_BY_SLOT bucket, split via itemMatchesCategory). */
+/** Hidden items belonging to the currently browsed category (dofus/trophée and familier/monture each share one ITEMS_BY_SLOT bucket, split via itemMatchesCategory). */
 function hiddenItemsInCurrentCategory() {
-  const bucket = activeCategory === "trophee" || activeCategory === "dofus" ? "dofus" : activeCategory;
+  const bucket = activeCategory === "trophee" || activeCategory === "dofus" ? "dofus"
+    : activeCategory === "monture" ? "familier"
+    : activeCategory;
   return (ITEMS_BY_SLOT.get(bucket) || []).filter(i => hiddenItemIds.has(i.id) && itemMatchesCategory(i, activeCategory));
 }
 

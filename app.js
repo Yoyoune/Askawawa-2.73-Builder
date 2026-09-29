@@ -355,7 +355,7 @@ function statIcon(label) {
 // that ever happening again.
 const STORAGE_KEY = "askawawa-273-builder-equipped-v1";
 const STORAGE_KEY_CUSTOM = "askawawa-273-builder-customization-v1";
-const BUILD_CATEGORIES = ["20", "40", "60", "80", "120", "140", "160", "180", "199", "200"];
+const BUILD_CATEGORIES = ["20", "40", "60", "80", "100", "120", "140", "160", "180", "199", "200"];
 
 const STORAGE_KEY_BUILDS = "askawawa-273-builder-saved-builds-v1";
 const STORAGE_KEY_HIDDEN = "askawawa-273-builder-hidden-v1";

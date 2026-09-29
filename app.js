@@ -707,6 +707,12 @@ async function main() {
     updateCharacteristicPointsBudget();
     renderStats();
     renderPaperdoll();
+    renderCurrentlyEquipped();
+    // A pet's (Familier/Montilier) effects panel shows level-scaled values (see
+    // displayEffectsForItem) - re-render it live if it's the one currently open, same as
+    // renderStats/renderPaperdoll/renderCurrentlyEquipped above already do for their own
+    // charLevel-dependent bits.
+    if (activeUiSlot && isPetItem(equipped[activeUiSlot])) renderDetail(activeUiSlot);
   });
   document.getElementById("resetBtn").addEventListener("click", () => {
     if (!confirm("Retirer tout l'équipement (et les réglages de jet/forgemagie) ?")) return;
@@ -1504,7 +1510,7 @@ function showEquippedTooltip(anchorEl, item) {
 
   const eff = document.createElement("div");
   eff.className = "item-effects";
-  eff.innerHTML = effectsGridHtml(item.effects, { specialSpellName: item.specialSpellName, specialSpellDescription: item.specialSpellDescription });
+  eff.innerHTML = effectsGridHtml(displayEffectsForItem(item), { specialSpellName: item.specialSpellName, specialSpellDescription: item.specialSpellDescription });
   tooltip.appendChild(eff);
 
   if (item.weaponRange !== undefined || item.apCost !== undefined) {
@@ -1649,7 +1655,7 @@ function renderCurrentlyEquipped() {
   if (item.effects && item.effects.length) {
     const eff = document.createElement("div");
     eff.className = "item-effects";
-    eff.innerHTML = effectsGridHtml(item.effects, { specialSpellName: item.specialSpellName, specialSpellDescription: item.specialSpellDescription });
+    eff.innerHTML = effectsGridHtml(displayEffectsForItem(item), { specialSpellName: item.specialSpellName, specialSpellDescription: item.specialSpellDescription });
     body.appendChild(eff);
   }
   card.appendChild(body);
@@ -1752,7 +1758,7 @@ function renderItemCard(item, isEquipped, charLevel) {
   if ((item.effects && item.effects.length) || item.specialSpellDescription) {
     const eff = document.createElement("div");
     eff.className = "item-effects";
-    eff.innerHTML = effectsGridHtml(item.effects, { specialSpellName: item.specialSpellName, specialSpellDescription: item.specialSpellDescription });
+    eff.innerHTML = effectsGridHtml(displayEffectsForItem(item), { specialSpellName: item.specialSpellName, specialSpellDescription: item.specialSpellDescription });
     body.appendChild(eff);
   }
 
@@ -1939,7 +1945,7 @@ function renderDetail(uiSlotId) {
   effSection.className = "detail-section";
   effSection.innerHTML = "<h3>Effets de l'objet (jet)</h3>";
 
-  const effects = item.effects || [];
+  const effects = displayEffectsForItem(item);
   if (effects.length === 0) {
     const none = document.createElement("div");
     none.className = "stat-empty";
@@ -2054,6 +2060,43 @@ function renderDetail(uiSlotId) {
   addRow.appendChild(addBtn);
   fmSection.appendChild(addRow);
   body.appendChild(fmSection);
+}
+
+// ---------- Familier/Montilier dynamic level scaling ----------
+// In-game a pet's (Familier/Montilier, the "familier" slot - dragodindes/montures use a
+// separate item.slot and are untouched by this) stats aren't a fixed roll like other gear:
+// they scale linearly with the owning character's level, via a "pet level" that caps at 101
+// once the character reaches level 150. Mirrors PetItem.cs's Level property and
+// ChangeEffectsSquallingOnLevel exactly (server-authoritative formula).
+const PET_MAX_LEVEL = 101;
+const PET_CHAR_LEVEL_FOR_MAX = 150;
+
+function isPetItem(item) {
+  return !!item && item.slot === "familier";
+}
+
+function petLevelForCharLevel(charLevel) {
+  return Math.min(Math.floor(charLevel * PET_MAX_LEVEL / PET_CHAR_LEVEL_FOR_MAX), PET_MAX_LEVEL);
+}
+
+/** A pet effect's *current* value at the given character level. effect.max is always the
+ * ceiling reached at pet level 101, regardless of what min says (some pet effects store
+ * min=max already, others store a legacy min=1 range that in-game is never actually rolled -
+ * the value is always deterministic from level, see ChangeEffectsSquallingOnLevel). */
+function scaledPetEffectValue(effect, charLevel) {
+  const max = effect.max !== undefined ? effect.max : (effect.value !== undefined ? effect.value : 0);
+  return Math.floor(max / PET_MAX_LEVEL * petLevelForCharLevel(charLevel));
+}
+
+/** Returns item.effects as-is for normal gear, or a level-scaled copy (single value, no
+ * more misleading "1 à 300" range) for Familiers/Montiliers - use this instead of
+ * item.effects wherever pet effects are displayed or totaled. */
+function displayEffectsForItem(item, charLevel = getCharLevel()) {
+  if (!isPetItem(item) || !item.effects) return item.effects || [];
+  return item.effects.map(e => {
+    const v = scaledPetEffectValue(e, charLevel);
+    return { ...e, min: v, max: v, value: v };
+  });
 }
 
 function effectPlainText(effect) {
@@ -2795,7 +2838,7 @@ function openSetPreview(setId) {
     if ((item.effects && item.effects.length) || item.specialSpellDescription) {
       const eff = document.createElement("div");
       eff.className = "set-item-effects";
-      eff.innerHTML = effectsGridHtml(item.effects, { specialSpellName: item.specialSpellName, specialSpellDescription: item.specialSpellDescription });
+      eff.innerHTML = effectsGridHtml(displayEffectsForItem(item), { specialSpellName: item.specialSpellName, specialSpellDescription: item.specialSpellDescription });
       row.appendChild(eff);
     }
 
@@ -3486,7 +3529,7 @@ function renderSetCard(set) {
     if ((item.effects && item.effects.length) || item.specialSpellDescription) {
       const eff = document.createElement("div");
       eff.className = "set-item-effects";
-      eff.innerHTML = effectsGridHtml(item.effects, { specialSpellName: item.specialSpellName, specialSpellDescription: item.specialSpellDescription });
+      eff.innerHTML = effectsGridHtml(displayEffectsForItem(item), { specialSpellName: item.specialSpellName, specialSpellDescription: item.specialSpellDescription });
       row.appendChild(eff);
     }
 
@@ -3723,11 +3766,16 @@ function addEffectToTotals(totals, effect, overrideValue) {
   totals.set(label, (totals.get(label) || 0) + sign * value);
 }
 
-function computeItemStats(equippedMap = equipped, rollOverridesObj = rollOverrides, forgemagieObj = forgemagie) {
+function computeItemStats(equippedMap = equipped, rollOverridesObj = rollOverrides, forgemagieObj = forgemagie, charLevel = getCharLevel()) {
   const totals = new Map();
   for (const [uiSlotId, item] of Object.entries(equippedMap)) {
-    (item.effects || []).forEach((effect, idx) => {
-      const override = rollOverridesObj[uiSlotId] && rollOverridesObj[uiSlotId][idx];
+    const pet = isPetItem(item);
+    // Pets aren't player-roll-overridable (their value is deterministic from character
+    // level, not a chosen roll) - skip rollOverridesObj entirely for them, even if a stale
+    // override was stored before this level-scaling existed.
+    const effects = pet ? displayEffectsForItem(item, charLevel) : (item.effects || []);
+    effects.forEach((effect, idx) => {
+      const override = pet ? undefined : (rollOverridesObj[uiSlotId] && rollOverridesObj[uiSlotId][idx]);
       addEffectToTotals(totals, effect, override);
     });
     for (const fm of forgemagieObj[uiSlotId] || []) {
@@ -3757,7 +3805,7 @@ function computeActiveSets(equippedMap = equipped) {
 
 function computeCombinedStats(equippedMap, rollOverridesObj, forgemagieObj, parchotageObj, charLevel, characteristicPointsObj) {
   const base = computeBaseStats(charLevel);
-  const itemTotals = computeItemStats(equippedMap, rollOverridesObj, forgemagieObj);
+  const itemTotals = computeItemStats(equippedMap, rollOverridesObj, forgemagieObj, charLevel);
   const activeSets = computeActiveSets(equippedMap);
 
   const combined = new Map();

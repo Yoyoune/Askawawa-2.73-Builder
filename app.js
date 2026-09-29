@@ -2916,15 +2916,18 @@ const MANUAL_MULTI_SET_IDS = new Set([
 const ELEMENTAL_DAMAGE_LABELS = ["Dommages Terre", "Dommages Eau", "Dommages Feu", "Dommages Air"];
 
 function computeSetFlags(set) {
+  // Only a genuine bonus counts towards "has this stat" - a malus line (operator "-", e.g.
+  // "-100 Intelligence" on an otherwise offensive panoplie) must not make the set match a
+  // "Pano Intelligence"/"Bonus pano PA" filter just because the label matches.
   const bonusLabels = new Set();
-  for (const tier of set.bonuses || []) for (const eff of tier) bonusLabels.add(stripSign(eff.label));
+  for (const tier of set.bonuses || []) for (const eff of tier) if (eff.operator !== "-") bonusLabels.add(stripSign(eff.label));
 
   const itemLabels = new Set();
   let multi = MANUAL_MULTI_SET_IDS.has(set.id);
   for (const itemId of set.itemIds) {
     const item = ITEMS_BY_ID.get(itemId);
     if (!item) continue;
-    for (const eff of item.effects || []) itemLabels.add(stripSign(eff.label));
+    for (const eff of item.effects || []) if (eff.operator !== "-") itemLabels.add(stripSign(eff.label));
     if (itemMatchesMultiPattern(item)) multi = true;
   }
   // Pooled across the whole set (unlike itemMatchesMultiPattern, which checks a single item):

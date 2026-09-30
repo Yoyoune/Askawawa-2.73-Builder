@@ -3778,6 +3778,12 @@ function computeItemStats(equippedMap = equipped, rollOverridesObj = rollOverrid
     // override was stored before this level-scaling existed.
     const effects = pet ? displayEffectsForItem(item, charLevel) : (item.effects || []);
     effects.forEach((effect, idx) => {
+      // Effect_SubPMAttack (effect id 127, label "- PM") is a -1 PM debuff the weapon
+      // inflicts on the TARGET when a melee hit lands, not a stat malus on the wearer - it
+      // must never reduce the equipping character's own PM total (confirmed by the user,
+      // 2026-10-01; still shown in the item's own tooltip via isWeaponBlockEffect, just not
+      // counted here).
+      if (effect.effectId === 127) return;
       const override = pet ? undefined : (rollOverridesObj[uiSlotId] && rollOverridesObj[uiSlotId][idx]);
       addEffectToTotals(totals, effect, override);
     });

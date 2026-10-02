@@ -1215,6 +1215,23 @@ button:hover { border-color: var(--accent); }
   display: flex;
   gap: 6px;
 }
+.fm-rune-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.fm-rune-title { width: 110px; flex-shrink: 0; font-size: 13px; color: var(--accent); font-weight: 600; }
+.fm-rune-row select {
+  flex: 1;
+  min-width: 0;
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 13px;
+}
 .fm-add-row select, .fm-add-row input {
   background: var(--panel-alt);
   border: 1px solid var(--border);

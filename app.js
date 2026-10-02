@@ -481,7 +481,6 @@ async function main() {
     for (const tier of set.bonuses || []) for (const effect of tier) labelSet.add(stripSign(effect.label));
   }
   EFFECT_LABELS = [...labelSet].sort((a, b) => a.localeCompare(b));
-  buildEffectCatalogDatalist();
 
   for (const set of SETS_BY_ID.values()) {
     SET_FLAGS.set(set.id, computeSetFlags(set));
@@ -737,13 +736,6 @@ async function main() {
       renderStats();
     });
   }
-}
-
-function buildEffectCatalogDatalist() {
-  const datalist = document.createElement("datalist");
-  datalist.id = "fmCatalogList";
-  datalist.innerHTML = EFFECT_LABELS.map(l => `<option value="${escapeHtml(l)}">`).join("");
-  document.body.appendChild(datalist);
 }
 
 function getCharLevel() {
@@ -1977,6 +1969,8 @@ function renderDetail(uiSlotId) {
   const fmList = document.createElement("div");
   fmList.className = "fm-list";
   (forgemagie[uiSlotId] || []).forEach((fm, idx) => {
+    // Rune effects are shown/edited by their dropdown line below, not as a list row.
+    if (fm.rune) return;
     const row = document.createElement("div");
     row.className = "fm-row";
     const span = document.createElement("span");
@@ -1996,44 +1990,88 @@ function renderDetail(uiSlotId) {
     row.appendChild(rm);
     fmList.appendChild(row);
   });
-  if (!(forgemagie[uiSlotId] || []).length) {
-    const none = document.createElement("div");
-    none.className = "stat-empty";
-    none.textContent = "Aucun effet de forgemagie ajouté.";
-    fmList.appendChild(none);
-  }
-  fmSection.appendChild(fmList);
+  if (fmList.children.length) fmSection.appendChild(fmList);
 
-  const addRow = document.createElement("div");
-  addRow.className = "fm-add-row";
-  const labelInput = document.createElement("input");
-  labelInput.setAttribute("list", "fmCatalogList");
-  labelInput.placeholder = "Caractéristique (ex. Vitalité)";
-  const valueInput = document.createElement("input");
-  valueInput.type = "number";
-  valueInput.placeholder = "Valeur";
-  const addBtn = document.createElement("button");
-  addBtn.type = "button";
-  addBtn.textContent = "+ Ajouter";
-  addBtn.addEventListener("click", () => {
-    const label = labelInput.value.trim();
-    const value = parseInt(valueInput.value, 10);
-    if (!label || isNaN(value) || value === 0) return;
-    if (!forgemagie[uiSlotId]) forgemagie[uiSlotId] = [];
-    forgemagie[uiSlotId].push({ label, value });
-    saveCustomization();
-    labelInput.value = "";
-    valueInput.value = "";
-    renderDetail(uiSlotId);
-    renderPaperdoll();
-    renderStats();
-  });
-  addRow.appendChild(labelInput);
-  addRow.appendChild(valueInput);
-  addRow.appendChild(addBtn);
-  fmSection.appendChild(addRow);
+  // One line per rune family: an item can carry at most one Stasisun and one Stasisdeux
+  // effect (the server refuses a second one with the same marker).
+  for (const rune of STASIS_RUNES) {
+    const row = document.createElement("div");
+    row.className = "fm-rune-row";
+    const title = document.createElement("span");
+    title.className = "fm-rune-title";
+    title.textContent = rune.title;
+    row.appendChild(title);
+
+    const select = document.createElement("select");
+    const none = document.createElement("option");
+    none.value = "";
+    none.textContent = "— Aucun effet —";
+    select.appendChild(none);
+    for (const [label, values] of rune.groups) {
+      const group = document.createElement("optgroup");
+      group.label = label;
+      for (const value of values) {
+        const opt = document.createElement("option");
+        opt.value = `${label}|${value}`;
+        opt.textContent = `+${value} ${label}`;
+        group.appendChild(opt);
+      }
+      select.appendChild(group);
+    }
+    const current = (forgemagie[uiSlotId] || []).find(fm => fm.rune === rune.key);
+    if (current) select.value = `${current.label}|${current.value}`;
+
+    select.addEventListener("change", () => {
+      const kept = (forgemagie[uiSlotId] || []).filter(fm => fm.rune !== rune.key);
+      if (select.value) {
+        const sep = select.value.lastIndexOf("|");
+        kept.push({ label: select.value.slice(0, sep), value: parseInt(select.value.slice(sep + 1), 10), rune: rune.key });
+      }
+      forgemagie[uiSlotId] = kept;
+      saveCustomization();
+      renderDetail(uiSlotId);
+      renderPaperdoll();
+      renderStats();
+    });
+    row.appendChild(select);
+    fmSection.appendChild(row);
+  }
   body.appendChild(fmSection);
 }
+
+const STASIS_COMMON_EFFECTS = [
+  ["Vitalité", [20, 40, 60, 80, 100]],
+  ["Force", [4, 8, 12, 16, 20]],
+  ["Chance", [4, 8, 12, 16, 20]],
+  ["Intelligence", [4, 8, 12, 16, 20]],
+  ["Agilité", [4, 8, 12, 16, 20]],
+  ["Puissance", [4, 6, 8, 10, 12]],
+  ["Dommages Neutre", [2, 3, 4, 5, 6]],
+  ["Dommages Terre", [2, 3, 4, 5, 6]],
+  ["Dommages Eau", [2, 3, 4, 5, 6]],
+  ["Dommages Feu", [2, 3, 4, 5, 6]],
+  ["Dommages Air", [2, 3, 4, 5, 6]],
+  ["Dommages Critiques", [4, 5, 6, 7, 8]],
+  ["Dommages Poussée", [4, 5, 6, 7, 8]],
+];
+const STASISUN_ONLY_EFFECTS = [
+  ["Soins", [2, 4, 6, 8, 10]],
+  ["PA", [1]],
+  ["PM", [1]],
+  ["Portée", [1]],
+  ["Invocations", [1]],
+  ["% Critique", [2]],
+  ["Initiative", [40, 80, 120, 160, 200]],
+  ["% Résistance Neutre", [2, 3]],
+  ["% Résistance Terre", [2, 3]],
+  ["% Résistance Eau", [2, 3]],
+  ["% Résistance Feu", [2, 3]],
+  ["% Résistance Air", [2, 3]],
+];
+const STASIS_RUNES = [
+  { key: "stasisun", title: "Rune Stasisun", groups: [...STASIS_COMMON_EFFECTS, ...STASISUN_ONLY_EFFECTS] },
+  { key: "stasisdeux", title: "Rune Stasisdeux", groups: STASIS_COMMON_EFFECTS },
+];
 
 // ---------- Familier/Montilier dynamic level scaling ----------
 // In-game a pet's (Familier/Montilier, the "familier" slot - dragodindes/montures use a

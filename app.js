@@ -431,6 +431,8 @@ let rollOverrides = {};
 let forgemagie = {};
 /** statLabel -> manually added points (free-form, unrelated to the level-based budget) */
 let parchotage = {};
+/** Selected Prestige rank, 0 (none) to 5 - bonuses are cumulative (see PRESTIGE_BONUSES). */
+let prestige = 0;
 /** statLabel -> points allocated from the level-based characteristic point budget */
 let characteristicPoints = {};
 /** [{ name, charLevel, equipped: {uiSlotId:itemId}, rollOverrides, forgemagie, parchotage, characteristicPoints, savedAt }] */
@@ -496,6 +498,7 @@ async function main() {
   renderPaperdoll();
   renderParchotageGrid();
   renderCharacteristicPointsGrid();
+  renderPrestige();
   renderBaseStats();
   renderStats();
   renderBuildCategoryFilterChips();
@@ -705,6 +708,7 @@ async function main() {
     forgemagie = {};
     parchotage = {};
     characteristicPoints = {};
+    prestige = 0;
     hiddenItemIds = new Set();
     hiddenSetIds = new Set();
     activeBuildName = null;
@@ -715,6 +719,7 @@ async function main() {
     renderPaperdoll();
     renderParchotageGrid();
     renderCharacteristicPointsGrid();
+    renderPrestige();
     renderStats();
     renderItemList();
     renderSetsList();
@@ -780,13 +785,14 @@ function loadCustomization() {
     forgemagie = data.forgemagie || {};
     parchotage = data.parchotage || {};
     characteristicPoints = data.characteristicPoints || {};
+    prestige = clampPrestige(data.prestige);
   } catch (e) {
     console.warn("Could not restore saved customization", e);
   }
 }
 
 function saveCustomization() {
-  localStorage.setItem(STORAGE_KEY_CUSTOM, JSON.stringify({ rollOverrides, forgemagie, parchotage, characteristicPoints }));
+  localStorage.setItem(STORAGE_KEY_CUSTOM, JSON.stringify({ rollOverrides, forgemagie, parchotage, characteristicPoints, prestige }));
 }
 
 function loadHidden() {
@@ -886,6 +892,7 @@ function saveCurrentAsBuild(name) {
     forgemagie: JSON.parse(JSON.stringify(forgemagie)),
     parchotage: JSON.parse(JSON.stringify(parchotage)),
     characteristicPoints: JSON.parse(JSON.stringify(characteristicPoints)),
+    prestige,
     categories: existingIdx >= 0 ? savedBuilds[existingIdx].categories : [],
     savedAt: new Date().toISOString(),
   };
@@ -993,6 +1000,7 @@ function exportBuild(build) {
     forgemagie: build.forgemagie,
     parchotage: build.parchotage,
     characteristicPoints: build.characteristicPoints,
+    prestige: build.prestige || 0,
   };
   const url = `${location.origin}${location.pathname}?import=${encodeBuildForUrl(snapshot)}`;
   if (navigator.clipboard) navigator.clipboard.writeText(url).catch(() => {});
@@ -1041,6 +1049,7 @@ function loadBuildByName(name) {
   forgemagie = JSON.parse(JSON.stringify(build.forgemagie || {}));
   parchotage = JSON.parse(JSON.stringify(build.parchotage || {}));
   characteristicPoints = JSON.parse(JSON.stringify(build.characteristicPoints || {}));
+  prestige = clampPrestige(build.prestige);
   if (build.charLevel) document.getElementById("charLevel").value = build.charLevel;
 
   activeBuildName = name;
@@ -1052,6 +1061,7 @@ function loadBuildByName(name) {
   renderPaperdoll();
   renderParchotageGrid();
   renderCharacteristicPointsGrid();
+  renderPrestige();
   renderBaseStats();
   renderStats();
 }
@@ -1234,7 +1244,8 @@ function statsForBuild(build) {
     build.forgemagie || {},
     build.parchotage || {},
     build.charLevel || 200,
-    build.characteristicPoints || {}
+    build.characteristicPoints || {},
+    clampPrestige(build.prestige)
   );
 }
 
@@ -2336,7 +2347,7 @@ function itemHasUnmetConditions(item) {
   if (!item) return false;
   if (item.level > getCharLevel()) return true;
   if (!item.conditions || item.conditions.length === 0) return false;
-  const combined = computeCombinedStats(equipped, rollOverrides, forgemagie, parchotage, getCharLevel(), characteristicPoints);
+  const combined = computeCombinedStats(equipped, rollOverrides, forgemagie, parchotage, getCharLevel(), characteristicPoints, prestige);
   return item.conditions.some(c => conditionIsUnmet(c, combined));
 }
 
@@ -2531,7 +2542,7 @@ function pushDamageLine(effects, combinedStats, level) {
 }
 
 function computeWeaponDamageSimulation(weapon, masteryEnabled) {
-  const combined = computeCombinedStats(equipped, rollOverrides, forgemagie, parchotage, getCharLevel(), characteristicPoints);
+  const combined = computeCombinedStats(equipped, rollOverrides, forgemagie, parchotage, getCharLevel(), characteristicPoints, prestige);
   const critRate = Math.min(100, Math.max(0, (weapon.criticalHitProbability || 0) + (combined.get("% Critique") || 0)));
   const isMelee = weapon.minRange <= 1 && weapon.weaponRange <= 1;
   // "Maîtrise des armes" is a weapon-damage-panel-only toggle: it never touches
@@ -2577,7 +2588,7 @@ function computeWeaponDamageSimulation(weapon, masteryEnabled) {
  * "critical" value that's really just the normal roll plus the player's crit stats.
  */
 function computeSpellGradeDamageSimulation(grade) {
-  const combined = computeCombinedStats(equipped, rollOverrides, forgemagie, parchotage, getCharLevel(), characteristicPoints);
+  const combined = computeCombinedStats(equipped, rollOverrides, forgemagie, parchotage, getCharLevel(), characteristicPoints, prestige);
   const hasCritVariant = (grade.criticalEffects || []).length > 0;
   const critRate = Math.min(100, Math.max(0, (grade.criticalHitProbability || 0) + (combined.get("% Critique") || 0)));
   const isMelee = grade.minRange <= 1 && grade.range <= 1;
@@ -3853,7 +3864,52 @@ function computeActiveSets(equippedMap = equipped) {
   return result;
 }
 
-function computeCombinedStats(equippedMap, rollOverridesObj, forgemagieObj, parchotageObj, charLevel, characteristicPointsObj) {
+// Prestige ranks are cumulative: rank N gives every bonus from rank 1 to N. The "+20 to each of
+// the 5 stats" line is read as Force/Intelligence/Chance/Agilité/Sagesse (Vitalité excluded, it
+// already has its own rank-2 line) - adjust here if that's wrong.
+const PRESTIGE_BONUSES = [
+  [["Sagesse", 30]],
+  [["Vitalité", 30]],
+  [["Dommages", 2]],
+  [["Force", 20], ["Intelligence", 20], ["Chance", 20], ["Agilité", 20], ["Sagesse", 20]],
+  [["Dommages", 3]],
+];
+const PRESTIGE_NUMERALS = ["0", "I", "II", "III", "IV", "V"];
+
+function clampPrestige(v) {
+  const n = parseInt(v, 10);
+  return isNaN(n) ? 0 : Math.min(PRESTIGE_BONUSES.length, Math.max(0, n));
+}
+
+function prestigeBonusText(rank) {
+  const totals = new Map();
+  for (const bonuses of PRESTIGE_BONUSES.slice(0, rank)) {
+    for (const [stat, value] of bonuses) totals.set(stat, (totals.get(stat) || 0) + value);
+  }
+  return [...totals].map(([stat, value]) => `+${value} ${stat}`).join(", ") || "Aucun bonus";
+}
+
+function renderPrestige() {
+  const row = document.getElementById("prestigeRow");
+  row.innerHTML = "";
+  for (let rank = 0; rank <= PRESTIGE_BONUSES.length; rank++) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "filter-chip" + (rank === prestige ? " active" : "");
+    btn.textContent = `Prestige ${PRESTIGE_NUMERALS[rank]}`;
+    btn.title = prestigeBonusText(rank);
+    btn.addEventListener("click", () => {
+      prestige = rank;
+      saveCustomization();
+      renderPrestige();
+      renderStats();
+      renderPaperdoll();
+    });
+    row.appendChild(btn);
+  }
+}
+
+function computeCombinedStats(equippedMap, rollOverridesObj, forgemagieObj, parchotageObj, charLevel, characteristicPointsObj, prestigeRank = 0) {
   const base = computeBaseStats(charLevel);
   const itemTotals = computeItemStats(equippedMap, rollOverridesObj, forgemagieObj, charLevel);
   const activeSets = computeActiveSets(equippedMap);
@@ -3870,6 +3926,9 @@ function computeCombinedStats(equippedMap, rollOverridesObj, forgemagieObj, parc
   for (const [stat, value] of Object.entries(characteristicPointsObj || {})) {
     if (value) combined.set(stat, (combined.get(stat) || 0) + value);
   }
+  for (const bonuses of PRESTIGE_BONUSES.slice(0, prestigeRank)) {
+    for (const [stat, value] of bonuses) combined.set(stat, (combined.get(stat) || 0) + value);
+  }
   return combined;
 }
 
@@ -3884,7 +3943,7 @@ function sortStatEntries(entries) {
 }
 
 function renderStats() {
-  const combined = computeCombinedStats(equipped, rollOverrides, forgemagie, parchotage, getCharLevel(), characteristicPoints);
+  const combined = computeCombinedStats(equipped, rollOverrides, forgemagie, parchotage, getCharLevel(), characteristicPoints, prestige);
   const activeSets = computeActiveSets(equipped);
 
   const statsEl = document.getElementById("statsContent");

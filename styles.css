@@ -1271,6 +1271,9 @@ button:hover { border-color: var(--accent); }
   grid-template-columns: 1fr 1fr;
   gap: 6px 10px;
 }
+.parchotage-grid-relics { grid-template-columns: 1fr; }
+.parchotage-grid-relics .relic-stat-name { flex: 1; }
+.parchotage-grid-relics .relic-max-btn { margin-bottom: 0; padding: 3px 8px; }
 .parchotage-field {
   display: flex;
   align-items: center;

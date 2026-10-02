@@ -722,20 +722,12 @@ async function main() {
   });
 
   document.getElementById("parchotageMaxBtn").addEventListener("click", () => {
-    parchotage = { "Sagesse": 100, "Vitalité": 130, "Intelligence": 130, "Chance": 130, "Force": 130, "Agilité": 130 };
+    parchotage = Object.fromEntries(RELIC_STATS.map(({ stat, max }) => [stat, max]));
     saveCustomization();
     renderParchotageGrid();
     renderStats();
+    renderPaperdoll();
   });
-
-  for (const value of [0, 25, 50, 80, 100]) {
-    document.getElementById(`parchotage${value}Btn`).addEventListener("click", () => {
-      parchotage = Object.fromEntries(PARCHOTAGE_STATS.map(stat => [stat, value]));
-      saveCustomization();
-      renderParchotageGrid();
-      renderStats();
-    });
-  }
 }
 
 function getCharLevel() {
@@ -3619,28 +3611,66 @@ function renderBaseStats() {
   `;
 }
 
-// ---------- Parchotage (free-form scroll points, no budget) ----------
+// ---------- Reliques de boss (free-form, capped per stat at the total the relics can give) ----------
+// (internally still called "parchotage" - saved builds and combined-stats code key on it)
+
+const RELIC_STATS = [
+  { stat: "Force", max: 150 },
+  { stat: "Intelligence", max: 150 },
+  { stat: "Agilité", max: 150 },
+  { stat: "Chance", max: 150 },
+  { stat: "Vitalité", max: 150 },
+  { stat: "Sagesse", max: 150 },
+  { stat: "Initiative", max: 300 },
+  { stat: "% Critique", max: 5 },
+  { stat: "Dommages Neutre", max: 10 },
+  { stat: "Dommages Terre", max: 10 },
+  { stat: "Dommages Feu", max: 10 },
+  { stat: "Dommages Eau", max: 10 },
+  { stat: "Dommages Air", max: 10 },
+  { stat: "Dommages Poussée", max: 10 },
+  { stat: "Dommages Critiques", max: 10 },
+];
 
 function renderParchotageGrid() {
   const grid = document.getElementById("parchotageGrid");
   grid.innerHTML = "";
-  for (const stat of PARCHOTAGE_STATS) {
+  for (const { stat, max } of RELIC_STATS) {
     const field = document.createElement("label");
     field.className = "parchotage-field";
     const span = document.createElement("span");
+    span.className = "relic-stat-name";
     span.textContent = stat;
     const input = document.createElement("input");
     input.type = "number";
+    input.min = 0;
+    input.max = max;
     input.value = parchotage[stat] || 0;
-    input.addEventListener("input", () => {
-      const v = parseInt(input.value, 10);
-      parchotage[stat] = isNaN(v) ? 0 : v;
+    const apply = (v) => {
+      parchotage[stat] = v;
       saveCustomization();
       renderStats();
       renderPaperdoll();
+    };
+    input.addEventListener("input", () => {
+      let v = parseInt(input.value, 10);
+      if (isNaN(v) || v < 0) v = 0;
+      if (v > max) { v = max; input.value = max; }
+      apply(v);
+    });
+    const maxBtn = document.createElement("button");
+    maxBtn.type = "button";
+    maxBtn.className = "parchotage-max-btn relic-max-btn";
+    maxBtn.textContent = "Max";
+    maxBtn.title = `Mettre au maximum (+${max})`;
+    maxBtn.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      input.value = max;
+      apply(max);
     });
     field.appendChild(span);
     field.appendChild(input);
+    field.appendChild(maxBtn);
     grid.appendChild(field);
   }
 }

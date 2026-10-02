@@ -298,25 +298,17 @@ button:hover { border-color: var(--accent); }
 .resource-row .resource-qty { color: var(--accent); font-weight: 600; white-space: nowrap; }
 
 /* ---- Atelier ---- */
-.atelier-view-toggle { display: flex; gap: 6px; }
+#atelierModalBody { display: block; }
 
-#atelierModalBody {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 14px;
-  align-items: start;
-}
-
-.atelier-resource-view {
-  grid-column: 1 / -1;
+.atelier-drop-view {
   display: flex;
   gap: 24px;
-  max-width: 860px;
+  max-width: 980px;
 }
 
-.atelier-resource-col { flex: 1; min-width: 0; }
+.atelier-drop-col { flex: 1; min-width: 0; }
 
-.atelier-resource-col-title {
+.atelier-drop-col-title {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -327,47 +319,13 @@ button:hover { border-color: var(--accent); }
   border-bottom: 1px solid var(--border);
 }
 
-.atelier-resource-col-list .stat-empty { padding: 8px 0; font-size: 12px; }
+.atelier-drop-col-list .stat-empty { padding: 8px 0; font-size: 12px; }
 
 @media (max-width: 640px) {
-  .atelier-resource-view { flex-direction: column; }
-}
-
-.atelier-card {
-  position: relative;
-  background: var(--panel-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 12px;
-}
-
-.atelier-card-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-  padding-right: 20px;
-}
-.atelier-card-header .item-icon { width: 32px; height: 32px; flex-shrink: 0; }
-.atelier-card-name { font-weight: 600; color: var(--accent); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-.atelier-copies-input {
-  width: 44px;
-  text-align: center;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--accent);
-  font-weight: 600;
-  font-size: 13px;
-  padding: 2px 4px;
-  flex-shrink: 0;
+  .atelier-drop-view { flex-direction: column; }
 }
 
 .atelier-card-remove-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -378,33 +336,43 @@ button:hover { border-color: var(--accent); }
   line-height: 20px;
   padding: 0;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
-.atelier-ingredient-row {
+.atelier-drop-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 0;
+  padding: 6px 0;
   border-bottom: 1px solid var(--border);
   font-size: 13px;
   transition: background .15s, opacity .15s;
 }
-.atelier-ingredient-row:last-child { border-bottom: none; }
-.atelier-ingredient-row .item-icon { width: 26px; height: 26px; flex-shrink: 0; }
-.atelier-ingredient-row .resource-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.atelier-ingredient-row .atelier-needed { color: var(--text-dim); white-space: nowrap; }
-.atelier-ingredient-row.fulfilled { background: rgba(255, 255, 255, 0.04); opacity: .55; }
+.atelier-drop-row:last-child { border-bottom: none; }
+.atelier-drop-row .item-icon { width: 28px; height: 28px; flex-shrink: 0; }
+.atelier-drop-row.done { background: rgba(255, 255, 255, 0.04); opacity: .55; }
 
-.atelier-have-input {
-  width: 46px;
-  text-align: center;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--text);
-  font-size: 12px;
-  padding: 2px 4px;
+.atelier-drop-name { font-weight: 600; color: var(--accent); flex: 1 1 35%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.atelier-drop-monster { flex: 1 1 30%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
+.atelier-drop-rate { color: var(--text-dim); white-space: nowrap; flex-shrink: 0; }
+.atelier-drop-stasis-icon { width: 20px; height: 20px; flex-shrink: 0; }
+
+.atelier-validate-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--positive);
+  background: transparent;
+  color: var(--positive);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: auto;
 }
+.atelier-validate-btn.done { background: var(--positive); color: #16321a; }
 
 /* ---- Paperdoll ---- */
 .paperdoll {
@@ -1605,7 +1573,6 @@ body.mobile-mode .detail-body {
    toggles, "Vider"...) is a single no-wrap flex row sized for a wide desktop modal - on a
    narrow screen it must wrap onto several lines instead of clipping its last button(s). */
 body.mobile-mode .browser-header { flex-wrap: wrap; row-gap: 8px; }
-body.mobile-mode .atelier-view-toggle { flex-wrap: wrap; }
 
 /* ---- Filtres/recherche : empilés au lieu d'une rangée trop étroite ---- */
 body.mobile-mode .browser-controls,

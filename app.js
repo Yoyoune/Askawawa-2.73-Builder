@@ -36,6 +36,7 @@ const PARCHOTAGE_STATS = ["Force", "Intelligence", "Chance", "Agilité", "Vitali
 // ItemsToReceiveCSV, "|"-separated groups positionally paired). Generated straight from that
 // row (154/154 groups matched cleanly, every ingredient id resolved) rather than hand-typed,
 // so it can't drift from what the in-game NPC actually asks for. familiarItemId -> [[ingredientItemId, quantity, name, iconId], ...] (name/iconId baked in server-side, same as item.recipe - these ingredient ids are plain crafting resources, not in items.json's own item list).
+// Currently unused: the Atelier panel no longer shows a recipe/exchange-cost breakdown (2026-10-02).
 
 const FAMILIAR_EXCHANGES = {
   12177: [[388,5,"Poils d'Arakne Malade",54060], [2491,5,"Œil d'Arakmuté",109516]],
@@ -436,12 +437,8 @@ let characteristicPoints = {};
 let savedBuilds = [];
 /** ordered list of item ids sent to the atelier */
 let atelierOrder = [];
-/** itemId -> { ingredientItemId: quantity typed by the user } */
-let atelierHave = {};
-/** itemId -> number of copies of the item to craft (multiplies each ingredient's needed quantity) */
-let atelierCopies = {};
-/** "resource" (default) or "item" - which panel the Atelier modal currently shows */
-let atelierViewMode = "resource";
+/** itemId -> true once the user has clicked the validate checkmark for it */
+let atelierDone = {};
 /** name of the build last loaded/saved, so "Enregistrer" updates it without re-prompting */
 let activeBuildName = null;
 /** itemId set - hidden from the item browser until "Réinitialiser" is pressed */
@@ -601,18 +598,6 @@ async function main() {
   document.getElementById("atelierBtn").addEventListener("click", openAtelierModal);
   document.getElementById("atelierClearBtn").addEventListener("click", clearAtelier);
   document.getElementById("atelierModalClose").addEventListener("click", closeAtelierModal);
-  const atelierViewButtons = {
-    item: document.getElementById("atelierViewItemBtn"),
-    resource: document.getElementById("atelierViewResourceBtn"),
-    familiers: document.getElementById("atelierViewFamiliersBtn"),
-  };
-  for (const [mode, btn] of Object.entries(atelierViewButtons)) {
-    btn.addEventListener("click", () => {
-      atelierViewMode = mode;
-      for (const [m, b] of Object.entries(atelierViewButtons)) b.classList.toggle("active", m === mode);
-      renderAtelierModal();
-    });
-  }
   document.getElementById("atelierModalOverlay").addEventListener("click", (ev) => {
     if (ev.target.id === "atelierModalOverlay") closeAtelierModal();
   });
@@ -842,33 +827,24 @@ function loadAtelier() {
     if (!raw) return;
     const data = JSON.parse(raw);
     atelierOrder = (data.order || []).filter(id => ITEMS_BY_ID.has(id));
-    atelierHave = data.have || {};
-    atelierCopies = data.copies || {};
+    atelierDone = data.done || {};
   } catch (e) {
     console.warn("Could not restore atelier", e);
   }
 }
 
 function saveAtelier() {
-  localStorage.setItem(STORAGE_KEY_ATELIER, JSON.stringify({ order: atelierOrder, have: atelierHave, copies: atelierCopies }));
+  localStorage.setItem(STORAGE_KEY_ATELIER, JSON.stringify({ order: atelierOrder, done: atelierDone }));
 }
 
 function addItemToAtelier(itemId) {
-  if (atelierOrder.includes(itemId)) {
-    // Already in the atelier - sending it again means "one more", not a no-op.
-    atelierCopies[itemId] = (atelierCopies[itemId] || 1) + 1;
-  } else {
-    atelierOrder.push(itemId);
-    if (!atelierHave[itemId]) atelierHave[itemId] = {};
-    if (!atelierCopies[itemId]) atelierCopies[itemId] = 1;
-  }
+  if (!atelierOrder.includes(itemId)) atelierOrder.push(itemId);
   saveAtelier();
 }
 
 function removeItemFromAtelier(itemId) {
   atelierOrder = atelierOrder.filter(id => id !== itemId);
-  delete atelierHave[itemId];
-  delete atelierCopies[itemId];
+  delete atelierDone[itemId];
   saveAtelier();
   renderAtelierModal();
 }
@@ -877,8 +853,7 @@ function clearAtelier() {
   if (atelierOrder.length === 0) return;
   if (!confirm("Vider l'atelier (retirer tous les objets) ?")) return;
   atelierOrder = [];
-  atelierHave = {};
-  atelierCopies = {};
+  atelierDone = {};
   saveAtelier();
   renderAtelierModal();
 }
@@ -1800,8 +1775,7 @@ function renderItemCard(item, isEquipped, charLevel) {
 
   const set = item.itemSetId && item.itemSetId > 0 ? SETS_BY_ID.get(item.itemSetId) : null;
   const hasRecipe = item.recipe && item.recipe.length > 0;
-  // Familiers/dragodindes never have item.recipe (their exchange cost lives in
-  // FAMILIAR_EXCHANGES instead - see isFamiliarItem) but still need the atelier hammer icon.
+  // Familiers/dragodindes never have item.recipe but still need the atelier hammer icon.
   const isFamiliar = isFamiliarItem(item);
 
   if (set || hasRecipe || isFamiliar) {
@@ -1832,9 +1806,8 @@ function renderItemCard(item, isEquipped, charLevel) {
       });
       actions.appendChild(atelierBtn);
 
-      // "Recette" opens a modal keyed on item.recipe - familiers don't have one (their cost
-      // is FAMILIAR_EXCHANGES, shown once sent to the atelier's "Atelier des familiers" tab
-      // instead), so only offer it for real crafting recipes.
+      // "Recette" opens a modal keyed on item.recipe - familiers don't have one, so only
+      // offer it for real crafting recipes.
       if (hasRecipe) {
         const recipeBtn = document.createElement("button");
         recipeBtn.type = "button";
@@ -3935,220 +3908,70 @@ function closeAtelierModal() {
   document.getElementById("atelierModalOverlay").classList.add("hidden");
 }
 
-/** Familiers/dragodindes have no crafting recipe - they only ever show in the "Atelier des
- * familiers" tab, never in "par item"/"par ressource" (see FAMILIAR_EXCHANGES above). */
+/** Familiers/dragodindes have no crafting recipe or monster drop - kept for the set-badge
+ * "Envoyer en atelier" hammer icon elsewhere, which also applies to them. */
 function isFamiliarItem(item) {
   return !!item && dataSlotForItem(item) === "familier";
 }
 
+/** Single checklist: icon, name, drop monster, drop rate (+ Stasis badge when applicable),
+ * then a validate checkmark that moves the row to the "Fait" column, greyed out. Clicking the
+ * checkmark again on a done row moves it back. Replaces the old recipe/resource breakdown -
+ * the Atelier now just tracks where to farm each item sent to it, not what it costs to craft. */
 function renderAtelierModal() {
   const body = document.getElementById("atelierModalBody");
   body.innerHTML = "";
 
-  if (atelierOrder.length === 0) {
+  const ids = [...new Set(atelierOrder)].filter(id => ITEMS_BY_ID.has(id));
+  if (ids.length === 0) {
     body.innerHTML = '<div class="stat-empty">Aucun objet envoyé en atelier. Cliquez sur l\'icône marteau à côté d\'un objet équipé (ou celle au centre de la case vide à gauche des coiffes) pour l\'ajouter ici.</div>';
     return;
   }
+  ids.sort((a, b) => ITEMS_BY_ID.get(a).name.localeCompare(ITEMS_BY_ID.get(b).name));
 
-  if (atelierViewMode === "familiers") {
-    const familiarIds = atelierOrder.filter(id => isFamiliarItem(ITEMS_BY_ID.get(id)));
-    if (familiarIds.length === 0) {
-      body.innerHTML = '<div class="stat-empty">Aucun familier envoyé en atelier.</div>';
-      return;
-    }
-    for (const itemId of familiarIds) {
-      const item = ITEMS_BY_ID.get(itemId);
-      body.appendChild(renderAtelierCard(item, familiarRecipeIngredients(item), "Ressources inconnues pour ce familier."));
-    }
-    return;
-  }
-
-  const craftIds = atelierOrder.filter(id => {
-    const item = ITEMS_BY_ID.get(id);
-    return item && !isFamiliarItem(item);
-  });
-  if (craftIds.length === 0) {
-    body.innerHTML = '<div class="stat-empty">Seuls des familiers sont envoyés en atelier - voir l\'onglet "Atelier des familiers".</div>';
-    return;
-  }
-
-  if (atelierViewMode === "resource") {
-    body.appendChild(renderAtelierResourceView());
-    return;
-  }
-
-  for (const itemId of craftIds) {
-    const item = ITEMS_BY_ID.get(itemId);
-    body.appendChild(renderAtelierCard(item));
-  }
-}
-
-/** ingredientItemId -> real item -> {name, iconId, quantity} entries for a familiar/dragodinde,
- * mirroring the shape of item.recipe so renderAtelierCard can render it unchanged. Returns null
- * if this familiar isn't in FAMILIAR_EXCHANGES (shouldn't happen - all 154 are covered). */
-function familiarRecipeIngredients(item) {
-  const raw = FAMILIAR_EXCHANGES[item.id];
-  if (!raw) return null;
-  return raw.map(([ingId, qty, name, iconId]) => ({ itemId: ingId, name, iconId, quantity: qty }));
-}
-
-/** ingredientItemId -> { name, iconId, needed, have } aggregated across every non-familier item
- * currently in the atelier (familiers/dragodindes have their own tab, see isFamiliarItem). */
-function computeAtelierResourceTotals() {
-  const totals = new Map();
-  for (const itemId of atelierOrder) {
-    const item = ITEMS_BY_ID.get(itemId);
-    if (!item || isFamiliarItem(item) || !item.recipe) continue;
-    const copies = Math.max(1, atelierCopies[itemId] || 1);
-    const have = atelierHave[itemId] || {};
-    for (const ing of item.recipe) {
-      let t = totals.get(ing.itemId);
-      if (!t) {
-        t = { name: ing.name, iconId: ing.iconId, needed: 0, have: 0 };
-        totals.set(ing.itemId, t);
-      }
-      t.needed += ing.quantity * copies;
-      t.have += have[ing.itemId] || 0;
-    }
-  }
-  return totals;
-}
-
-/** Redistributes a resource's new total "have" across every item using it, filling each
- * item's own need in atelierOrder order before moving to the next (waterfall allocation) -
- * mirrors filling recipes one at a time with a shared pile of one raw resource. */
-function distributeResourceHave(ingredientItemId, totalHave) {
-  let remaining = Math.max(0, totalHave);
-  for (const itemId of atelierOrder) {
-    const item = ITEMS_BY_ID.get(itemId);
-    if (!item || isFamiliarItem(item) || !item.recipe) continue;
-    const ing = item.recipe.find(r => r.itemId === ingredientItemId);
-    if (!ing) continue;
-    const copies = Math.max(1, atelierCopies[itemId] || 1);
-    const needed = ing.quantity * copies;
-    const have = atelierHave[itemId] || (atelierHave[itemId] = {});
-    const allocate = Math.min(remaining, needed);
-    have[ingredientItemId] = allocate;
-    remaining -= allocate;
-  }
-  saveAtelier();
-}
-
-/** Inserts `row` into `container` keeping rows alphabetically ordered by `name`, so a row
- * moved in from the other column lands in the right spot instead of just at the end. */
-function insertResourceRowSorted(container, row, name) {
-  const rows = container.querySelectorAll(".atelier-ingredient-row");
-  for (const r of rows) {
-    if (name.localeCompare(r.dataset.name) < 0) {
-      container.insertBefore(row, r);
-      return;
-    }
-  }
-  container.appendChild(row);
-}
-
-/** Shows/hides a column's placeholder text depending on whether it currently holds any rows. */
-function updateResourceColEmptyState(listEl, placeholderEl) {
-  const hasRows = listEl.querySelector(".atelier-ingredient-row") !== null;
-  placeholderEl.classList.toggle("hidden", hasRows);
-}
-
-function renderAtelierResourceView() {
   const wrap = document.createElement("div");
-  wrap.className = "atelier-resource-view";
+  wrap.className = "atelier-drop-view";
 
-  const totals = computeAtelierResourceTotals();
-  const ids = [...totals.keys()].sort((a, b) => totals.get(a).name.localeCompare(totals.get(b).name));
-
-  if (ids.length === 0) {
-    const none = document.createElement("div");
-    none.className = "stat-empty";
-    none.textContent = "Recette inconnue pour tous les objets de l'atelier.";
-    wrap.appendChild(none);
-    return wrap;
-  }
-
-  // Left column: resources still short of the total needed. Right column: resources
-  // already fully gathered, greyed out and set aside so the left column only shows what's
-  // still actionable.
   const colLeft = document.createElement("div");
-  colLeft.className = "atelier-resource-col";
+  colLeft.className = "atelier-drop-col";
   const colLeftTitle = document.createElement("div");
-  colLeftTitle.className = "atelier-resource-col-title";
-  colLeftTitle.textContent = "À réunir";
+  colLeftTitle.className = "atelier-drop-col-title";
+  colLeftTitle.textContent = "À faire";
   const colLeftList = document.createElement("div");
-  colLeftList.className = "atelier-resource-col-list";
+  colLeftList.className = "atelier-drop-col-list";
   const colLeftEmpty = document.createElement("div");
   colLeftEmpty.className = "stat-empty hidden";
-  colLeftEmpty.textContent = "Tout est réuni !";
+  colLeftEmpty.textContent = "Tout est fait !";
   colLeft.append(colLeftTitle, colLeftList, colLeftEmpty);
 
   const colRight = document.createElement("div");
-  colRight.className = "atelier-resource-col";
+  colRight.className = "atelier-drop-col";
   const colRightTitle = document.createElement("div");
-  colRightTitle.className = "atelier-resource-col-title";
-  colRightTitle.textContent = "Complètes";
+  colRightTitle.className = "atelier-drop-col-title";
+  colRightTitle.textContent = "Fait";
   const colRightList = document.createElement("div");
-  colRightList.className = "atelier-resource-col-list";
+  colRightList.className = "atelier-drop-col-list";
   const colRightEmpty = document.createElement("div");
   colRightEmpty.className = "stat-empty hidden";
-  colRightEmpty.textContent = "Aucune ressource complète pour l'instant.";
+  colRightEmpty.textContent = "Rien de validé pour l'instant.";
   colRight.append(colRightTitle, colRightList, colRightEmpty);
 
-  for (const ingId of ids) {
-    const t = totals.get(ingId);
-    const row = document.createElement("div");
-    const fulfilled = t.have >= t.needed;
-    row.className = "atelier-ingredient-row" + (fulfilled ? " fulfilled" : "");
-    row.dataset.name = t.name;
-    row.appendChild(itemIconEl({ iconId: t.iconId }, "🧱", "item-icon"));
-
-    const name = document.createElement("span");
-    name.className = "resource-name";
-    name.textContent = t.name;
-    row.appendChild(name);
-
-    const input = document.createElement("input");
-    input.type = "number";
-    input.min = "0";
-    input.className = "atelier-have-input";
-    input.value = t.have;
-
-    const needed = document.createElement("span");
-    needed.className = "atelier-needed";
-    needed.textContent = "/ " + t.needed;
-
-    input.addEventListener("input", () => {
-      const v = Math.max(0, Number(input.value) || 0);
-      distributeResourceHave(ingId, v);
-      const nowFulfilled = v >= t.needed;
-      row.classList.toggle("fulfilled", nowFulfilled);
-      const targetList = nowFulfilled ? colRightList : colLeftList;
-      if (row.parentElement !== targetList) {
-        insertResourceRowSorted(targetList, row, t.name);
-        updateResourceColEmptyState(colLeftList, colLeftEmpty);
-        updateResourceColEmptyState(colRightList, colRightEmpty);
-      }
-    });
-
-    row.appendChild(input);
-    row.appendChild(needed);
-    insertResourceRowSorted(fulfilled ? colRightList : colLeftList, row, t.name);
+  for (const itemId of ids) {
+    const item = ITEMS_BY_ID.get(itemId);
+    const done = !!atelierDone[itemId];
+    (done ? colRightList : colLeftList).appendChild(renderAtelierDropRow(item, done));
   }
 
-  updateResourceColEmptyState(colLeftList, colLeftEmpty);
-  updateResourceColEmptyState(colRightList, colRightEmpty);
+  colLeftEmpty.classList.toggle("hidden", colLeftList.children.length > 0);
+  colRightEmpty.classList.toggle("hidden", colRightList.children.length > 0);
 
   wrap.append(colLeft, colRight);
-  return wrap;
+  body.appendChild(wrap);
 }
 
-/** `recipeOverride`/`emptyMessage` let familiar cards reuse this exact same markup and
- * have/copies tracking with FAMILIAR_EXCHANGES data in place of item.recipe (see
- * familiarRecipeIngredients). Omit both for the normal item.recipe path. */
-function renderAtelierCard(item, recipeOverride, emptyMessage) {
-  const card = document.createElement("div");
-  card.className = "atelier-card";
+function renderAtelierDropRow(item, done) {
+  const row = document.createElement("div");
+  row.className = "atelier-drop-row" + (done ? " done" : "");
 
   const removeBtn = document.createElement("button");
   removeBtn.type = "button";
@@ -4156,88 +3979,47 @@ function renderAtelierCard(item, recipeOverride, emptyMessage) {
   removeBtn.textContent = "×";
   removeBtn.title = "Retirer de l'atelier";
   removeBtn.addEventListener("click", () => removeItemFromAtelier(item.id));
-  card.appendChild(removeBtn);
+  row.appendChild(removeBtn);
 
-  const header = document.createElement("div");
-  header.className = "atelier-card-header";
-  header.appendChild(itemIconEl(item, "🔨", "item-icon"));
+  row.appendChild(itemIconEl(item, "🔨", "item-icon"));
+
   const name = document.createElement("span");
-  name.className = "atelier-card-name";
+  name.className = "atelier-drop-name";
   name.textContent = item.name;
-  header.appendChild(name);
+  row.appendChild(name);
 
-  const copiesInput = document.createElement("input");
-  copiesInput.type = "number";
-  copiesInput.min = "1";
-  copiesInput.className = "atelier-copies-input";
-  copiesInput.title = "Nombre d'exemplaires à fabriquer";
-  copiesInput.value = atelierCopies[item.id] || 1;
-  header.appendChild(copiesInput);
+  const monster = document.createElement("span");
+  monster.className = "atelier-drop-monster";
+  monster.textContent = item.drop ? item.drop.monsterName : "Source inconnue";
+  row.appendChild(monster);
 
-  card.appendChild(header);
+  const rate = document.createElement("span");
+  rate.className = "atelier-drop-rate";
+  rate.textContent = item.drop ? `${item.drop.rate}%` : "—";
+  row.appendChild(rate);
 
-  const ingredients = document.createElement("div");
-  ingredients.className = "atelier-ingredient-list";
-
-  const rowUpdaters = [];
-  const recipe = recipeOverride !== undefined ? recipeOverride : item.recipe;
-
-  if (!recipe || recipe.length === 0) {
-    const none = document.createElement("div");
-    none.className = "stat-empty";
-    none.textContent = emptyMessage || "Recette inconnue pour cet objet.";
-    ingredients.appendChild(none);
-  } else {
-    const have = atelierHave[item.id] || (atelierHave[item.id] = {});
-    for (const ing of recipe) {
-      const row = document.createElement("div");
-      row.className = "atelier-ingredient-row";
-      row.appendChild(itemIconEl({ iconId: ing.iconId }, "🧱", "item-icon"));
-
-      const name2 = document.createElement("span");
-      name2.className = "resource-name";
-      name2.textContent = ing.name;
-      row.appendChild(name2);
-
-      const input = document.createElement("input");
-      input.type = "number";
-      input.min = "0";
-      input.className = "atelier-have-input";
-      input.value = have[ing.itemId] || 0;
-
-      const needed = document.createElement("span");
-      needed.className = "atelier-needed";
-
-      const update = () => {
-        const copies = Math.max(1, Number(copiesInput.value) || 1);
-        const totalNeeded = ing.quantity * copies;
-        needed.textContent = "/ " + totalNeeded;
-        row.classList.toggle("fulfilled", Number(input.value) >= totalNeeded);
-      };
-      input.addEventListener("input", () => {
-        const v = Math.max(0, Number(input.value) || 0);
-        have[ing.itemId] = v;
-        saveAtelier();
-        update();
-      });
-      rowUpdaters.push(update);
-      update();
-
-      row.appendChild(input);
-      row.appendChild(needed);
-      ingredients.appendChild(row);
-    }
+  if (item.drop && item.drop.stasis) {
+    const stasisImg = document.createElement("img");
+    stasisImg.className = "atelier-drop-stasis-icon";
+    stasisImg.src = "icons/90011.png";
+    stasisImg.alt = "Stasis";
+    stasisImg.title = "Drop sous condition Stasis";
+    row.appendChild(stasisImg);
   }
 
-  copiesInput.addEventListener("input", () => {
-    const v = Math.max(1, Number(copiesInput.value) || 1);
-    atelierCopies[item.id] = v;
+  const validateBtn = document.createElement("button");
+  validateBtn.type = "button";
+  validateBtn.className = "atelier-validate-btn" + (done ? " done" : "");
+  validateBtn.title = done ? "Remettre dans la liste à faire" : "Valider";
+  validateBtn.textContent = "✓";
+  validateBtn.addEventListener("click", () => {
+    atelierDone[item.id] = !done;
     saveAtelier();
-    rowUpdaters.forEach(fn => fn());
+    renderAtelierModal();
   });
+  row.appendChild(validateBtn);
 
-  card.appendChild(ingredients);
-  return card;
+  return row;
 }
 
 // ---------- Ladder (XP / Succès) ----------

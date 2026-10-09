@@ -4692,6 +4692,12 @@ function plainParamItem(text) {
   return `<div class="spell-card-params-item">${escapeHtml(text)}</div>`;
 }
 
+/** Client-tooltip "Zone d'effet : <icon> croix de 1 case" line (grade.zone = { icon, text } from the exporter). */
+function zoneLineHtml(zone) {
+  if (!zone) return "";
+  return `<div class="spell-card-zone"><span class="spell-card-zone-label">Zone d'effet :</span><img class="spell-card-zone-icon" src="icons/areas/${escapeHtml(zone.icon)}.png" alt=""><span>${escapeHtml(zone.text)}</span></div>`;
+}
+
 function renderSpellVariantCard(spell, level) {
   const grade = pickGradeForLevel(spell, level);
   const card = document.createElement("div");
@@ -4736,7 +4742,7 @@ function renderSpellVariantCard(spell, level) {
       </div>
       ${gradeTabsHtml(spell, grade)}
     </div>
-    ${spell.description ? `<div class="spell-card-top"><div class="spell-card-description">${escapeHtml(spell.description)}</div></div>` : ""}
+    ${spell.description || grade.zone ? `<div class="spell-card-top">${spell.description ? `<div class="spell-card-description">${escapeHtml(spell.description)}</div>` : ""}${zoneLineHtml(grade.zone)}</div>` : ""}
     ${damageSectionHtml(sim)}
     <hr class="spell-card-hr">
     <div class="spell-card-params">

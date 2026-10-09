@@ -1427,10 +1427,15 @@ button:hover { border-color: var(--accent); }
 
 .spell-card-top {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
   margin-top: 10px;
 }
+.spell-card-zone { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-dim); }
+.spell-card-zone-label { white-space: nowrap; }
+.spell-card-zone-icon { width: 36px; height: 18px; flex-shrink: 0; }
+.spell-card-zone > span:last-child { color: var(--text); }
 .spell-card-icon { width: 44px; height: 44px; object-fit: contain; image-rendering: pixelated; border-radius: 6px; flex-shrink: 0; }
 .spell-card-icon.icon-fallback { display: flex; align-items: center; justify-content: center; font-size: 26px; background: var(--panel); }
 .spell-card-description { font-size: 12px; color: var(--text-dim); flex: 1; }

@@ -2389,6 +2389,16 @@ function findBestElement(combinedStats) {
  */
 function simulateDamageLine(effect, element, combinedStats, isCritical, opts) {
   if (element === "Meilleur") element = findBestElement(combinedStats);
+  if (element === "MeilleurDegats") {
+    // Same candidate order as the server (neutral, earth, air, fire, water), first strict max wins.
+    let bestValue = -1;
+    let best = "Neutre";
+    for (const el of ["Neutre", "Terre", "Air", "Feu", "Eau"]) {
+      const v = simulateDamageLine(effect, el, combinedStats, isCritical, opts).max;
+      if (v > bestValue) { best = el; bestValue = v; }
+    }
+    element = best;
+  }
   const stat = combinedStats.get(DAMAGE_ELEMENT_CHARACTERISTIC[element]) || 0;
   // "Maîtrise des armes" toggle (weapon damage panel only): +300 Puissance applied ONLY
   // to this simulation, never written into combinedStats - it must stay invisible in
@@ -2478,6 +2488,9 @@ function damageRollLines(effects, criticalEffects) {
       // its "(vol meilleur élément)" label (see EffectLabelOverrides in Worker.cs) already
       // gets kind="vol" from the check below, this only needs to resolve its element.
       if (!element && (e.effectId === 2822 || e.effectId === 2824)) element = "Meilleur";
+      // Effect_StealHPDamage (2828, "(vol Meilleur élément)" - Kyrja/Vajra): unlike the two above, the
+      // server (HPSteal.FindBestSchool) picks the element whose COMPUTED damage is highest.
+      if (!element && e.effectId === 2828) element = "MeilleurDegats";
       if (!element && kind !== "regen" && kind !== "poussee") continue; // e.g. "(Retrait PA)" - not a damage/regen/poussée roll
       out.push({ effect: e, element: element || null, kind });
     }

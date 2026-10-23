@@ -631,7 +631,7 @@ async function main() {
   });
   document.getElementById("paPmPaBtn").addEventListener("click", () => openPaPmList("pa"));
   document.getElementById("paPmPmBtn").addEventListener("click", () => openPaPmList("pm"));
-  document.getElementById("paPmLegBtn").addEventListener("click", () => openPaPmList("legendary"));
+  document.getElementById("legendaryBtn").addEventListener("click", () => openPaPmList("legendary"));
   document.getElementById("paPmListModalClose").addEventListener("click", closePaPmList);
   document.getElementById("paPmListModalOverlay").addEventListener("click", (ev) => {
     if (ev.target.id === "paPmListModalOverlay") closePaPmList();

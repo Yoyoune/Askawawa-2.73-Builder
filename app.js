@@ -4334,7 +4334,7 @@ function isPmFilterItem(item) {
   return (item.effects || []).some(e => stripSign(e.label) === "PM" && getEffectComparableValue(e) === 1);
 }
 
-// "Item Légendaire" category of the PA-PM picker: the 16 level-200 legendary pieces (by id - the
+// "Item Légendaire" category of the PA-PM picker: the level-200 legendary pieces still carrying their legendary effect (by id - the
 // user named two of them by slot + character, "Cape de Jahash Jurgen" = Noblesse de Jahash Jurgen
 // 20362, "Ceinture de Dame Jhessica" = Courage de Dame Jhessica 20366).
 const PA_PM_LEGENDARY_ITEM_IDS = new Set([
@@ -4345,15 +4345,8 @@ const PA_PM_LEGENDARY_ITEM_IDS = new Set([
   20362, // Noblesse de Jahash Jurgen (cape)
   20366, // Courage de Dame Jhessica (ceinture)
   20359, // Couronne de Brâm Barbe-Monde
-  20353, // Crocobur
   20360, // Diadème de Ganymède
   20357, // Droiture de Fallanster
-  20356, // Plume de Buhorado
-  20358, // Trompe-la-Mort
-  22429, // Étreinte de Servitude
-  22412, // Pestilence de Corruption
-  22444, // Balance-Fléau de Misère
-  22368, // Hachebarde de Guerre
 ]);
 
 function openPaPmPicker() {

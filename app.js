@@ -18,6 +18,8 @@ const UI_SLOTS = [
   { id: "ceinture", label: "Ceinture", dataSlot: "ceinture", icon: "icons/slot-placeholders/ceinture.png" },
   { id: "bottes", label: "Bottes", dataSlot: "bottes", icon: "icons/slot-placeholders/bottes.png" },
   { id: "familier", label: "Familier", dataSlot: "familier", icon: "icons/slot-placeholders/familier.png" },
+  // 2026-10-27: the 12 legendary "Fragment" runes, drawn as a half-size square (placeholder = greyed Fragment icon).
+  { id: "runeLeg", label: "Rune légendaire", dataSlot: "runeLegendaire", icon: "icons/slot-placeholders/rune.png", small: true },
   { id: "dofus1", label: "Dofus", dataSlot: "dofus", icon: "icons/slot-placeholders/dofus.png", group: "dofus" },
   { id: "dofus2", label: "Dofus", dataSlot: "dofus", icon: "icons/slot-placeholders/dofus.png", group: "dofus" },
   { id: "dofus3", label: "Dofus", dataSlot: "dofus", icon: "icons/slot-placeholders/dofus.png", group: "dofus" },
@@ -213,6 +215,7 @@ const CATEGORY_LABELS = {
   monture: "Monture",
   dofus: "Dofus",
   trophee: "Trophée",
+  runeLegendaire: "Runes légendaires",
 };
 // items_types.Id for the "Trophée" item type (superType 13, shared with real Dofus).
 const TROPHEE_TYPE_ID = 151;
@@ -1294,7 +1297,7 @@ const PAPERDOLL_LAYOUT = [
   null, "coiffe", "cape",
   "anneau1", "amulette", "anneau2",
   "arme", "ceinture", "bouclier",
-  null, "bottes", "familier",
+  "runeLeg", "bottes", "familier",
 ];
 
 function renderPaperdoll() {
@@ -1326,31 +1329,30 @@ function renderPaperdoll() {
 
 function renderEmptySlotEl(emptySlotIndex) {
   const el = document.createElement("div");
-  el.className = "slot slot-empty" +
-    (emptySlotIndex === 0 ? " atelier-all-slot" : emptySlotIndex === 1 ? " all-equip-slot" : "");
-  if (emptySlotIndex === 0) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "atelier-send-all-btn";
-    btn.title = "Envoyer tout l'équipement en atelier";
-    const img = document.createElement("img");
-    img.src = "icons/ui/atelier.png";
-    img.alt = "";
-    btn.appendChild(img);
-    btn.addEventListener("click", () => sendAllEquippedToAtelier());
-    el.appendChild(btn);
-  } else if (emptySlotIndex === 1) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "all-equip-btn";
-    btn.title = "Parcourir tout l'équipement";
-    const img = document.createElement("img");
-    img.src = "icons/ui/tout-equipement.png";
-    img.alt = "";
-    btn.appendChild(img);
-    btn.addEventListener("click", () => openAllEquipList());
-    el.appendChild(btn);
-  }
+  // The one blank cell of the grid (top-left) holds both "all equipment" actions as two small stacked buttons.
+  el.className = "slot slot-empty all-actions-slot";
+
+  const atelierBtn = document.createElement("button");
+  atelierBtn.type = "button";
+  atelierBtn.className = "atelier-send-all-btn";
+  atelierBtn.title = "Envoyer tout l'équipement en atelier";
+  const atelierImg = document.createElement("img");
+  atelierImg.src = "icons/ui/atelier.png";
+  atelierImg.alt = "";
+  atelierBtn.appendChild(atelierImg);
+  atelierBtn.addEventListener("click", () => sendAllEquippedToAtelier());
+  el.appendChild(atelierBtn);
+
+  const browseBtn = document.createElement("button");
+  browseBtn.type = "button";
+  browseBtn.className = "all-equip-btn";
+  browseBtn.title = "Parcourir tout l'équipement";
+  const browseImg = document.createElement("img");
+  browseImg.src = "icons/ui/tout-equipement.png";
+  browseImg.alt = "";
+  browseBtn.appendChild(browseImg);
+  browseBtn.addEventListener("click", () => openAllEquipList());
+  el.appendChild(browseBtn);
   return el;
 }
 
@@ -1365,7 +1367,7 @@ function unequipSlot(uiSlotId) {
 function renderSlotEl(uiSlot) {
   const item = equipped[uiSlot.id];
   const el = document.createElement("div");
-  el.className = "slot" + (item ? " filled" : "") + (activeUiSlot === uiSlot.id ? " selected" : "") +
+  el.className = "slot" + (uiSlot.small ? " slot-small" : "") + (item ? " filled" : "") + (activeUiSlot === uiSlot.id ? " selected" : "") +
     (itemHasUnmetConditions(item) ? " unmet-conditions" : "");
   el.title = item ? item.name : uiSlot.label;
 
@@ -2208,7 +2210,9 @@ const SPECIAL_SPELL_STAR_ICON = svg(ICON_SHAPES.star(ICON_YELLOW));
 
 function specialSpellLineHtml(name, description) {
   if (!description) return "";
-  const text = name ? `${name} : ${description}` : description;
+  // Client spell texts carry HTML (<br/> line breaks, &lt;/&gt; for a literal < or >) - e.g. the Rubilax rune.
+  const plain = description.replace(/<br\s*\/?>/gi, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+  const text = name ? `${name} : ${plain}` : plain;
   return `<span class="eff-line eff-line-spell"><span class="stat-icon">${SPECIAL_SPELL_STAR_ICON}</span><span class="eff spell">${escapeHtml(text)}</span></span>`;
 }
 

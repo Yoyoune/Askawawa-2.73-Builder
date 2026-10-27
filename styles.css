@@ -508,8 +508,41 @@ button:hover { border-color: var(--accent); }
   cursor: default;
   pointer-events: none;
 }
-.slot.slot-empty.atelier-all-slot { pointer-events: auto; }
-.slot.slot-empty.all-equip-slot { pointer-events: auto; }
+/* Top-left cell: the two "all equipment" buttons, smaller and stacked. */
+.slot.slot-empty.all-actions-slot {
+  pointer-events: auto;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
+  overflow: visible;
+}
+.slot.all-actions-slot .atelier-send-all-btn,
+.slot.all-actions-slot .all-equip-btn {
+  min-height: 0;
+  height: 56px;
+}
+.slot.all-actions-slot .atelier-send-all-btn img,
+.slot.all-actions-slot .all-equip-btn img { width: 26px; height: 26px; }
+
+/* Legendary-rune slot: half-size square (about half the width of a regular equipment slot), centred in its cell. */
+.slot.slot-small {
+  min-height: 0;
+  width: 60px;
+  height: 60px;
+  justify-self: center;
+  align-self: center;
+  padding: 2px;
+}
+.slot.slot-small img.icon { width: 30px; height: 30px; }
+.slot.slot-small img.icon-placeholder { width: 30px; height: 30px; }
+.slot.slot-small .label,
+.slot.slot-small .item-name,
+.slot.slot-small .item-level,
+.slot.slot-small .slot-action-row,
+.slot.slot-small .edit-btn { display: none; }
+.slot.slot-small .remove-btn { width: 14px; height: 14px; font-size: 10px; line-height: 14px; }
 
 .atelier-send-all-btn {
   width: 100%;

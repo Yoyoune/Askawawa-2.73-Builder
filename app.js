@@ -631,7 +631,6 @@ async function main() {
   });
   document.getElementById("paPmPaBtn").addEventListener("click", () => openPaPmList("pa"));
   document.getElementById("paPmPmBtn").addEventListener("click", () => openPaPmList("pm"));
-  document.getElementById("legendaryBtn").addEventListener("click", () => openPaPmList("legendary"));
   document.getElementById("paPmListModalClose").addEventListener("click", closePaPmList);
   document.getElementById("paPmListModalOverlay").addEventListener("click", (ev) => {
     if (ev.target.id === "paPmListModalOverlay") closePaPmList();
@@ -4334,21 +4333,6 @@ function isPmFilterItem(item) {
   return (item.effects || []).some(e => stripSign(e.label) === "PM" && getEffectComparableValue(e) === 1);
 }
 
-// "Item Légendaire" category of the PA-PM picker: the level-200 legendary pieces still carrying their legendary effect (by id - the
-// user named two of them by slot + character, "Cape de Jahash Jurgen" = Noblesse de Jahash Jurgen
-// 20362, "Ceinture de Dame Jhessica" = Courage de Dame Jhessica 20366).
-const PA_PM_LEGENDARY_ITEM_IDS = new Set([
-  20365, // Audace de Dodge
-  20363, // Bottes de Mille Lieues
-  20364, // Bottes du Cul Botté
-  20361, // Bravoure de Rykke Errel
-  20362, // Noblesse de Jahash Jurgen (cape)
-  20366, // Courage de Dame Jhessica (ceinture)
-  20359, // Couronne de Brâm Barbe-Monde
-  20360, // Diadème de Ganymède
-  20357, // Droiture de Fallanster
-]);
-
 function openPaPmPicker() {
   document.getElementById("paPmPickerModalOverlay").classList.remove("hidden");
 }
@@ -4377,11 +4361,7 @@ let paPmActiveSlotFilters = new Set();
 function renderPaPmSlotFilterChips() {
   const row = document.getElementById("paPmSlotFilterRow");
   row.innerHTML = "";
-  // The legendary list includes two boucliers (the PA/PM lists never do).
-  const defs = paPmActiveKind === "legendary"
-    ? [...PA_PM_SLOT_FILTER_DEFS, { key: "bouclier", label: "Bouclier" }]
-    : PA_PM_SLOT_FILTER_DEFS;
-  for (const def of defs) {
+  for (const def of PA_PM_SLOT_FILTER_DEFS) {
     const chip = document.createElement("button");
     chip.type = "button";
     chip.className = "filter-chip";
@@ -4458,8 +4438,7 @@ function itemMatchesPaPmStatFilters(item) {
 function openPaPmList(kind) {
   closePaPmPicker();
   paPmActiveKind = kind;
-  document.getElementById("paPmListModalTitle").textContent =
-    kind === "pa" ? "Items PA" : kind === "pm" ? "Items PM" : "Items Légendaires";
+  document.getElementById("paPmListModalTitle").textContent = kind === "pa" ? "Items PA" : "Items PM";
   document.getElementById("paPmSearchInput").value = "";
   document.getElementById("paPmLevelMinInput").value = "";
   // Pre-set to the character's own level (not left empty) - per user request, so the
@@ -4486,9 +4465,7 @@ function renderPaPmList() {
   const levelMin = parseInt(document.getElementById("paPmLevelMinInput").value, 10);
   const levelMax = parseInt(document.getElementById("paPmLevelMaxInput").value, 10);
 
-  const kindFilter = paPmActiveKind === "pa" ? isPaFilterItem
-    : paPmActiveKind === "pm" ? isPmFilterItem
-    : (i => PA_PM_LEGENDARY_ITEM_IDS.has(i.id));
+  const kindFilter = paPmActiveKind === "pa" ? isPaFilterItem : isPmFilterItem;
   let items = ITEMS.filter(kindFilter);
   if (search) items = items.filter(i => i.name.toLowerCase().includes(search));
   if (!isNaN(levelMin)) items = items.filter(i => i.level >= levelMin);

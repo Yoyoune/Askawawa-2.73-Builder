@@ -3958,8 +3958,32 @@ function computeCombinedStats(equippedMap, rollOverridesObj, forgemagieObj, parc
   for (const bonuses of PRESTIGE_BONUSES.slice(0, prestigeRank)) {
     for (const [stat, value] of bonuses) combined.set(stat, (combined.get(stat) || 0) + value);
   }
+  // Characteristic-derived stats (server StatsFields formulas), then the artifact conversions on those totals, then the formulas
+  // again on the post-artifact characteristics (an artifact can change Agilité/Sagesse/Chance, which feed those formulas).
+  const before = characteristicFormulaBonuses(combined);
+  for (const [label, value] of before) combined.set(label, (combined.get(label) || 0) + value);
   applyArtifactBonuses(combined, equippedMap);
+  const after = characteristicFormulaBonuses(combined);
+  for (const label of new Set([...before.keys(), ...after.keys()])) {
+    const diff = (after.get(label) || 0) - (before.get(label) || 0);
+    if (diff !== 0) combined.set(label, (combined.get(label) || 0) + diff);
+  }
   return combined;
+}
+
+// Server-side derived statistics (Game/Actors/Stats/StatsFields.cs): Tacle and Fuite gain Agilité/10, Retrait PA/PM and
+// Esquive PA/PM gain Sagesse/10, Prospection gains Chance/10 (each truncated toward zero), and Initiative is the sum of
+// Force + Intelligence + Chance + Agilité (items' own Initiative comes on top).
+function characteristicFormulaBonuses(totals) {
+  const get = (label) => totals.get(label) || 0;
+  const tenth = (v) => Math.trunc(v / 10);
+  const bonuses = new Map();
+  const agility = tenth(get("Agilité")), wisdom = tenth(get("Sagesse")), chance = tenth(get("Chance"));
+  for (const label of ["Tacle", "Fuite"]) bonuses.set(label, agility);
+  for (const label of ["Retrait PA", "Retrait PM", "Esquive PA", "Esquive PM"]) bonuses.set(label, wisdom);
+  bonuses.set("Prospection", chance);
+  bonuses.set("Initiative", get("Force") + get("Intelligence") + get("Chance") + get("Agilité"));
+  return bonuses;
 }
 
 // ---------- Artéfacts (stat conversions, mirror of the server's Game/Custom/Artifacts.cs) ----------

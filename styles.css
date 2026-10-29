@@ -526,7 +526,16 @@ button:hover { border-color: var(--accent); }
 .slot.all-actions-slot .atelier-send-all-btn img,
 .slot.all-actions-slot .all-equip-btn img { width: 26px; height: 26px; }
 
-/* Legendary-rune slot: half-size square (about half the width of a regular equipment slot), centred in its cell. */
+/* Two half-size slots (legendary rune + artifact) stacked in one grid cell. */
+.slot-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Half-size slots (legendary rune, artifact): half-size square (about half the width of a regular equipment slot), centred in its cell. */
 .slot.slot-small {
   min-height: 0;
   width: 60px;

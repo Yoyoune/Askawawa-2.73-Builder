@@ -20,6 +20,8 @@ const UI_SLOTS = [
   { id: "familier", label: "Familier", dataSlot: "familier", icon: "icons/slot-placeholders/familier.png" },
   // 2026-10-27: the 12 legendary "Fragment" runes, drawn as a half-size square (placeholder = greyed Fragment icon).
   { id: "runeLeg", label: "Rune légendaire", dataSlot: "runeLegendaire", icon: "icons/slot-placeholders/rune.png", small: true },
+  // 2026-10-29: the 10 Artéfacts, second half-size square under the rune slot (placeholder = greyed Artéfact de Percimol icon).
+  { id: "artefact", label: "Artéfact", dataSlot: "artefact", icon: "icons/slot-placeholders/artefact.png", small: true },
   { id: "dofus1", label: "Dofus", dataSlot: "dofus", icon: "icons/slot-placeholders/dofus.png", group: "dofus" },
   { id: "dofus2", label: "Dofus", dataSlot: "dofus", icon: "icons/slot-placeholders/dofus.png", group: "dofus" },
   { id: "dofus3", label: "Dofus", dataSlot: "dofus", icon: "icons/slot-placeholders/dofus.png", group: "dofus" },
@@ -216,6 +218,7 @@ const CATEGORY_LABELS = {
   dofus: "Dofus",
   trophee: "Trophée",
   runeLegendaire: "Runes légendaires",
+  artefact: "Artéfacts",
 };
 // items_types.Id for the "Trophée" item type (superType 13, shared with real Dofus).
 const TROPHEE_TYPE_ID = 151;
@@ -1297,7 +1300,7 @@ const PAPERDOLL_LAYOUT = [
   null, "coiffe", "cape",
   "anneau1", "amulette", "anneau2",
   "arme", "ceinture", "bouclier",
-  "runeLeg", "bottes", "familier",
+  ["runeLeg", "artefact"], "bottes", "familier",
 ];
 
 function renderPaperdoll() {
@@ -1311,6 +1314,14 @@ function renderPaperdoll() {
     if (slotId === null) {
       root.appendChild(renderEmptySlotEl(emptySlotIndex));
       emptySlotIndex++;
+      continue;
+    }
+    if (Array.isArray(slotId)) {
+      // Several half-size slots stacked in one grid cell (legendary rune + artifact).
+      const pair = document.createElement("div");
+      pair.className = "slot-pair";
+      for (const id of slotId) pair.appendChild(renderSlotEl(UI_SLOTS.find(s => s.id === id)));
+      root.appendChild(pair);
       continue;
     }
     root.appendChild(renderSlotEl(UI_SLOTS.find(s => s.id === slotId)));
@@ -2213,7 +2224,8 @@ function specialSpellLineHtml(name, description) {
   // Client spell texts carry HTML (<br/> line breaks, &lt;/&gt; for a literal < or >) - e.g. the Rubilax rune.
   const plain = description.replace(/<br\s*\/?>/gi, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
   const text = name ? `${name} : ${plain}` : plain;
-  return `<span class="eff-line eff-line-spell"><span class="stat-icon">${SPECIAL_SPELL_STAR_ICON}</span><span class="eff spell">${escapeHtml(text)}</span></span>`;
+  // Real line breaks (artifact descriptions) stay line breaks.
+  return `<span class="eff-line eff-line-spell"><span class="stat-icon">${SPECIAL_SPELL_STAR_ICON}</span><span class="eff spell">${escapeHtml(text).replace(/\n/g, "<br>")}</span></span>`;
 }
 
 const WEAPON_DIVIDER_HTML = '<hr class="eff-weapon-divider">';
@@ -3946,7 +3958,73 @@ function computeCombinedStats(equippedMap, rollOverridesObj, forgemagieObj, parc
   for (const bonuses of PRESTIGE_BONUSES.slice(0, prestigeRank)) {
     for (const [stat, value] of bonuses) combined.set(stat, (combined.get(stat) || 0) + value);
   }
+  applyArtifactBonuses(combined, equippedMap);
   return combined;
+}
+
+// ---------- Artéfacts (stat conversions, mirror of the server's Game/Custom/Artifacts.cs) ----------
+// The artifact's stat changes are computed from the character's totals WITHOUT the artifact's own bonuses, all at once, then added.
+// Non-stat artifacts (Shuccube: weapons usable once more per turn; Aurore Pourpre: plays first among allies) only show their description.
+const ARTIFACT_PRIMARY = ["Force", "Intelligence", "Chance", "Agilité"];
+const ARTIFACT_ELEMENTAL = ["Dommages Terre", "Dommages Feu", "Dommages Eau", "Dommages Air", "Dommages Neutre"];
+const ARTIFACT_IDS = {
+  larve: 50623, aurorePourpre: 50625, julith: 50626, corbeauNoir: 50627, shuccube: 50628,
+  agonie: 50629, percimol: 50630, horloger: 50631, grimacant: 50632, dathura: 50633,
+};
+
+function applyArtifactBonuses(combined, equippedMap) {
+  const artifact = Object.values(equippedMap || {}).find(it => it && Object.values(ARTIFACT_IDS).includes(it.id));
+  if (!artifact) return;
+
+  const get = (label) => combined.get(label) || 0;
+  const pos = (v) => (v > 0 ? v : 0);
+  const percent = (v, p) => Math.floor(pos(v) * p / 100);
+  const half = (v) => Math.floor(pos(v) / 2);
+  const deltas = new Map();
+  const add = (label, v) => deltas.set(label, (deltas.get(label) || 0) + v);
+  // First field wins ties, in list order (same as the server).
+  const highest = (fields) => fields.reduce((best, f) => (get(f) > get(best) ? f : best), fields[0]);
+
+  // The highest other primary stat adds 50% of its amount to the target; the highest other elemental damage adds 50% to each target.
+  const boost = (target, damageTargets) => {
+    add(target, half(get(highest(ARTIFACT_PRIMARY.filter(f => f !== target)))));
+    const amount = half(get(highest(ARTIFACT_ELEMENTAL.filter(f => !damageTargets.includes(f)))));
+    for (const d of damageTargets) add(d, amount);
+  };
+  // The highest of the group loses 35%, which is added to each of the others.
+  const redistribute = (group) => {
+    const best = highest(group);
+    const amount = percent(get(best), 35);
+    if (amount <= 0) return;
+    for (const f of group) add(f, f === best ? -amount : amount);
+  };
+
+  switch (artifact.id) {
+    case ARTIFACT_IDS.percimol: boost("Force", ["Dommages Terre", "Dommages Neutre"]); break;
+    case ARTIFACT_IDS.agonie: boost("Chance", ["Dommages Eau"]); break;
+    case ARTIFACT_IDS.horloger: boost("Intelligence", ["Dommages Feu"]); break;
+    case ARTIFACT_IDS.grimacant: boost("Agilité", ["Dommages Air"]); break;
+    case ARTIFACT_IDS.larve: redistribute(ARTIFACT_PRIMARY); redistribute(ARTIFACT_ELEMENTAL); break;
+    case ARTIFACT_IDS.julith:
+      add("Retrait PM", percent(get("Retrait PA"), 30));
+      add("Retrait PA", percent(get("Retrait PM"), 30));
+      add("Esquive PM", percent(get("Esquive PA"), 30));
+      add("Esquive PA", percent(get("Esquive PM"), 30));
+      break;
+    case ARTIFACT_IDS.dathura:
+      add("Fuite", percent(get("Tacle"), 50));
+      add("Tacle", percent(get("Fuite"), 50));
+      break;
+    case ARTIFACT_IDS.corbeauNoir: {
+      // Conversion: the converted statistic loses everything it had.
+      const crit = get("% Critique"), critDamage = get("Dommages Critiques"), pushDamage = get("Dommages Poussée");
+      if (crit > 0) { add("Puissance", crit * 5); add("% Critique", -crit); }
+      if (critDamage > 0) { add("Dommages", Math.trunc(critDamage / 2)); add("Dommages Critiques", -critDamage); }
+      if (pushDamage > 0) { add("Dommages", Math.trunc(pushDamage / 3)); add("Dommages Poussée", -pushDamage); }
+      break;
+    }
+  }
+  for (const [label, v] of deltas) if (v !== 0) combined.set(label, get(label) + v);
 }
 
 function sortStatEntries(entries) {

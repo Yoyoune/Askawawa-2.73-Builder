@@ -213,7 +213,9 @@ button:hover { border-color: var(--accent); }
 .builds-save-row button:hover { background: #e0bc63; }
 
 /* Class dropdown next to the build name: a button that opens a grid of the 20 classes' male head icons (+ "None"). */
-.build-class-select { position: relative; flex-shrink: 0; }
+/* The menu is anchored on the whole save row (not on the button) so it can never stick out of the builder's left column. */
+.builds-save-row { position: relative; }
+.build-class-select { flex-shrink: 0; }
 .builds-save-row .build-class-btn {
   display: flex;
   align-items: center;
@@ -231,10 +233,12 @@ button:hover { border-color: var(--accent); }
 .build-class-menu {
   position: absolute;
   top: calc(100% + 4px);
+  left: 0;
   right: 0;
   z-index: 50;
   display: grid;
-  grid-template-columns: repeat(7, 40px);
+  grid-template-columns: repeat(auto-fill, 40px);
+  justify-content: center;
   gap: 4px;
   padding: 8px;
   background: var(--panel);

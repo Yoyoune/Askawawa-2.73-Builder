@@ -688,6 +688,7 @@ async function main() {
     activeBuildName = name;
   };
   document.getElementById("saveBuildBtn").addEventListener("click", doSaveBuild);
+  initBuildClassSelect();
   document.getElementById("buildNameInput").addEventListener("keydown", (ev) => {
     if (ev.key === "Enter") doSaveBuild();
   });
@@ -719,6 +720,7 @@ async function main() {
     hiddenSetIds = new Set();
     activeBuildName = null;
     document.getElementById("buildNameInput").value = "";
+    setSelectedBuildBreed(0);
     saveEquipped();
     saveCustomization();
     saveHidden();
@@ -888,6 +890,79 @@ function persistSavedBuilds() {
 
 // ---------- Mes builds ----------
 
+// Class a build is attributed to (breed id, 0 = "None", the default). Picked in the dropdown next to the build name,
+// stored with the build on "Enregistrer".
+let selectedBuildBreed = 0;
+
+/** Male head 1 of a class: SmallHead_<breed*10 + sex>, sex 0 = male. */
+function buildBreedHead(breedId) {
+  return `icons/heads/SmallHead_${breedId * 10}.png`;
+}
+
+function buildBreedName(breedId) {
+  const breed = BREEDS.find(b => b.id === breedId);
+  return breed ? breed.name : "";
+}
+
+function setSelectedBuildBreed(breedId) {
+  selectedBuildBreed = breedId || 0;
+  renderBuildClassSelect();
+}
+
+function closeBuildClassMenu() {
+  const menu = document.getElementById("buildClassMenu");
+  if (!menu) return;
+  menu.classList.add("hidden");
+  document.getElementById("buildClassBtn").setAttribute("aria-expanded", "false");
+}
+
+/** Button = current class (head icon, or "Classe" when None); menu = "None" + the classes in breed order, icons only. */
+function renderBuildClassSelect() {
+  const btn = document.getElementById("buildClassBtn");
+  const menu = document.getElementById("buildClassMenu");
+  if (!btn || !menu) return;
+
+  btn.innerHTML = selectedBuildBreed
+    ? `<img src="${buildBreedHead(selectedBuildBreed)}" alt=""><span class="chevron">▾</span>`
+    : `<span>Classe</span><span class="chevron">▾</span>`;
+  btn.title = selectedBuildBreed ? `Classe : ${buildBreedName(selectedBuildBreed)}` : "Classe du build (None)";
+
+  menu.innerHTML = "";
+  const addOption = (breedId, label, content) => {
+    const opt = document.createElement("button");
+    opt.type = "button";
+    opt.className = "build-class-option" + (selectedBuildBreed === breedId ? " active" : "");
+    opt.title = label;
+    opt.setAttribute("role", "menuitem");
+    opt.innerHTML = content;
+    opt.addEventListener("click", () => {
+      setSelectedBuildBreed(breedId);
+      closeBuildClassMenu();
+    });
+    menu.appendChild(opt);
+  };
+  addOption(0, "None", "None");
+  // BREEDS also holds the "Sorts communs" pseudo-class (id 0) - not a playable class.
+  for (const breed of BREEDS.filter(b => b.id >= 1).sort((a, b) => a.id - b.id)) {
+    addOption(breed.id, breed.name, `<img src="${buildBreedHead(breed.id)}" alt="">`);
+  }
+}
+
+function initBuildClassSelect() {
+  renderBuildClassSelect();
+  document.getElementById("buildClassBtn").addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    const menu = document.getElementById("buildClassMenu");
+    const willOpen = menu.classList.contains("hidden");
+    menu.classList.toggle("hidden", !willOpen);
+    document.getElementById("buildClassBtn").setAttribute("aria-expanded", String(willOpen));
+  });
+  document.addEventListener("click", (ev) => {
+    if (!ev.target.closest("#buildClassSelect")) closeBuildClassMenu();
+  });
+  document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") closeBuildClassMenu(); });
+}
+
 function saveCurrentAsBuild(name) {
   const existingIdx = savedBuilds.findIndex(b => b.name === name);
   const snapshot = {
@@ -899,6 +974,7 @@ function saveCurrentAsBuild(name) {
     parchotage: JSON.parse(JSON.stringify(parchotage)),
     characteristicPoints: JSON.parse(JSON.stringify(characteristicPoints)),
     prestige,
+    breedId: selectedBuildBreed,
     categories: existingIdx >= 0 ? savedBuilds[existingIdx].categories : [],
     savedAt: new Date().toISOString(),
   };
@@ -1007,8 +1083,9 @@ function exportBuild(build) {
     parchotage: build.parchotage,
     characteristicPoints: build.characteristicPoints,
     prestige: build.prestige || 0,
+    breedId: build.breedId || 0,
   };
-  const url = `${location.origin}${location.pathname}?import=${encodeBuildForUrl(snapshot)}`;
+  const url =`${location.origin}${location.pathname}?import=${encodeBuildForUrl(snapshot)}`;
   if (navigator.clipboard) navigator.clipboard.writeText(url).catch(() => {});
   prompt('Lien du build (déjà copié dans le presse-papier) - à partager :', url);
 }
@@ -1060,6 +1137,7 @@ function loadBuildByName(name) {
 
   activeBuildName = name;
   document.getElementById("buildNameInput").value = name;
+  setSelectedBuildBreed(build.breedId || 0);
 
   saveEquipped();
   saveCustomization();
@@ -1097,6 +1175,7 @@ function deleteBuildByName(name) {
   if (activeBuildName === name) {
     activeBuildName = null;
     document.getElementById("buildNameInput").value = "";
+    setSelectedBuildBreed(0);
   }
   persistSavedBuilds();
   renderSavedBuildsList();
@@ -1132,6 +1211,15 @@ function renderSavedBuildsList() {
     renameBtn.title = "Renommer";
     renameBtn.addEventListener("click", () => renameBuildByName(build.name));
     nameCell.appendChild(renameBtn);
+
+    if (build.breedId) {
+      const classIcon = document.createElement("img");
+      classIcon.className = "build-class-icon";
+      classIcon.src = buildBreedHead(build.breedId);
+      classIcon.alt = "";
+      classIcon.title = buildBreedName(build.breedId);
+      nameCell.appendChild(classIcon);
+    }
 
     const name = document.createElement("span");
     name.className = "build-name";

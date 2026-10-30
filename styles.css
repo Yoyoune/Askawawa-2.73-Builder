@@ -212,6 +212,56 @@ button:hover { border-color: var(--accent); }
 }
 .builds-save-row button:hover { background: #e0bc63; }
 
+/* Class dropdown next to the build name: a button that opens a grid of the 20 classes' male head icons (+ "None"). */
+.build-class-select { position: relative; flex-shrink: 0; }
+.builds-save-row .build-class-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  background: var(--panel-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-weight: 500;
+  font-size: 13px;
+}
+.builds-save-row .build-class-btn:hover { background: var(--panel-alt); border-color: var(--accent); }
+.build-class-btn img { width: 22px; height: 22px; object-fit: contain; }
+.build-class-btn .chevron { font-size: 9px; color: var(--text-dim); }
+.build-class-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: repeat(7, 40px);
+  gap: 4px;
+  padding: 8px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .5);
+}
+.build-class-menu.hidden { display: none; }
+.builds-save-row .build-class-option {
+  width: 40px;
+  height: 40px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel-alt);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.builds-save-row .build-class-option:hover { background: var(--panel-alt); border-color: var(--accent); }
+.builds-save-row .build-class-option.active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.build-class-option img { width: 34px; height: 34px; object-fit: contain; }
+.build-row .build-class-icon { width: 22px; height: 22px; flex-shrink: 0; object-fit: contain; }
+
 .ladder-updated { font-size: 11px; color: var(--text-dim); margin: 8px 0 4px; }
 #ladderList { max-height: 480px; overflow-y: auto; }
 .ladder-row {

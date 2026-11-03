@@ -2161,7 +2161,6 @@ const STASIS_COMMON_EFFECTS = [
 const STASISUN_ONLY_EFFECTS = [
   ["Soins", [2, 4, 6, 8, 10]],
   ["PA", [1]],
-  ["PM", [1]],
   ["Portée", [1]],
   ["Invocations", [1]],
   ["% Critique", [2]],
@@ -3957,6 +3956,8 @@ function computeItemStats(equippedMap = equipped, rollOverridesObj = rollOverrid
       addEffectToTotals(totals, effect, override);
     });
     for (const fm of forgemagieObj[uiSlotId] || []) {
+      // The Stasisun "+1 PM" rune effect no longer exists - ignore it in builds saved before it was removed.
+      if (fm.rune === "stasisun" && fm.label === "PM") continue;
       totals.set(fm.label, (totals.get(fm.label) || 0) + fm.value);
     }
   }

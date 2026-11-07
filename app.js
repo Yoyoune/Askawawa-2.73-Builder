@@ -2096,6 +2096,14 @@ function renderDetail(uiSlotId) {
   });
   if (fmList.children.length) fmSection.appendChild(fmList);
 
+  const maxTier = maxStasisTierForItem(item);
+  const tierHint = document.createElement("div");
+  tierHint.className = "stat-empty";
+  tierHint.textContent = maxTier < 0
+    ? `Aucune rune Stasis applicable (objet niveau ${item.level}, runes à partir du niveau 40).`
+    : `Runes Stasis : palier maximal applicable = rune niveau ${STASIS_RUNE_LEVELS[maxTier]} (objet niveau ${item.level}).`;
+  fmSection.appendChild(tierHint);
+
   // One line per rune family: an item can carry at most one Stasisun and one Stasisdeux
   // effect (the server refuses a second one with the same marker).
   for (const rune of STASIS_RUNES) {
@@ -2109,20 +2117,34 @@ function renderDetail(uiSlotId) {
     const select = document.createElement("select");
     const none = document.createElement("option");
     none.value = "";
-    none.textContent = "— Aucun effet —";
+    none.textContent = maxTier < 0 ? "— Aucune rune applicable (objet < niv. 40) —" : "— Aucun effet —";
     select.appendChild(none);
-    for (const [label, values] of rune.groups) {
-      const group = document.createElement("optgroup");
-      group.label = label;
-      for (const value of values) {
+    const current = (forgemagie[uiSlotId] || []).find(fm => fm.rune === rune.key);
+    let currentListed = false;
+    if (maxTier >= 0) {
+      for (const [label, values] of rune.groups) {
+        const value = values[maxTier];
+        const group = document.createElement("optgroup");
+        group.label = label;
         const opt = document.createElement("option");
         opt.value = `${label}|${value}`;
         opt.textContent = `+${value} ${label}`;
         group.appendChild(opt);
+        select.appendChild(group);
+        if (current && current.label === label && current.value === value) currentListed = true;
       }
+    }
+    // A value saved earlier (another tier, or an item level that no longer allows it) stays visible
+    // so it can still be seen and removed.
+    if (current && !currentListed) {
+      const group = document.createElement("optgroup");
+      group.label = "Palier non applicable";
+      const opt = document.createElement("option");
+      opt.value = `${current.label}|${current.value}`;
+      opt.textContent = `+${current.value} ${current.label}`;
+      group.appendChild(opt);
       select.appendChild(group);
     }
-    const current = (forgemagie[uiSlotId] || []).find(fm => fm.rune === rune.key);
     if (current) select.value = `${current.label}|${current.value}`;
 
     select.addEventListener("change", () => {
@@ -2143,6 +2165,10 @@ function renderDetail(uiSlotId) {
   body.appendChild(fmSection);
 }
 
+// A Stasis rune of level N can only be applied to an item of level >= N, and the 5 rune tiers
+// have levels 40/80/120/160/200 (value index = tier). The editor therefore offers, per stat,
+// only the highest tier whose rune level does not exceed the item's level.
+const STASIS_RUNE_LEVELS = [40, 80, 120, 160, 200];
 const STASIS_COMMON_EFFECTS = [
   ["Vitalité", [20, 40, 60, 80, 100]],
   ["Force", [4, 8, 12, 16, 20]],
@@ -2160,17 +2186,25 @@ const STASIS_COMMON_EFFECTS = [
 ];
 const STASISUN_ONLY_EFFECTS = [
   ["Soins", [2, 4, 6, 8, 10]],
-  ["PA", [1]],
-  ["Portée", [1]],
-  ["Invocations", [1]],
-  ["% Critique", [2]],
+  ["PA", [1, 1, 1, 1, 1]],
+  ["Portée", [1, 1, 1, 1, 1]],
+  ["Invocations", [1, 1, 1, 1, 1]],
+  ["% Critique", [2, 2, 2, 2, 2]],
   ["Initiative", [40, 80, 120, 160, 200]],
-  ["% Résistance Neutre", [2, 3]],
-  ["% Résistance Terre", [2, 3]],
-  ["% Résistance Eau", [2, 3]],
-  ["% Résistance Feu", [2, 3]],
-  ["% Résistance Air", [2, 3]],
+  ["% Résistance Neutre", [2, 2, 2, 3, 3]],
+  ["% Résistance Terre", [2, 2, 2, 3, 3]],
+  ["% Résistance Eau", [2, 2, 2, 3, 3]],
+  ["% Résistance Feu", [2, 2, 2, 3, 3]],
+  ["% Résistance Air", [2, 2, 2, 3, 3]],
 ];
+
+/** Index of the highest rune tier applicable to an item of this level (-1 = none, item below level 40). */
+function maxStasisTierForItem(item) {
+  const level = item && Number.isFinite(item.level) ? item.level : 0;
+  let tier = -1;
+  STASIS_RUNE_LEVELS.forEach((cap, i) => { if (cap <= level) tier = i; });
+  return tier;
+}
 const STASIS_RUNES = [
   { key: "stasisun", title: "Rune Stasisun", groups: [...STASIS_COMMON_EFFECTS, ...STASISUN_ONLY_EFFECTS] },
   { key: "stasisdeux", title: "Rune Stasisdeux", groups: STASIS_COMMON_EFFECTS },

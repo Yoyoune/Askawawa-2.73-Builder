@@ -1435,12 +1435,23 @@ function wikiIconButton(entry, catKey) {
   return btn;
 }
 
-/** Fills `el` with one paragraph per line of `text` (text is optional: empty until the content is written). */
+/** Fills `el` with one paragraph per line of `text` (text is optional: empty until the content is written).
+ *  Consecutive lines starting with "- " become a bullet list. */
 function wikiFillText(el, text) {
   el.innerHTML = "";
   if (!text) return;
-  for (const line of String(text).split(/\n+/)) {
-    if (!line.trim()) continue;
+  let list = null;
+  for (const raw of String(text).split(/\n+/)) {
+    const line = raw.trim();
+    if (!line) continue;
+    if (/^-\s+/.test(line)) {
+      if (!list) { list = document.createElement("ul"); el.appendChild(list); }
+      const li = document.createElement("li");
+      li.textContent = line.replace(/^-\s+/, "");
+      list.appendChild(li);
+      continue;
+    }
+    list = null;
     const p = document.createElement("p");
     p.textContent = line;
     el.appendChild(p);

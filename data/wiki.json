@@ -649,39 +649,48 @@
                       },
                       {
                           "name":  "Julith",
-                          "monsterId":  5663
+                          "monsterId":  5663,
+                          "text":  "Julith débute le combat avec 100 % de résistance dans tous les éléments. En cas de dommage distance subi, elle perd 100 % de résistance dans 1 élément au hasard, parmi les 3 éléments autres que celui du sort.\nEn cas de dommage mêlée, pas de rotation élémentaire."
                       },
                       {
                           "name":  "Dathura",
-                          "monsterId":  5673
+                          "monsterId":  5673,
+                          "text":  "Tous les 2 tours, Dathura invoque un bourgeon invulnérable. Ce bourgeon se transforme en Dathura le tour suivant."
                       },
                       {
                           "name":  "Corbeau Noir",
-                          "monsterId":  5682
+                          "monsterId":  5682,
+                          "text":  "Le Corbeau Noir est invulnérable pendant 10 tours.\nChaque tour, un joueur est désigné avec l’état Aventurier, ce qui implique :\n- La mort de ce joueur met fin au combat\n- Seul ce joueur peut infliger des dégâts au Corbeau Noir, sous peine d’OS de la team\nAléatoirement, le Corbeau Noir peut également poser des glyphes noirs. Finir son tour dessus OS."
                       },
                       {
                           "name":  "Larve de Rushu",
-                          "monsterId":  5683
+                          "monsterId":  5683,
+                          "text":  "À chaque coup reçu, la Larve de Rushu gagne un nombre de PA aléatoire qui lui déverrouille l’accès à plusieurs de ses sorts.\nSi la Larve n’a pas subi de dégâts pendant 3 tours au global, elle OS un personnage chaque tour."
                       },
                       {
                           "name":  "Agonie la Déterrée",
-                          "monsterId":  5684
+                          "monsterId":  5684,
+                          "text":  "Agonie est invulnérable et invoque 4 cristaux. Un glyphe autour d’Agonie se propage sur un cycle de 4 tours. Lorsque les cristaux sont dans ce glyphe, ils sont vulnérables.\nAfin de retirer l’invulnérabilité d’Agonie, il faut détruire les 4 cristaux.\nNB : frapper Agonie en mêlée accélère de 1 le cycle du glyphe, mais inflige des dégâts et un malus de 100 PM au joueur."
                       },
                       {
                           "name":  "Percimol",
-                          "monsterId":  5687
+                          "monsterId":  5687,
+                          "text":  "Percimol renvoie 25 % des dégâts qu’il subit aux attaquants qui sont en ligne de vue avec lui."
                       },
                       {
                           "name":  "Léorictus le Roi Grimaçant",
-                          "monsterId":  5688
+                          "monsterId":  5688,
+                          "text":  "Léoriktus est invulnérable.\nTous les 2 tours, une entité (hormis Léoriktus) reçoit un état Harcelé, qui implique :\n- Si l’entité est toujours vivante après 2 tours, Léoriktus incrémente son état Impatience\n- Si l’entité meurt, tous les joueurs sont OS\nLorsque Léoriktus atteint son état Impatience IV, il perd son invulnérabilité."
                       },
                       {
                           "name":  "Shuccube",
-                          "monsterId":  5755
+                          "monsterId":  5755,
+                          "text":  "Shuccube est invisible et possède 50 % de résistance mêlée et distance. Elle invoque également Ondine.\nInfliger des dégâts mêlée à Ondine démasque Shuccube pour le reste du combat (en la boostant en puissance / PM mais en lui retirant ses résistances). Le joueur ayant infligé des dégâts mêlée à Ondine perd 100 PM pour le reste du combat."
                       },
                       {
                           "name":  "Noximilien l\u0027Horloger",
-                          "monsterId":  5781
+                          "monsterId":  5781,
+                          "text":  "Noximilien réduit les dégâts distance de 50 %.\nChaque tour, Noximilien fabrique des Proto-Noxine qui viennent se suicider en posant un glyphe au corps à corps des joueurs.\nÀ chaque début de tour, Noximilien renvoie à leur position de début de combat tous les personnages qu’il a en ligne de vue.\nInfliger des dégâts à une Proto-Noxine fait subir une TP symétrique à l’attaquant."
                       }
                   ],
     "avis":  [

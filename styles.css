@@ -185,7 +185,7 @@ body.wiki-mode .layout { display: none; }
 .wiki-text-col p:last-child { margin-bottom: 0; }
 .wiki-intro-text p,
 .wiki-text-col p,
-.wiki-modal-text p { text-align: justify; hyphens: auto; }
+.wiki-modal-text p { text-align: justify; hyphens: none; word-break: normal; overflow-wrap: normal; }
 
 /* Entry window over a category's icon page (anomaly guardians). */
 .wiki-entry-modal .browser-header h2 { font-family: inherit; font-size: 18px; gap: 12px; }
@@ -193,6 +193,10 @@ body.wiki-mode .layout { display: none; }
 .wiki-modal-text { font-size: 15px; min-height: 40px; }
 .wiki-modal-text p { margin: 0 0 10px; line-height: 1.55; color: var(--text); }
 .wiki-modal-text p:last-child { margin-bottom: 0; }
+/* Bullet lists inside wiki texts ("- ..." lines). */
+.wiki-text-body ul { margin: 0 0 10px; padding-left: 22px; }
+.wiki-text-body li { margin: 0 0 4px; line-height: 1.55; text-align: justify; hyphens: none; }
+.wiki-text-body ul:last-child { margin-bottom: 0; }
 .wiki-intro-image {
   flex: 0 1 420px;
   width: 420px;

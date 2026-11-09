@@ -506,26 +506,6 @@
                          "monsterId":  3416
                      },
                      {
-                         "name":  "Duo Harebourg + Nileza",
-                         "level":  200,
-                         "monsterId":  3397
-                     },
-                     {
-                         "name":  "Duo Harebourg + Sylargh",
-                         "level":  200,
-                         "monsterId":  3409
-                     },
-                     {
-                         "name":  "Duo Harebourg + Missiz Frizz",
-                         "level":  200,
-                         "monsterId":  3391
-                     },
-                     {
-                         "name":  "Duo Harebourg + Klime",
-                         "level":  200,
-                         "monsterId":  3384
-                     },
-                     {
                          "name":  "Œil de Vortex",
                          "level":  200,
                          "monsterId":  3835
@@ -626,11 +606,6 @@
                          "monsterId":  6026
                      },
                      {
-                         "name":  "Tempête de l\u0027Eliocalypse",
-                         "level":  200,
-                         "monsterId":  5955
-                     },
-                     {
                          "name":  "Souvenir d\u0027Imagiro",
                          "level":  200,
                          "monsterId":  6478
@@ -663,7 +638,7 @@
                      {
                          "name":  "Songe de Mériana",
                          "level":  200,
-                         "monsterId":  5409
+                         "monsterId":  3578
                      }
                  ],
     "anomalies":  [

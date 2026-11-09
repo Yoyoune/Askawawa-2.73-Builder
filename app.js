@@ -1500,19 +1500,60 @@ function wikiDungeonColumn(level) {
   return 4;
 }
 
+// Categories whose icons open the entry in a window over the icon page (like the item/set browsers)
+// instead of replacing the page. Route stays #wiki/<category>/<slug>, so the link is shareable and
+// closing the window goes back to #wiki/<category>.
+const WIKI_MODAL_CATEGORIES = new Set(["anomalie-temporelle"]);
+
+function closeWikiEntryModal() {
+  const ov = document.getElementById("wikiEntryOverlay");
+  if (ov) ov.classList.add("hidden");
+}
+
+/** Closes the entry window by going back to the category's icon page. */
+function dismissWikiEntryModal() {
+  const m = /^#wiki\/([a-z0-9-]+)\/[a-z0-9-]+$/.exec(location.hash);
+  if (m) location.hash = `#wiki/${m[1]}`;
+  else closeWikiEntryModal();
+}
+
+function openWikiEntryModal(entry) {
+  const title = document.getElementById("wikiEntryTitle");
+  const body = document.getElementById("wikiEntryBody");
+  if (!title || !body) return;
+  title.innerHTML = "";
+  const img = document.createElement("img");
+  img.className = "wiki-modal-icon";
+  img.src = `icons/monsters/${entry.monsterId}.png`;
+  img.alt = "";
+  img.addEventListener("error", () => { img.style.display = "none"; });
+  title.appendChild(img);
+  title.appendChild(document.createTextNode(entry.name));
+  body.innerHTML = "";
+  const col = document.createElement("div");
+  col.className = "wiki-text-body wiki-modal-text";
+  wikiFillText(col, entry.text);
+  body.appendChild(col);
+  document.title = `${entry.name} — Wiki Askawawa 2.73`;
+  document.getElementById("wikiEntryOverlay").classList.remove("hidden");
+}
+
 async function renderWikiPage(key, slug) {
   const root = document.getElementById("wikiPage");
   if (!root) return;
+  closeWikiEntryModal();
   root.innerHTML = "";
   if (!WIKI_ENTRY_LISTS[key]) return; // pages without icons: one empty single page for now
   let data;
   try { data = await loadWikiData(); } catch (e) { console.error("wiki.json", e); return; }
   if (root.dataset.page !== (slug ? `${key}/${slug}` : key)) return; // route changed while loading
 
+  let modalEntry = null;
   if (slug) {
     const entry = WIKI_ENTRY_LISTS[key](data).find(e => wikiSlug(e.name) === slug);
-    if (entry) renderWikiEntry(root, key, entry);
-    return;
+    if (entry && !WIKI_MODAL_CATEGORIES.has(key)) { renderWikiEntry(root, key, entry); return; }
+    if (!entry) return;
+    modalEntry = entry; // window over the category's icon page, rendered below
   }
 
   if (key === "donjon") {
@@ -1551,6 +1592,8 @@ async function renderWikiPage(key, slug) {
     }
     root.appendChild(block);
   }
+
+  if (modalEntry) openWikiEntryModal(modalEntry);
 }
 
 /** Shows the wiki page matching location.hash (#wiki/<key> or #wiki/<key>/<entry>), or the normal builder otherwise. */
@@ -1574,6 +1617,16 @@ function initWikiMenu() {
   const btn = document.getElementById("wikiBtn");
   const menu = document.getElementById("wikiMenu");
   if (!dropdown || !btn || !menu) return;
+
+  const entryClose = document.getElementById("wikiEntryClose");
+  const entryOverlay = document.getElementById("wikiEntryOverlay");
+  if (entryClose) entryClose.addEventListener("click", dismissWikiEntryModal);
+  if (entryOverlay) entryOverlay.addEventListener("click", (ev) => {
+    if (ev.target === entryOverlay) dismissWikiEntryModal();
+  });
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape" && entryOverlay && !entryOverlay.classList.contains("hidden")) dismissWikiEntryModal();
+  });
 
   // Opens on hover (CSS) and on click/tap (touch devices have no hover).
   const setOpen = (open) => {

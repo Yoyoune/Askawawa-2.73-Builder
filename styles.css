@@ -184,7 +184,15 @@ body.wiki-mode .layout { display: none; }
 .wiki-intro-text p:last-child,
 .wiki-text-col p:last-child { margin-bottom: 0; }
 .wiki-intro-text p,
-.wiki-text-col p { text-align: justify; hyphens: auto; }
+.wiki-text-col p,
+.wiki-modal-text p { text-align: justify; hyphens: auto; }
+
+/* Entry window over a category's icon page (anomaly guardians). */
+.wiki-entry-modal .browser-header h2 { font-family: inherit; font-size: 18px; gap: 12px; }
+.wiki-modal-icon { width: 44px; height: 44px; object-fit: contain; flex-shrink: 0; }
+.wiki-modal-text { font-size: 15px; min-height: 40px; }
+.wiki-modal-text p { margin: 0 0 10px; line-height: 1.55; color: var(--text); }
+.wiki-modal-text p:last-child { margin-bottom: 0; }
 .wiki-intro-image {
   flex: 0 1 420px;
   width: 420px;

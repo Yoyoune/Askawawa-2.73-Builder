@@ -644,7 +644,8 @@
     "anomalies":  [
                       {
                           "name":  "Champion de l\u0027Aurore Pourpre",
-                          "monsterId":  5662
+                          "monsterId":  5662,
+                          "text":  "Invulnérable au début du combat. Après avoir subi 3x des dommages de poussée, perd son invulnérabilité pour le tour en cours (le compte des DoPou se cumule entre personnages)."
                       },
                       {
                           "name":  "Julith",

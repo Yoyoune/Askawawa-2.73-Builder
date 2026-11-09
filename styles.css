@@ -193,6 +193,10 @@ body.wiki-mode .layout { display: none; }
 .wiki-modal-text { font-size: 15px; min-height: 40px; }
 .wiki-modal-text p { margin: 0 0 10px; line-height: 1.55; color: var(--text); }
 .wiki-modal-text p:last-child { margin-bottom: 0; }
+/* Inline icon / centered illustration inside wiki texts ({icon:...} / {figure:...}). */
+.wiki-inline-icon { height: 30px; width: auto; vertical-align: middle; margin: 0 2px; }
+.wiki-figure { margin: 16px 0; text-align: center; }
+.wiki-figure img { max-width: 100%; width: 720px; height: auto; border: 1px solid var(--border); border-radius: var(--radius); }
 /* Bullet lists inside wiki texts ("- ..." lines). */
 .wiki-text-body ul { margin: 0 0 10px; padding-left: 22px; }
 .wiki-text-body li { margin: 0 0 4px; line-height: 1.55; text-align: justify; hyphens: none; }

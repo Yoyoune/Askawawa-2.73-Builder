@@ -1444,17 +1444,44 @@ function wikiFillText(el, text) {
   for (const raw of String(text).split(/\n+/)) {
     const line = raw.trim();
     if (!line) continue;
-    if (/^-\s+/.test(line)) {
-      if (!list) { list = document.createElement("ul"); el.appendChild(list); }
-      const li = document.createElement("li");
-      li.textContent = line.replace(/^-\s+/, "");
-      list.appendChild(li);
+    // A line made only of {figure:path|alt} is a centered illustration.
+    const fig = /^\{figure:([^}|]+)(?:\|([^}]*))?\}$/.exec(line);
+    if (fig) {
+      list = null;
+      const f = document.createElement("figure");
+      f.className = "wiki-figure";
+      const img = document.createElement("img");
+      img.src = fig[1];
+      img.alt = fig[2] || "";
+      f.appendChild(img);
+      el.appendChild(f);
       continue;
     }
-    list = null;
-    const p = document.createElement("p");
-    p.textContent = line;
-    el.appendChild(p);
+    let target;
+    let content = line;
+    if (/^-\s+/.test(line)) {
+      if (!list) { list = document.createElement("ul"); el.appendChild(list); }
+      target = document.createElement("li");
+      list.appendChild(target);
+      content = line.replace(/^-\s+/, "");
+    } else {
+      list = null;
+      target = document.createElement("p");
+      el.appendChild(target);
+    }
+    // {icon:path|alt} anywhere in a line is a small inline picture.
+    const re = /\{icon:([^}|]+)(?:\|([^}]*))?\}/g;
+    let last = 0, m;
+    while ((m = re.exec(content))) {
+      if (m.index > last) target.appendChild(document.createTextNode(content.slice(last, m.index)));
+      const ic = document.createElement("img");
+      ic.className = "wiki-inline-icon";
+      ic.src = m[1];
+      ic.alt = m[2] || "";
+      target.appendChild(ic);
+      last = m.index + m[0].length;
+    }
+    if (last < content.length) target.appendChild(document.createTextNode(content.slice(last)));
   }
 }
 
@@ -1554,10 +1581,28 @@ async function renderWikiPage(key, slug) {
   if (!root) return;
   closeWikiEntryModal();
   root.innerHTML = "";
-  if (!WIKI_ENTRY_LISTS[key]) return; // pages without icons: one empty single page for now
+  if (!key) return;
   let data;
   try { data = await loadWikiData(); } catch (e) { console.error("wiki.json", e); return; }
   if (root.dataset.page !== (slug ? `${key}/${slug}` : key)) return; // route changed while loading
+
+  if (!WIKI_ENTRY_LISTS[key]) {
+    // Page without icons: one single text page (data.pages[<category>].text), empty until written.
+    const page = data.pages && data.pages[key];
+    if (page && page.text) {
+      const one = document.createElement("div");
+      one.className = "wiki-single-col";
+      const col = document.createElement("section");
+      col.className = "wiki-text-col";
+      const body = document.createElement("div");
+      body.className = "wiki-text-body";
+      wikiFillText(body, page.text);
+      col.appendChild(body);
+      one.appendChild(col);
+      root.appendChild(one);
+    }
+    return;
+  }
 
   let modalEntry = null;
   if (slug) {

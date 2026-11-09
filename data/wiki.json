@@ -867,6 +867,11 @@
                      "monsterId":  555
                  }
              ],
+    "pages":  {
+                  "relique-de-donjon":  {
+                                            "text":  "Sur Askawawa, il est possible d’obtenir des caractéristiques permanentes. Cette obtention se fait de 2 manières :\n- Les reliques de Donjon\n- Le passage de Prestige\nChacun des Boss de donjons, une fois vaincu, permet de récupérer des reliques Donjon, dont le suivi est possible dans le Panel Reliques Donjon {icon:icons/ui/relique-donjon.png|Icône du panel Reliques Donjon}.\nCes reliques, pour chaque boss, offrent leur bonus maximal théorique une fois que le Boss a été vaincu 5x.\n{figure:images/wiki/reliques-donjon.webp|Panel Reliques Donjon : relique de Kardorim}\nL’avancée des reliques est commune au compte."
+                                        }
+              },
     "intros":  {
                    "anomalie-temporelle":  {
                                                "text":  "Toutes les 2h, 2 anomalies temporelles apparaissent sur des zones. Ces zones bénéficient d’un bonus xp et drop.\nLorsqu’une anomalie apparaît, il y a un gardien de cette anomalie. Afin d’affronter ce gardien, il faut se rendre sur un zaap et se téléporter sur la zone anomalie temporelle. À partir de là, un combat se lance pour un des 10 gardiens (aléatoirement). Remporter le combat contre ce gardien met fin à l’anomalie et en ouvre une nouvelle.",

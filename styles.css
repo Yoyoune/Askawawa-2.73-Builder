@@ -171,6 +171,18 @@ body.wiki-mode .layout { display: none; }
 /* Text + illustration under a category's icons: text on the left, picture beside it. */
 .wiki-intro { display: flex; align-items: flex-start; gap: 28px; margin-top: 28px; }
 .wiki-intro-text { flex: 1 1 0; min-width: 0; font-size: 15px; }
+/* Grey panel behind every wiki text block so it stays readable over the background art. */
+.wiki-intro-text,
+.wiki-text-col {
+  box-sizing: border-box;
+  padding: 18px 22px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+.wiki-intro-text p:last-child,
+.wiki-text-col p:last-child { margin-bottom: 0; }
 .wiki-intro-image {
   flex: 0 1 420px;
   width: 420px;

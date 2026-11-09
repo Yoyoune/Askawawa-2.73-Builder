@@ -1390,6 +1390,9 @@ const WIKI_PAGES = [
   { key: "avis-de-recherche", label: "Avis de recherche" },
   { key: "anomalies", label: "Anomalies" },
   { key: "boss-ultimes", label: "Boss Ultimes" },
+  { key: "stasis", label: "Stasis" },
+  { key: "relique-de-donjon", label: "Relique de donjon" },
+  { key: "prestige", label: "Prestige" },
   { key: "songe", label: "Songe" },
   { key: "forgemagie", label: "Forgemagie" },
 ];

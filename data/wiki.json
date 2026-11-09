@@ -868,6 +868,9 @@
                  }
              ],
     "pages":  {
+                  "prestige":  {
+                                   "text":  "Sur Askawawa, il est possible d’obtenir des caractéristiques permanentes. Cette obtention se fait de 2 manières :\n- Les reliques de Donjon\n- Le passage de Prestige\nLes Prestiges, au nombre de 5, reset le niveau du personnage au niveau 1 en échange de l’acquisition d’une Relique Prestige qui s’étoffe à chaque Prestige passé.\n{figure:images/wiki/relique-prestige.png|Relique Prestige : 30 Sagesse, catégorie Île de Frigost|460}\nLes conditions nécessaires au passage d’un Prestige sont :\n- Prestige I : Omega 1\n- Prestige II : Omega 25\n- Prestige III : Omega 50\n- Prestige IV : Omega 75\n- Prestige V : Omega 100"
+                               },
                   "relique-de-donjon":  {
                                             "text":  "Sur Askawawa, il est possible d’obtenir des caractéristiques permanentes. Cette obtention se fait de 2 manières :\n- Les reliques de Donjon\n- Le passage de Prestige\nChacun des Boss de donjons, une fois vaincu, permet de récupérer des reliques Donjon, dont le suivi est possible dans le Panel Reliques Donjon {icon:icons/ui/relique-donjon.png|Icône du panel Reliques Donjon}.\nCes reliques, pour chaque boss, offrent leur bonus maximal théorique une fois que le Boss a été vaincu 5x.\n{figure:images/wiki/reliques-donjon.webp|Panel Reliques Donjon : relique de Kardorim}\nL’avancée des reliques est commune au compte."
                                         }

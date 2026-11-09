@@ -1445,7 +1445,8 @@ function wikiFillText(el, text) {
     const line = raw.trim();
     if (!line) continue;
     // A line made only of {figure:path|alt} is a centered illustration.
-    const fig = /^\{figure:([^}|]+)(?:\|([^}]*))?\}$/.exec(line);
+    // Optional third part = display width in px ({figure:path|alt|520}).
+    const fig = /^\{figure:([^}|]+)(?:\|([^}|]*))?(?:\|(\d+))?\}$/.exec(line);
     if (fig) {
       list = null;
       const f = document.createElement("figure");
@@ -1453,6 +1454,7 @@ function wikiFillText(el, text) {
       const img = document.createElement("img");
       img.src = fig[1];
       img.alt = fig[2] || "";
+      if (fig[3]) img.style.width = fig[3] + "px";
       f.appendChild(img);
       el.appendChild(f);
       continue;

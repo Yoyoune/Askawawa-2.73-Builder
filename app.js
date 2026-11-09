@@ -1382,17 +1382,31 @@ function renderComparison() {
 
 // ---------- Wiki menu (topbar dropdown) ----------
 
-// Entries of the Wiki dropdown. `url` = page to open in a new tab; null = page not written yet
-// (the entry is shown but does nothing). Fill the urls in once the pages exist.
+// Entries of the Wiki dropdown. Each one opens its own wiki page, routed as `#wiki/<key>` on the
+// same page: the topbar/background stay, the builder columns are hidden and #wikiPage (empty for
+// now - the text of each section will go there) is shown instead.
 const WIKI_PAGES = [
-  { key: "presentation", label: "Présentation du serveur", url: null },
-  { key: "donjons", label: "Donjons", url: null },
-  { key: "avis-de-recherche", label: "Avis de recherche", url: null },
-  { key: "anomalies", label: "Anomalies", url: null },
-  { key: "boss-ultimes", label: "Boss Ultimes", url: null },
-  { key: "songe", label: "Songe", url: null },
-  { key: "forgemagie", label: "Forgemagie", url: null },
+  { key: "presentation", label: "Présentation du serveur" },
+  { key: "donjons", label: "Donjons" },
+  { key: "avis-de-recherche", label: "Avis de recherche" },
+  { key: "anomalies", label: "Anomalies" },
+  { key: "boss-ultimes", label: "Boss Ultimes" },
+  { key: "songe", label: "Songe" },
+  { key: "forgemagie", label: "Forgemagie" },
 ];
+
+/** Shows the wiki page matching location.hash (#wiki/<key>), or the normal builder otherwise. */
+function applyWikiRoute() {
+  const m = /^#wiki\/([a-z0-9-]+)$/.exec(location.hash);
+  const page = m ? WIKI_PAGES.find(p => p.key === m[1]) : null;
+  const wikiPage = document.getElementById("wikiPage");
+  document.body.classList.toggle("wiki-mode", !!page);
+  if (wikiPage) {
+    wikiPage.classList.toggle("hidden", !page);
+    wikiPage.dataset.page = page ? page.key : "";
+  }
+  document.title = page ? `${page.label} — Wiki Askawawa 2.73` : "Askawawa 2.73 Builder";
+}
 
 function initWikiMenu() {
   const dropdown = document.getElementById("wikiDropdown");
@@ -1400,31 +1414,33 @@ function initWikiMenu() {
   const menu = document.getElementById("wikiMenu");
   if (!dropdown || !btn || !menu) return;
 
-  menu.innerHTML = "";
-  for (const page of WIKI_PAGES) {
-    const entry = document.createElement(page.url ? "a" : "button");
-    entry.className = "topbar-menu-item" + (page.url ? "" : " pending");
-    entry.setAttribute("role", "menuitem");
-    entry.textContent = page.label;
-    if (page.url) {
-      entry.href = page.url;
-      entry.target = "_blank";
-      entry.rel = "noopener";
-    } else {
-      entry.type = "button";
-      entry.title = "Page bientôt disponible";
-    }
-    menu.appendChild(entry);
-  }
-
   // Opens on hover (CSS) and on click/tap (touch devices have no hover).
   const setOpen = (open) => {
     dropdown.classList.toggle("open", open);
     btn.setAttribute("aria-expanded", open ? "true" : "false");
   };
+
+  menu.innerHTML = "";
+  for (const page of WIKI_PAGES) {
+    const entry = document.createElement("a");
+    entry.className = "topbar-menu-item";
+    entry.setAttribute("role", "menuitem");
+    entry.href = `#wiki/${page.key}`;
+    entry.textContent = page.label;
+    entry.addEventListener("click", () => {
+      setOpen(false);
+      // The cursor is still over the menu: drop focus so :focus-within doesn't keep it open.
+      if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    });
+    menu.appendChild(entry);
+  }
+
   btn.addEventListener("click", (ev) => { ev.stopPropagation(); setOpen(!dropdown.classList.contains("open")); });
   document.addEventListener("click", (ev) => { if (!dropdown.contains(ev.target)) setOpen(false); });
   document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") setOpen(false); });
+
+  window.addEventListener("hashchange", applyWikiRoute);
+  applyWikiRoute();
 }
 
 // ---------- Paperdoll ----------

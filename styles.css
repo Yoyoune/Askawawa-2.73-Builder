@@ -125,6 +125,14 @@ button:hover { border-color: var(--accent); }
 }
 .topbar-link-btn:hover { border-color: var(--accent); }
 
+/* Title doubles as the "back to the builder" link (clears the #wiki/... hash). */
+.topbar-home-link { color: inherit; text-decoration: none; }
+
+/* Wiki page (#wiki/<section>): only the top bar is kept; the builder columns are hidden and an
+   empty, unframed container (future text) sits below it. */
+body.wiki-mode .layout { display: none; }
+.wiki-page { min-height: 70vh; padding: 16px; }
+
 /* Wiki dropdown: opens on hover (and on click via the .open class). */
 .topbar-dropdown { position: relative; display: inline-block; }
 .topbar-menu {

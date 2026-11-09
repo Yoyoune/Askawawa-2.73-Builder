@@ -1395,6 +1395,8 @@ const WIKI_PAGES = [
   { key: "prestige", label: "Prestige" },
   { key: "songe", label: "Songe" },
   { key: "forgemagie", label: "Forgemagie" },
+  { key: "familier", label: "Familier" },
+  { key: "dofus", label: "Dofus" },
 ];
 
 // Data of the icon-button pages (data/wiki.json): dungeons (teleporter order, with level + boss monster id),
@@ -1508,7 +1510,8 @@ function wikiFillText(el, text) {
       el.appendChild(target);
     }
     // {icon:path|alt} anywhere in a line is a small inline picture.
-    const re = /\{icon:([^}|]+)(?:\|([^}]*))?\}/g;
+    // Optional third part = height in px ({icon:path|alt|44}).
+    const re = /\{icon:([^}|]+)(?:\|([^}|]*))?(?:\|(\d+))?\}/g;
     let last = 0, m;
     while ((m = re.exec(content))) {
       if (m.index > last) target.appendChild(document.createTextNode(content.slice(last, m.index)));
@@ -1516,6 +1519,7 @@ function wikiFillText(el, text) {
       ic.className = "wiki-inline-icon";
       ic.src = m[1];
       ic.alt = m[2] || "";
+      if (m[3]) ic.style.height = m[3] + "px";
       target.appendChild(ic);
       last = m.index + m[0].length;
     }

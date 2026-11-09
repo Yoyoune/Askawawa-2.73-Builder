@@ -133,6 +133,43 @@ button:hover { border-color: var(--accent); }
 body.wiki-mode .layout { display: none; }
 .wiki-page { min-height: 70vh; padding: 16px; }
 
+/* Wiki icon buttons: boss/monster portrait + name. */
+.wiki-icon-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  padding: 6px 10px;
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+}
+.wiki-icon-btn:hover { border-color: var(--accent); background: var(--panel-alt); }
+.wiki-icon-btn img { width: 40px; height: 40px; flex-shrink: 0; object-fit: contain; }
+.wiki-icon-btn span { min-width: 0; line-height: 1.2; overflow-wrap: anywhere; }
+
+/* Donjon page: 5 columns (levels 1-50 | 60-100 | 110-150 | 160-190 | 200), teleporter order inside each. */
+.wiki-dungeon-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(190px, 1fr));
+  gap: 12px;
+  align-items: start;
+  overflow-x: auto;
+}
+.wiki-dungeon-col { display: flex; flex-direction: column; gap: 8px; }
+
+/* Anomalie Temporelle / Avis de recherche pages: grid of icon buttons. */
+.wiki-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
 /* Wiki dropdown: opens on hover (and on click via the .open class). */
 .topbar-dropdown { position: relative; display: inline-block; }
 .topbar-menu {

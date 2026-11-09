@@ -1386,16 +1386,78 @@ function renderComparison() {
 // now - the text of each section will go there) is shown instead.
 const WIKI_PAGES = [
   { key: "presentation", label: "Présentation du serveur" },
-  { key: "donjons", label: "Donjons" },
+  { key: "donjon", label: "Donjon" },
   { key: "avis-de-recherche", label: "Avis de recherche" },
-  { key: "anomalies", label: "Anomalies" },
-  { key: "boss-ultimes", label: "Boss Ultimes" },
+  { key: "anomalie-temporelle", label: "Anomalie Temporelle" },
+  { key: "boss-ultime", label: "Boss Ultime" },
   { key: "stasis", label: "Stasis" },
   { key: "relique-de-donjon", label: "Relique de donjon" },
   { key: "prestige", label: "Prestige" },
   { key: "songe", label: "Songe" },
   { key: "forgemagie", label: "Forgemagie" },
 ];
+
+// Data of the icon-button pages (data/wiki.json): dungeons (teleporter order, with level + boss monster id),
+// anomaly guardians and wanted notices. Icons are the monster portraits in icons/monsters/<monsterId>.png.
+let wikiData = null;
+async function loadWikiData() {
+  if (!wikiData) wikiData = await fetch("data/wiki.json").then(r => r.json());
+  return wikiData;
+}
+
+function wikiIconButton(entry) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "wiki-icon-btn";
+  btn.title = entry.name;
+  const img = document.createElement("img");
+  img.src = `icons/monsters/${entry.monsterId}.png`;
+  img.alt = "";
+  img.addEventListener("error", () => { img.style.visibility = "hidden"; });
+  btn.appendChild(img);
+  const label = document.createElement("span");
+  label.textContent = entry.name;
+  btn.appendChild(label);
+  return btn;
+}
+
+// Dungeon columns by teleporter level: 1-50, 60-100, 110-150, 160-190, 200.
+function wikiDungeonColumn(level) {
+  if (level <= 50) return 0;
+  if (level <= 100) return 1;
+  if (level <= 150) return 2;
+  if (level <= 190) return 3;
+  return 4;
+}
+
+async function renderWikiPage(key) {
+  const root = document.getElementById("wikiPage");
+  if (!root) return;
+  root.innerHTML = "";
+  if (key !== "donjon" && key !== "anomalie-temporelle" && key !== "avis-de-recherche") return;
+  let data;
+  try { data = await loadWikiData(); } catch (e) { console.error("wiki.json", e); return; }
+  if (root.dataset.page !== key) return; // route changed while loading
+
+  if (key === "donjon") {
+    const grid = document.createElement("div");
+    grid.className = "wiki-dungeon-grid";
+    const cols = [0, 1, 2, 3, 4].map(() => {
+      const col = document.createElement("div");
+      col.className = "wiki-dungeon-col";
+      grid.appendChild(col);
+      return col;
+    });
+    for (const d of data.dungeons) cols[wikiDungeonColumn(d.level)].appendChild(wikiIconButton(d));
+    root.appendChild(grid);
+  } else {
+    const grid = document.createElement("div");
+    grid.className = "wiki-icon-grid";
+    const list = key === "anomalie-temporelle" ? data.anomalies : data.avis;
+    for (const e of list) grid.appendChild(wikiIconButton(e));
+    root.appendChild(grid);
+  }
+}
 
 /** Shows the wiki page matching location.hash (#wiki/<key>), or the normal builder otherwise. */
 function applyWikiRoute() {
@@ -1406,6 +1468,7 @@ function applyWikiRoute() {
   if (wikiPage) {
     wikiPage.classList.toggle("hidden", !page);
     wikiPage.dataset.page = page ? page.key : "";
+    renderWikiPage(page ? page.key : "");
   }
   document.title = page ? `${page.label} — Wiki Askawawa 2.73` : "Askawawa 2.73 Builder";
 }

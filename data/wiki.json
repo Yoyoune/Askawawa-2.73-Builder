@@ -1,0 +1,885 @@
+{
+    "dungeons":  [
+                     {
+                         "name":  "Crypte de Kardorim",
+                         "level":  10,
+                         "monsterId":  4051
+                     },
+                     {
+                         "name":  "Grange du Tournesol Affamé",
+                         "level":  20,
+                         "monsterId":  799
+                     },
+                     {
+                         "name":  "Château Ensablé",
+                         "level":  20,
+                         "monsterId":  928
+                     },
+                     {
+                         "name":  "Cour du Bouftou Royal",
+                         "level":  30,
+                         "monsterId":  147
+                     },
+                     {
+                         "name":  "Cache de Kankreblath",
+                         "level":  40,
+                         "monsterId":  3945
+                     },
+                     {
+                         "name":  "Maison Fantôme",
+                         "level":  40,
+                         "monsterId":  2975
+                     },
+                     {
+                         "name":  "Donjon des Squelettes",
+                         "level":  40,
+                         "monsterId":  3238
+                     },
+                     {
+                         "name":  "Donjon des Scarafeuille",
+                         "level":  40,
+                         "monsterId":  797
+                     },
+                     {
+                         "name":  "Donjon des Tofus",
+                         "level":  40,
+                         "monsterId":  800
+                     },
+                     {
+                         "name":  "Akadémie des Gobs",
+                         "level":  40,
+                         "monsterId":  6903
+                     },
+                     {
+                         "name":  "Grozilla et Grasmera Somnambules",
+                         "level":  40,
+                         "monsterId":  3295
+                     },
+                     {
+                         "name":  "Donjon des Bworks",
+                         "level":  50,
+                         "monsterId":  792
+                     },
+                     {
+                         "name":  "Donjon des Forgerons",
+                         "level":  50,
+                         "monsterId":  252
+                     },
+                     {
+                         "name":  "Grotte Hesque",
+                         "level":  50,
+                         "monsterId":  1027
+                     },
+                     {
+                         "name":  "Donjon des Larves",
+                         "level":  50,
+                         "monsterId":  457
+                     },
+                     {
+                         "name":  "Nid du Kwakwa",
+                         "level":  50,
+                         "monsterId":  2995
+                     },
+                     {
+                         "name":  "Donjon de Nowel",
+                         "level":  50,
+                         "monsterId":  1179
+                     },
+                     {
+                         "name":  "Refuge Sylvestre",
+                         "level":  50,
+                         "monsterId":  7197
+                     },
+                     {
+                         "name":  "Château du Wa Wabbit",
+                         "level":  60,
+                         "monsterId":  180
+                     },
+                     {
+                         "name":  "Clos des Blops",
+                         "level":  60,
+                         "monsterId":  1184
+                     },
+                     {
+                         "name":  "Gelaxième Dimenson",
+                         "level":  60,
+                         "monsterId":  85
+                     },
+                     {
+                         "name":  "Village Kanniboul",
+                         "level":  60,
+                         "monsterId":  2960
+                     },
+                     {
+                         "name":  "Fonderie des Waddicts",
+                         "level":  60,
+                         "monsterId":  5653
+                     },
+                     {
+                         "name":  "Cale de l\u0027Arche d\u0027Otomaï",
+                         "level":  70,
+                         "monsterId":  1051
+                     },
+                     {
+                         "name":  "Laboratoire de Brumen Tinctorias",
+                         "level":  70,
+                         "monsterId":  3100
+                     },
+                     {
+                         "name":  "Pitons Rocheux des Craqueleurs",
+                         "level":  70,
+                         "monsterId":  669
+                     },
+                     {
+                         "name":  "Epreuve de Draegnerys",
+                         "level":  70,
+                         "monsterId":  5823
+                     },
+                     {
+                         "name":  "Terrier du Wa Wabbit",
+                         "level":  80,
+                         "monsterId":  3460
+                     },
+                     {
+                         "name":  "Cimetière des mastodontes",
+                         "level":  80,
+                         "monsterId":  4621
+                     },
+                     {
+                         "name":  "Antre de la Reine Nyée",
+                         "level":  90,
+                         "monsterId":  3996
+                     },
+                     {
+                         "name":  "Bateau du Chouque",
+                         "level":  90,
+                         "monsterId":  230
+                     },
+                     {
+                         "name":  "Domaine Ancestral",
+                         "level":  90,
+                         "monsterId":  173
+                     },
+                     {
+                         "name":  "Chapiteau des Magik Riktus",
+                         "level":  90,
+                         "monsterId":  4860
+                     },
+                     {
+                         "name":  "Grozilla et Grasmera Epuisés",
+                         "level":  90,
+                         "monsterId":  3294
+                     },
+                     {
+                         "name":  "Antre du Dragon Cochon",
+                         "level":  100,
+                         "monsterId":  113
+                     },
+                     {
+                         "name":  "Tanière du Meulou",
+                         "level":  100,
+                         "monsterId":  232
+                     },
+                     {
+                         "name":  "Caverne du Koulosse",
+                         "level":  100,
+                         "monsterId":  670
+                     },
+                     {
+                         "name":  "Fabrique de Malléfisk",
+                         "level":  100,
+                         "monsterId":  3652
+                     },
+                     {
+                         "name":  "Arbre de Moon",
+                         "level":  100,
+                         "monsterId":  226
+                     },
+                     {
+                         "name":  "Potager d\u0027Halouine",
+                         "level":  100,
+                         "monsterId":  3306
+                     },
+                     {
+                         "name":  "Théâtre de Dramak",
+                         "level":  100,
+                         "monsterId":  3476
+                     },
+                     {
+                         "name":  "Repaire du Kharnozor",
+                         "level":  100,
+                         "monsterId":  5819
+                     },
+                     {
+                         "name":  "Bibliothèque du Maître Corbac",
+                         "level":  110,
+                         "monsterId":  289
+                     },
+                     {
+                         "name":  "Caverne de Nowel",
+                         "level":  110,
+                         "monsterId":  872
+                     },
+                     {
+                         "name":  "Goulet du Rasboul",
+                         "level":  110,
+                         "monsterId":  1071
+                     },
+                     {
+                         "name":  "Miausolée du Pounicheur",
+                         "level":  110,
+                         "monsterId":  4278
+                     },
+                     {
+                         "name":  "Bambusaie de Damadrya",
+                         "level":  110,
+                         "monsterId":  6326
+                     },
+                     {
+                         "name":  "Garde-manger du Rat Blanc",
+                         "level":  110,
+                         "monsterId":  940
+                     },
+                     {
+                         "name":  "Sousouricière du Rat Noir",
+                         "level":  110,
+                         "monsterId":  939
+                     },
+                     {
+                         "name":  "Antre du Blop Multicolore Royal",
+                         "level":  120,
+                         "monsterId":  1188
+                     },
+                     {
+                         "name":  "Mégalithe de Fraktale",
+                         "level":  120,
+                         "monsterId":  3852
+                     },
+                     {
+                         "name":  "Centre du Labyrinthe du Minotoror",
+                         "level":  120,
+                         "monsterId":  121
+                     },
+                     {
+                         "name":  "Repaire de Skeunk",
+                         "level":  120,
+                         "monsterId":  780
+                     },
+                     {
+                         "name":  "Antre de Crocabulia",
+                         "level":  120,
+                         "monsterId":  854
+                     },
+                     {
+                         "name":  "Serre du Royalmouth",
+                         "level":  120,
+                         "monsterId":  2854
+                     },
+                     {
+                         "name":  "Tofulailler Royal",
+                         "level":  120,
+                         "monsterId":  382
+                     },
+                     {
+                         "name":  "Ring du Capitaine Ekarlatte",
+                         "level":  130,
+                         "monsterId":  3753
+                     },
+                     {
+                         "name":  "Volière de la Haute Truche",
+                         "level":  130,
+                         "monsterId":  3618
+                     },
+                     {
+                         "name":  "Croquanterie",
+                         "level":  130,
+                         "monsterId":  5664
+                     },
+                     {
+                         "name":  "Caverne d\u0027El Piko",
+                         "level":  130,
+                         "monsterId":  4609
+                     },
+                     {
+                         "name":  "Atelier du Tanukouï San",
+                         "level":  130,
+                         "monsterId":  6218
+                     },
+                     {
+                         "name":  "Vallée de la Dame des eaux",
+                         "level":  130,
+                         "monsterId":  6256
+                     },
+                     {
+                         "name":  "Clairière du Chêne Mou",
+                         "level":  140,
+                         "monsterId":  257
+                     },
+                     {
+                         "name":  "Excavation du Mansot Royal",
+                         "level":  140,
+                         "monsterId":  2848
+                     },
+                     {
+                         "name":  "Laboratoire du Tynril",
+                         "level":  140,
+                         "monsterId":  1086
+                     },
+                     {
+                         "name":  "Fabrique de foux d\u0027artifice",
+                         "level":  140,
+                         "monsterId":  6249
+                     },
+                     {
+                         "name":  "Dojo du Vent",
+                         "level":  140,
+                         "monsterId":  6212
+                     },
+                     {
+                         "name":  "Grozilla et Grasmera Fatigués",
+                         "level":  140,
+                         "monsterId":  3293
+                     },
+                     {
+                         "name":  "Epave du Grolandais violent",
+                         "level":  150,
+                         "monsterId":  2877
+                     },
+                     {
+                         "name":  "Galerie du Phossile",
+                         "level":  150,
+                         "monsterId":  3651
+                     },
+                     {
+                         "name":  "Repaire de Sphincter Cell",
+                         "level":  150,
+                         "monsterId":  943
+                     },
+                     {
+                         "name":  "Tertre du long sommeil",
+                         "level":  150,
+                         "monsterId":  107
+                     },
+                     {
+                         "name":  "Canopée du Kimbo",
+                         "level":  160,
+                         "monsterId":  1045
+                     },
+                     {
+                         "name":  "Grotte de Kanigroula",
+                         "level":  160,
+                         "monsterId":  3556
+                     },
+                     {
+                         "name":  "Hypogée de l\u0027Obsidiantre",
+                         "level":  160,
+                         "monsterId":  2924
+                     },
+                     {
+                         "name":  "Plateau de Ush",
+                         "level":  160,
+                         "monsterId":  4264
+                     },
+                     {
+                         "name":  "Tombe du Shogun Tofugawa",
+                         "level":  160,
+                         "monsterId":  6388
+                     },
+                     {
+                         "name":  "Horologium de XLII",
+                         "level":  170,
+                         "monsterId":  3849
+                     },
+                     {
+                         "name":  "Tanière Givrefoux",
+                         "level":  170,
+                         "monsterId":  3234
+                     },
+                     {
+                         "name":  "Boyau du Père Ver",
+                         "level":  170,
+                         "monsterId":  4726
+                     },
+                     {
+                         "name":  "Demeure des Esprits",
+                         "level":  170,
+                         "monsterId":  6394
+                     },
+                     {
+                         "name":  "Antre du Korriandre",
+                         "level":  180,
+                         "monsterId":  2968
+                     },
+                     {
+                         "name":  "Antre du Kralamoure Géant",
+                         "level":  180,
+                         "monsterId":  423
+                     },
+                     {
+                         "name":  "Grotte du Bworker",
+                         "level":  180,
+                         "monsterId":  478
+                     },
+                     {
+                         "name":  "Cave du Toxoliath",
+                         "level":  180,
+                         "monsterId":  3752
+                     },
+                     {
+                         "name":  "Temple du Grand Ougah",
+                         "level":  180,
+                         "monsterId":  1159
+                     },
+                     {
+                         "name":  "Maison du Papa Nowel",
+                         "level":  180,
+                         "monsterId":  1194
+                     },
+                     {
+                         "name":  "Temple Maudit d\u0027Araknas",
+                         "level":  180,
+                         "monsterId":  1195
+                     },
+                     {
+                         "name":  "Cavernes du Kolosso",
+                         "level":  190,
+                         "monsterId":  2986
+                     },
+                     {
+                         "name":  "Antichambre des Gloursons",
+                         "level":  190,
+                         "monsterId":  2864
+                     },
+                     {
+                         "name":  "Mine de Sakaï",
+                         "level":  190,
+                         "monsterId":  2942
+                     },
+                     {
+                         "name":  "Pyramide d\u0027Ombre",
+                         "level":  190,
+                         "monsterId":  3564
+                     },
+                     {
+                         "name":  "Camp du Comte Razof",
+                         "level":  190,
+                         "monsterId":  4803
+                     },
+                     {
+                         "name":  "Bastion des Marteaux-Aigris",
+                         "level":  190,
+                         "monsterId":  7219
+                     },
+                     {
+                         "name":  "Grozilla et Grasmera",
+                         "level":  190,
+                         "monsterId":  3142
+                     },
+                     {
+                         "name":  "Forgefroide de Missiz Frizz",
+                         "level":  200,
+                         "monsterId":  3391
+                     },
+                     {
+                         "name":  "Laboratoire de Nileza",
+                         "level":  200,
+                         "monsterId":  3397
+                     },
+                     {
+                         "name":  "Salons privés de Klime",
+                         "level":  200,
+                         "monsterId":  3384
+                     },
+                     {
+                         "name":  "Transporteur de Sylargh",
+                         "level":  200,
+                         "monsterId":  3409
+                     },
+                     {
+                         "name":  "Aquadôme de Merkator",
+                         "level":  200,
+                         "monsterId":  3534
+                     },
+                     {
+                         "name":  "Donjon du Comte Harebourg",
+                         "level":  200,
+                         "monsterId":  3416
+                     },
+                     {
+                         "name":  "Duo Harebourg + Nileza",
+                         "level":  200,
+                         "monsterId":  3397
+                     },
+                     {
+                         "name":  "Duo Harebourg + Sylargh",
+                         "level":  200,
+                         "monsterId":  3409
+                     },
+                     {
+                         "name":  "Duo Harebourg + Missiz Frizz",
+                         "level":  200,
+                         "monsterId":  3391
+                     },
+                     {
+                         "name":  "Duo Harebourg + Klime",
+                         "level":  200,
+                         "monsterId":  3384
+                     },
+                     {
+                         "name":  "Œil de Vortex",
+                         "level":  200,
+                         "monsterId":  3835
+                     },
+                     {
+                         "name":  "Palais du roi Nidas",
+                         "level":  200,
+                         "monsterId":  3648
+                     },
+                     {
+                         "name":  "Trône de la Cour Sombre",
+                         "level":  200,
+                         "monsterId":  3726
+                     },
+                     {
+                         "name":  "Défi du Chaloeil",
+                         "level":  200,
+                         "monsterId":  4263
+                     },
+                     {
+                         "name":  "Ventre de la baleine",
+                         "level":  200,
+                         "monsterId":  3828
+                     },
+                     {
+                         "name":  "Temple de Koutoulou",
+                         "level":  200,
+                         "monsterId":  4453
+                     },
+                     {
+                         "name":  "Vaisseau du Capitaine Meno",
+                         "level":  200,
+                         "monsterId":  4460
+                     },
+                     {
+                         "name":  "Palais de Dantinéa",
+                         "level":  200,
+                         "monsterId":  4444
+                     },
+                     {
+                         "name":  "Chambre de Tal Kasha",
+                         "level":  200,
+                         "monsterId":  4744
+                     },
+                     {
+                         "name":  "Tour de Solar",
+                         "level":  200,
+                         "monsterId":  5100
+                     },
+                     {
+                         "name":  "Tour de Bethel",
+                         "level":  200,
+                         "monsterId":  5110
+                     },
+                     {
+                         "name":  "Brasserie du roi Dazak",
+                         "level":  200,
+                         "monsterId":  5319
+                     },
+                     {
+                         "name":  "Temple du dieu Kao",
+                         "level":  200,
+                         "monsterId":  5666
+                     },
+                     {
+                         "name":  "Belvédère d\u0027Ilyzaelle",
+                         "level":  200,
+                         "monsterId":  4967
+                     },
+                     {
+                         "name":  "Manoir des Katrepat",
+                         "level":  200,
+                         "monsterId":  4882
+                     },
+                     {
+                         "name":  "Sanctuaire de Torkélonia",
+                         "level":  200,
+                         "monsterId":  5806
+                     },
+                     {
+                         "name":  "Sentence de la Balance",
+                         "level":  200,
+                         "monsterId":  5990
+                     },
+                     {
+                         "name":  "Fers de la Tyrannie",
+                         "level":  200,
+                         "monsterId":  5955
+                     },
+                     {
+                         "name":  "Trône de sang",
+                         "level":  200,
+                         "monsterId":  6014
+                     },
+                     {
+                         "name":  "Arbre de mort",
+                         "level":  200,
+                         "monsterId":  6026
+                     },
+                     {
+                         "name":  "Tempête de l\u0027Eliocalypse",
+                         "level":  200,
+                         "monsterId":  5955
+                     },
+                     {
+                         "name":  "Souvenir d\u0027Imagiro",
+                         "level":  200,
+                         "monsterId":  6478
+                     },
+                     {
+                         "name":  "Mémoire d\u0027Orukam",
+                         "level":  200,
+                         "monsterId":  6472
+                     },
+                     {
+                         "name":  "Rituel de Kabahal",
+                         "level":  200,
+                         "monsterId":  6654
+                     },
+                     {
+                         "name":  "Bataille de l\u0027Aurore Pourpre",
+                         "level":  200,
+                         "monsterId":  6792
+                     },
+                     {
+                         "name":  "Chambre des maléfices",
+                         "level":  200,
+                         "monsterId":  7210
+                     },
+                     {
+                         "name":  "Caverne de Cire Momore",
+                         "level":  200,
+                         "monsterId":  7222
+                     },
+                     {
+                         "name":  "Songe de Mériana",
+                         "level":  200,
+                         "monsterId":  5409
+                     }
+                 ],
+    "anomalies":  [
+                      {
+                          "name":  "Champion de l\u0027Aurore Pourpre",
+                          "monsterId":  5662
+                      },
+                      {
+                          "name":  "Julith",
+                          "monsterId":  5663
+                      },
+                      {
+                          "name":  "Dathura",
+                          "monsterId":  5673
+                      },
+                      {
+                          "name":  "Corbeau Noir",
+                          "monsterId":  5682
+                      },
+                      {
+                          "name":  "Larve de Rushu",
+                          "monsterId":  5683
+                      },
+                      {
+                          "name":  "Agonie la Déterrée",
+                          "monsterId":  5684
+                      },
+                      {
+                          "name":  "Percimol",
+                          "monsterId":  5687
+                      },
+                      {
+                          "name":  "Léorictus le Roi Grimaçant",
+                          "monsterId":  5688
+                      },
+                      {
+                          "name":  "Shuccube",
+                          "monsterId":  5755
+                      },
+                      {
+                          "name":  "Noximilien l\u0027Horloger",
+                          "monsterId":  5781
+                      }
+                  ],
+    "avis":  [
+                 {
+                     "name":  "Aermyne \u0027Braco\u0027 Scalptaras",
+                     "monsterId":  446
+                 },
+                 {
+                     "name":  "Ali Grothor",
+                     "monsterId":  3524
+                 },
+                 {
+                     "name":  "Ambi Guman",
+                     "monsterId":  3525
+                 },
+                 {
+                     "name":  "Anatak Diskedor",
+                     "monsterId":  4017
+                 },
+                 {
+                     "name":  "Bouflouth",
+                     "monsterId":  2901
+                 },
+                 {
+                     "name":  "Brumen Tinctorias",
+                     "monsterId":  464
+                 },
+                 {
+                     "name":  "Chevalier de Glace",
+                     "monsterId":  3403
+                 },
+                 {
+                     "name":  "Culbutœuf",
+                     "monsterId":  3402
+                 },
+                 {
+                     "name":  "Docteur Eggob",
+                     "monsterId":  3400
+                 },
+                 {
+                     "name":  "Dragodingo",
+                     "monsterId":  4275
+                 },
+                 {
+                     "name":  "Dremoan",
+                     "monsterId":  2908
+                 },
+                 {
+                     "name":  "Fantômayte",
+                     "monsterId":  2904
+                 },
+                 {
+                     "name":  "Flasho",
+                     "monsterId":  2909
+                 },
+                 {
+                     "name":  "Fou",
+                     "monsterId":  4329
+                 },
+                 {
+                     "name":  "Fouduglen l\u0027Écureuil",
+                     "monsterId":  463
+                 },
+                 {
+                     "name":  "Frakacia Leukocytine",
+                     "monsterId":  460
+                 },
+                 {
+                     "name":  "Gein",
+                     "monsterId":  3761
+                 },
+                 {
+                     "name":  "Glandaf l\u0027Aigri",
+                     "monsterId":  5081
+                 },
+                 {
+                     "name":  "Glourdorak",
+                     "monsterId":  3373
+                 },
+                 {
+                     "name":  "Grand Kongoku",
+                     "monsterId":  4028
+                 },
+                 {
+                     "name":  "Guerrier du K.O.",
+                     "monsterId":  4016
+                 },
+                 {
+                     "name":  "Hin",
+                     "monsterId":  3848
+                 },
+                 {
+                     "name":  "Hyperscampe",
+                     "monsterId":  3533
+                 },
+                 {
+                     "name":  "Katigrou",
+                     "monsterId":  2903
+                 },
+                 {
+                     "name":  "Mekamouth",
+                     "monsterId":  3401
+                 },
+                 {
+                     "name":  "Monsieur Pingouin",
+                     "monsterId":  2902
+                 },
+                 {
+                     "name":  "Musha L\u0027Oni",
+                     "monsterId":  552
+                 },
+                 {
+                     "name":  "Naganita",
+                     "monsterId":  4027
+                 },
+                 {
+                     "name":  "Ogivol Scalarcin",
+                     "monsterId":  462
+                 },
+                 {
+                     "name":  "Padgref Demoël",
+                     "monsterId":  459
+                 },
+                 {
+                     "name":  "Pantèroz",
+                     "monsterId":  3762
+                 },
+                 {
+                     "name":  "Predagob",
+                     "monsterId":  4834
+                 },
+                 {
+                     "name":  "Psikopompe",
+                     "monsterId":  3413
+                 },
+                 {
+                     "name":  "Sam Sagaz",
+                     "monsterId":  4266
+                 },
+                 {
+                     "name":  "Simbadas",
+                     "monsterId":  4814
+                 },
+                 {
+                     "name":  "Tournade",
+                     "monsterId":  4618
+                 },
+                 {
+                     "name":  "Trukipik",
+                     "monsterId":  4240
+                 },
+                 {
+                     "name":  "Vashkiwi",
+                     "monsterId":  5074
+                 },
+                 {
+                     "name":  "Vengeuse Masquée",
+                     "monsterId":  2905
+                 },
+                 {
+                     "name":  "Viti Glourson",
+                     "monsterId":  2910
+                 },
+                 {
+                     "name":  "Voldelor",
+                     "monsterId":  3668
+                 },
+                 {
+                     "name":  "YeCh\u0027Ti",
+                     "monsterId":  2906
+                 },
+                 {
+                     "name":  "Zatoïshwan",
+                     "monsterId":  555
+                 }
+             ]
+}

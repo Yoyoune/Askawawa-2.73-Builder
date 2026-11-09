@@ -167,6 +167,22 @@ body.wiki-mode .layout { display: none; }
   border-bottom: 1px solid var(--border);
 }
 .wiki-text-body p { margin: 0 0 10px; line-height: 1.55; color: var(--text); }
+
+/* Text + illustration under a category's icons: text on the left, picture beside it. */
+.wiki-intro { display: flex; align-items: flex-start; gap: 28px; margin-top: 28px; }
+.wiki-intro-text { flex: 1 1 0; min-width: 0; font-size: 15px; }
+.wiki-intro-image {
+  flex: 0 1 420px;
+  width: 420px;
+  max-width: 45%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+@media (max-width: 800px) {
+  .wiki-intro { flex-direction: column; }
+  .wiki-intro-image { width: 100%; max-width: 420px; flex-basis: auto; }
+}
 @media (max-width: 800px) { .wiki-two-col { grid-template-columns: 1fr; } }
 .wiki-icon-btn img { width: 40px; height: 40px; flex-shrink: 0; object-fit: contain; }
 .wiki-icon-btn span { min-width: 0; line-height: 1.2; overflow-wrap: anywhere; }

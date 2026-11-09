@@ -1532,6 +1532,25 @@ async function renderWikiPage(key, slug) {
     for (const e of WIKI_ENTRY_LISTS[key](data)) grid.appendChild(wikiIconButton(e, key));
     root.appendChild(grid);
   }
+
+  // Optional text (+ illustration beside it) shown under the icons of a category (data.intros[<category>]).
+  const intro = data.intros && data.intros[key];
+  if (intro) {
+    const block = document.createElement("div");
+    block.className = "wiki-intro";
+    const text = document.createElement("div");
+    text.className = "wiki-intro-text wiki-text-body";
+    wikiFillText(text, intro.text);
+    block.appendChild(text);
+    if (intro.image) {
+      const fig = document.createElement("img");
+      fig.className = "wiki-intro-image";
+      fig.src = intro.image;
+      fig.alt = intro.alt || "";
+      block.appendChild(fig);
+    }
+    root.appendChild(block);
+  }
 }
 
 /** Shows the wiki page matching location.hash (#wiki/<key> or #wiki/<key>/<entry>), or the normal builder otherwise. */

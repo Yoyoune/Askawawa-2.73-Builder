@@ -1395,8 +1395,6 @@ const WIKI_PAGES = [
   { key: "prestige", label: "Prestige" },
   { key: "songe", label: "Songe" },
   { key: "forgemagie", label: "Forgemagie" },
-  { key: "familier", label: "Familier" },
-  { key: "dofus", label: "Dofus" },
 ];
 
 // Data of the icon-button pages (data/wiki.json): dungeons (teleporter order, with level + boss monster id),

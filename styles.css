@@ -706,6 +706,7 @@ body.wiki-mode .layout { display: none; }
   align-items: center;
   justify-content: space-between;
 }
+.paperdoll-icon-btns { display: flex; align-items: center; gap: 8px; }
 .paperdoll-papm-btn {
   width: 40px;
   height: 40px;

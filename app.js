@@ -535,7 +535,6 @@ async function main() {
   document.getElementById("browserClose").addEventListener("click", closeSidePanel);
   document.getElementById("detailClose").addEventListener("click", closeSidePanel);
   document.getElementById("setsBrowserClose").addEventListener("click", closeSidePanel);
-  document.getElementById("setsSearchBtn").addEventListener("click", openSetsBrowser);
   document.getElementById("setsSearchInput").addEventListener("input", renderSetsList);
   document.getElementById("setsSortSelect").addEventListener("change", renderSetsList);
   document.getElementById("setsLevelMinInput").addEventListener("input", renderSetsList);
@@ -1485,18 +1484,26 @@ function renderPaperdoll() {
   const label = document.createElement("span");
   label.textContent = "Dofus";
   labelRow.appendChild(label);
-  const paPmBtn = document.createElement("button");
-  paPmBtn.type = "button";
-  paPmBtn.id = "paPmBtn";
-  paPmBtn.className = "paperdoll-papm-btn";
-  paPmBtn.title = "Item PA-PM";
-  paPmBtn.setAttribute("aria-label", "Item PA-PM");
-  const paPmImg = document.createElement("img");
-  paPmImg.src = "icons/ui/papm.png";
-  paPmImg.alt = "";
-  paPmBtn.appendChild(paPmImg);
-  paPmBtn.addEventListener("click", openPaPmPicker);
-  labelRow.appendChild(paPmBtn);
+  // "Panoplies" and "Item PA-PM" shortcuts side by side (icon buttons, right-aligned under the Familier slot).
+  const iconBtns = document.createElement("div");
+  iconBtns.className = "paperdoll-icon-btns";
+  const makeIconBtn = (id, title, iconSrc, onClick) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.id = id;
+    b.className = "paperdoll-papm-btn";
+    b.title = title;
+    b.setAttribute("aria-label", title);
+    const img = document.createElement("img");
+    img.src = iconSrc;
+    img.alt = "";
+    b.appendChild(img);
+    b.addEventListener("click", onClick);
+    return b;
+  };
+  iconBtns.appendChild(makeIconBtn("setsSearchBtn", "Panoplies", "icons/ui/panoplies.png", openSetsBrowser));
+  iconBtns.appendChild(makeIconBtn("paPmBtn", "Item PA-PM", "icons/ui/papm.png", openPaPmPicker));
+  labelRow.appendChild(iconBtns);
   root.appendChild(labelRow);
 
   const dofusWrap = document.createElement("div");

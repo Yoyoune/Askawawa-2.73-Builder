@@ -195,7 +195,18 @@ body.wiki-mode .layout { display: none; }
 .wiki-modal-text p:last-child { margin-bottom: 0; }
 /* Inline icon / centered illustration inside wiki texts ({icon:...} / {figure:...}). */
 .wiki-inline-icon { height: 30px; width: auto; vertical-align: middle; margin: 0 2px; }
-.wiki-figure { margin: 16px 0; text-align: center; }
+.wiki-figure { margin: 0 0 10px; text-align: center; }
+/* Section headings in long wiki texts: bold red, larger. Gap before a section = exactly one text line
+   (25px ≈ 15px x 1.65 line-height; adjacent margins collapse with the 10px paragraph margin). */
+.wiki-text-body h4.wiki-heading { margin: 25px 0 8px; font-size: 21px; font-weight: 700; color: #e5484d; line-height: 1.3; }
+.wiki-text-body h4.wiki-heading:first-child { margin-top: 0; }
+.wiki-text-body p.wiki-arrow { padding-left: 18px; margin-bottom: 4px; }
+.wiki-text-body p.wiki-arrow + p:not(.wiki-arrow) { margin-top: 10px; }
+.wiki-table-wrap { margin: 0 0 10px; max-width: 100%; overflow-x: auto; }
+.wiki-table { border-collapse: collapse; min-width: 380px; max-width: 100%; }
+.wiki-table th { font-size: 17px; font-weight: 700; color: #4da3ff; text-align: left; padding: 6px 14px; border: 1px solid var(--border); background: rgba(0, 0, 0, 0.25); }
+.wiki-table td { padding: 5px 14px; border: 1px solid var(--border); line-height: 1.4; }
+.wiki-table th:last-child, .wiki-table td:last-child { text-align: center; white-space: nowrap; }
 .wiki-figure img { max-width: 100%; width: 720px; height: auto; border: 1px solid var(--border); border-radius: var(--radius); }
 /* Bullet lists inside wiki texts ("- ..." lines). */
 .wiki-text-body ul { margin: 0 0 10px; padding-left: 22px; }

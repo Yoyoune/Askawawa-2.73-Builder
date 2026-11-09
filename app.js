@@ -1441,9 +1441,44 @@ function wikiFillText(el, text) {
   el.innerHTML = "";
   if (!text) return;
   let list = null;
+  let table = null;
   for (const raw of String(text).split(/\n+/)) {
     const line = raw.trim();
     if (!line) continue;
+    // "| a | b" lines form a table (first row = header, bold blue).
+    if (line.startsWith("|")) {
+      list = null;
+      if (!table) {
+        const wrap = document.createElement("div");
+        wrap.className = "wiki-table-wrap";
+        table = document.createElement("table");
+        table.className = "wiki-table";
+        wrap.appendChild(table);
+        el.appendChild(wrap);
+        table.header = true;
+      }
+      const cells = line.replace(/^\|\s*/, "").split(/\s+\|\s+|\s+\|$/).map(c => c.trim());
+      const tr = document.createElement("tr");
+      for (const c of cells) {
+        const cell = document.createElement(table.header ? "th" : "td");
+        cell.textContent = c;
+        tr.appendChild(cell);
+      }
+      if (table.header) { const thead = document.createElement("thead"); thead.appendChild(tr); table.appendChild(thead); table.header = false; table.tbody = document.createElement("tbody"); table.appendChild(table.tbody); }
+      else table.tbody.appendChild(tr);
+      continue;
+    }
+    table = null;
+    // "## Title" = section heading (bold, red, larger).
+    const head = /^##\s+(.*)$/.exec(line);
+    if (head) {
+      list = null;
+      const h = document.createElement("h4");
+      h.className = "wiki-heading";
+      h.textContent = head[1];
+      el.appendChild(h);
+      continue;
+    }
     // A line made only of {figure:path|alt} is a centered illustration.
     // Optional third part = display width in px ({figure:path|alt|520}).
     const fig = /^\{figure:([^}|]+)(?:\|([^}|]*))?(?:\|(\d+))?\}$/.exec(line);
@@ -1469,6 +1504,7 @@ function wikiFillText(el, text) {
     } else {
       list = null;
       target = document.createElement("p");
+      if (line.startsWith("=>")) target.className = "wiki-arrow";
       el.appendChild(target);
     }
     // {icon:path|alt} anywhere in a line is a small inline picture.

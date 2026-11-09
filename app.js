@@ -1405,10 +1405,24 @@ async function loadWikiData() {
   return wikiData;
 }
 
-function wikiIconButton(entry) {
-  const btn = document.createElement("button");
-  btn.type = "button";
+/** URL-safe slug of an entry name ("Culbutœuf" -> "culbutoeuf", "Château Ensablé" -> "chateau-ensable"). */
+function wikiSlug(name) {
+  return name.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+    .replace(/œ/g, "oe").replace(/æ/g, "ae").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+// Which list of data/wiki.json each icon category reads.
+const WIKI_ENTRY_LISTS = {
+  "donjon": d => d.dungeons,
+  "anomalie-temporelle": d => d.anomalies,
+  "avis-de-recherche": d => d.avis,
+};
+
+/** Icon button (a link): opens the entry's own wiki page, #wiki/<category>/<slug>. */
+function wikiIconButton(entry, catKey) {
+  const btn = document.createElement("a");
   btn.className = "wiki-icon-btn";
+  btn.href = `#wiki/${catKey}/${wikiSlug(entry.name)}`;
   btn.title = entry.name;
   const img = document.createElement("img");
   img.src = `icons/monsters/${entry.monsterId}.png`;
@@ -1421,6 +1435,62 @@ function wikiIconButton(entry) {
   return btn;
 }
 
+/** Fills `el` with one paragraph per line of `text` (text is optional: empty until the content is written). */
+function wikiFillText(el, text) {
+  el.innerHTML = "";
+  if (!text) return;
+  for (const line of String(text).split(/\n+/)) {
+    if (!line.trim()) continue;
+    const p = document.createElement("p");
+    p.textContent = line;
+    el.appendChild(p);
+  }
+}
+
+/** One entry's page: dungeons get two titled columns (normal / Stasis mode), other entries a single column. */
+function renderWikiEntry(root, catKey, entry) {
+  document.title = `${entry.name} — Wiki Askawawa 2.73`;
+  const head = document.createElement("div");
+  head.className = "wiki-entry-head";
+  const img = document.createElement("img");
+  img.src = `icons/monsters/${entry.monsterId}.png`;
+  img.alt = "";
+  img.addEventListener("error", () => { img.style.display = "none"; });
+  head.appendChild(img);
+  const title = document.createElement("h2");
+  title.textContent = entry.name;
+  head.appendChild(title);
+  root.appendChild(head);
+
+  const makeCol = (heading, text) => {
+    const col = document.createElement("section");
+    col.className = "wiki-text-col";
+    if (heading) {
+      const h3 = document.createElement("h3");
+      h3.textContent = heading;
+      col.appendChild(h3);
+    }
+    const body = document.createElement("div");
+    body.className = "wiki-text-body";
+    wikiFillText(body, text);
+    col.appendChild(body);
+    return col;
+  };
+
+  if (catKey === "donjon") {
+    const two = document.createElement("div");
+    two.className = "wiki-two-col";
+    two.appendChild(makeCol("Donjon normal", entry.normal));
+    two.appendChild(makeCol("Mode Stasis actif", entry.stasis));
+    root.appendChild(two);
+  } else {
+    const one = document.createElement("div");
+    one.className = "wiki-single-col";
+    one.appendChild(makeCol("", entry.text));
+    root.appendChild(one);
+  }
+}
+
 // Dungeon columns by teleporter level: 1-50, 60-100, 110-150, 160-190, 200.
 function wikiDungeonColumn(level) {
   if (level <= 50) return 0;
@@ -1430,14 +1500,20 @@ function wikiDungeonColumn(level) {
   return 4;
 }
 
-async function renderWikiPage(key) {
+async function renderWikiPage(key, slug) {
   const root = document.getElementById("wikiPage");
   if (!root) return;
   root.innerHTML = "";
-  if (key !== "donjon" && key !== "anomalie-temporelle" && key !== "avis-de-recherche") return;
+  if (!WIKI_ENTRY_LISTS[key]) return; // pages without icons: one empty single page for now
   let data;
   try { data = await loadWikiData(); } catch (e) { console.error("wiki.json", e); return; }
-  if (root.dataset.page !== key) return; // route changed while loading
+  if (root.dataset.page !== (slug ? `${key}/${slug}` : key)) return; // route changed while loading
+
+  if (slug) {
+    const entry = WIKI_ENTRY_LISTS[key](data).find(e => wikiSlug(e.name) === slug);
+    if (entry) renderWikiEntry(root, key, entry);
+    return;
+  }
 
   if (key === "donjon") {
     const grid = document.createElement("div");
@@ -1448,28 +1524,29 @@ async function renderWikiPage(key) {
       grid.appendChild(col);
       return col;
     });
-    for (const d of data.dungeons) cols[wikiDungeonColumn(d.level)].appendChild(wikiIconButton(d));
+    for (const d of data.dungeons) cols[wikiDungeonColumn(d.level)].appendChild(wikiIconButton(d, key));
     root.appendChild(grid);
   } else {
     const grid = document.createElement("div");
     grid.className = "wiki-icon-grid";
-    const list = key === "anomalie-temporelle" ? data.anomalies : data.avis;
-    for (const e of list) grid.appendChild(wikiIconButton(e));
+    for (const e of WIKI_ENTRY_LISTS[key](data)) grid.appendChild(wikiIconButton(e, key));
     root.appendChild(grid);
   }
 }
 
-/** Shows the wiki page matching location.hash (#wiki/<key>), or the normal builder otherwise. */
+/** Shows the wiki page matching location.hash (#wiki/<key> or #wiki/<key>/<entry>), or the normal builder otherwise. */
 function applyWikiRoute() {
-  const m = /^#wiki\/([a-z0-9-]+)$/.exec(location.hash);
+  const m = /^#wiki\/([a-z0-9-]+)(?:\/([a-z0-9-]+))?$/.exec(location.hash);
   const page = m ? WIKI_PAGES.find(p => p.key === m[1]) : null;
+  const slug = page && m[2] ? m[2] : "";
   const wikiPage = document.getElementById("wikiPage");
   document.body.classList.toggle("wiki-mode", !!page);
   if (wikiPage) {
     wikiPage.classList.toggle("hidden", !page);
-    wikiPage.dataset.page = page ? page.key : "";
-    renderWikiPage(page ? page.key : "");
+    wikiPage.dataset.page = page ? (slug ? `${page.key}/${slug}` : page.key) : "";
+    renderWikiPage(page ? page.key : "", slug);
   }
+  // An entry page sets its own title once its data is loaded (renderWikiEntry).
   document.title = page ? `${page.label} — Wiki Askawawa 2.73` : "Askawawa 2.73 Builder";
 }
 

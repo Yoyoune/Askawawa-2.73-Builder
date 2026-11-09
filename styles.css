@@ -149,7 +149,25 @@ body.wiki-mode .layout { display: none; }
   font-size: 13px;
   cursor: pointer;
 }
+.wiki-icon-btn { box-sizing: border-box; text-decoration: none; }
 .wiki-icon-btn:hover { border-color: var(--accent); background: var(--panel-alt); }
+
+/* Entry page (click on an icon): header (icon + name), then two titled columns for dungeons
+   (normal | Stasis mode) or a single column for the other categories. */
+.wiki-entry-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.wiki-entry-head img { width: 56px; height: 56px; object-fit: contain; }
+.wiki-entry-head h2 { margin: 0; font-size: 22px; color: var(--accent); }
+.wiki-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+.wiki-single-col { max-width: 900px; }
+.wiki-text-col h3 {
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  font-size: 17px;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+}
+.wiki-text-body p { margin: 0 0 10px; line-height: 1.55; color: var(--text); }
+@media (max-width: 800px) { .wiki-two-col { grid-template-columns: 1fr; } }
 .wiki-icon-btn img { width: 40px; height: 40px; flex-shrink: 0; object-fit: contain; }
 .wiki-icon-btn span { min-width: 0; line-height: 1.2; overflow-wrap: anywhere; }
 

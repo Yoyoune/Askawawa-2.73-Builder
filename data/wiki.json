@@ -680,7 +680,7 @@
                       {
                           "name":  "Léorictus le Roi Grimaçant",
                           "monsterId":  5688,
-                          "text":  "Léoriktus est invulnérable.\nTous les 2 tours, une entité (hormis Léoriktus) reçoit un état Harcelé, qui implique :\n- Si l’entité est toujours vivante après 2 tours, Léoriktus incrémente son état Impatience\n- Si l’entité meurt, tous les joueurs sont OS\nLorsque Léoriktus atteint son état Impatience IV, il perd son invulnérabilité."
+                          "text":  "Léorictus est invulnérable.\nTous les 2 tours, une entité (hormis Léorictus) reçoit un état Harcelé, qui implique :\n- Si l’entité est toujours vivante après 2 tours, Léorictus incrémente son état Impatience\n- Si l’entité meurt, tous les joueurs sont OS\nLorsque Léorictus atteint son état Impatience IV, il perd son invulnérabilité."
                       },
                       {
                           "name":  "Shuccube",

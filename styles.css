@@ -204,9 +204,10 @@ body.wiki-mode .layout { display: none; }
 .wiki-text-body p.wiki-arrow + p:not(.wiki-arrow) { margin-top: 10px; }
 .wiki-table-wrap { margin: 0 0 10px; max-width: 100%; overflow-x: auto; }
 .wiki-table { border-collapse: collapse; min-width: 380px; max-width: 100%; }
-.wiki-table th { font-size: 17px; font-weight: 700; color: #4da3ff; text-align: left; padding: 6px 14px; border: 1px solid var(--border); background: rgba(0, 0, 0, 0.25); }
+.wiki-table th { font-size: 17px; font-weight: 700; color: #4da3ff; padding: 6px 14px; border: 1px solid var(--border); background: rgba(0, 0, 0, 0.25); }
 .wiki-table td { padding: 5px 14px; border: 1px solid var(--border); line-height: 1.4; }
-.wiki-table th:last-child, .wiki-table td:last-child { text-align: center; white-space: nowrap; }
+.wiki-table th, .wiki-table td { text-align: center; vertical-align: middle; }
+.wiki-table th:last-child, .wiki-table td:last-child { white-space: nowrap; }
 .wiki-figure img { max-width: 100%; width: 720px; height: auto; border: 1px solid var(--border); border-radius: var(--radius); }
 /* Bullet lists inside wiki texts ("- ..." lines). */
 .wiki-text-body ul { margin: 0 0 10px; padding-left: 22px; }

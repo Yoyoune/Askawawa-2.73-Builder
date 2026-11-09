@@ -183,6 +183,8 @@ body.wiki-mode .layout { display: none; }
 }
 .wiki-intro-text p:last-child,
 .wiki-text-col p:last-child { margin-bottom: 0; }
+.wiki-intro-text p,
+.wiki-text-col p { text-align: justify; hyphens: auto; }
 .wiki-intro-image {
   flex: 0 1 420px;
   width: 420px;

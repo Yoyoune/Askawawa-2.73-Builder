@@ -859,7 +859,7 @@
              ],
     "intros":  {
                    "anomalie-temporelle":  {
-                                               "text":  "Toutes les 2h, 2 anomalies temporelles apparaissent sur des zones. Ces zones bénéficient d’un bonus xp et drop.\nLorsqu’une anomalie apparait, il y a un gardien de cet anomalie. Afin d’affronter ce gardien, il faut se rendre sur un zaap et se téléporter sur la zone anomalie temporelle. A partir de là, un combat se lance pour un des 10 gardiens (aléatoirement). Remporter le combat contre ce gardien met fin à l’anomalie et en ouvre une nouvelle.",
+                                               "text":  "Toutes les 2h, 2 anomalies temporelles apparaissent sur des zones. Ces zones bénéficient d’un bonus xp et drop.\nLorsqu’une anomalie apparaît, il y a un gardien de cette anomalie. Afin d’affronter ce gardien, il faut se rendre sur un zaap et se téléporter sur la zone anomalie temporelle. À partir de là, un combat se lance pour un des 10 gardiens (aléatoirement). Remporter le combat contre ce gardien met fin à l’anomalie et en ouvre une nouvelle.",
                                                "image":  "images/wiki/anomalie-zaap.webp",
                                                "alt":  "Fenêtre de zaap : onglet Anomalie"
                                            }

@@ -630,7 +630,7 @@ async function main() {
   document.getElementById("classSpellsModalOverlay").addEventListener("click", (ev) => {
     if (ev.target.id === "classSpellsModalOverlay") closeClassSpells();
   });
-  document.getElementById("paPmBtn").addEventListener("click", openPaPmPicker);
+  initWikiMenu();
   document.getElementById("paPmPickerModalClose").addEventListener("click", closePaPmPicker);
   document.getElementById("paPmPickerModalOverlay").addEventListener("click", (ev) => {
     if (ev.target.id === "paPmPickerModalOverlay") closePaPmPicker();
@@ -1380,6 +1380,53 @@ function renderComparison() {
   }
 }
 
+// ---------- Wiki menu (topbar dropdown) ----------
+
+// Entries of the Wiki dropdown. `url` = page to open in a new tab; null = page not written yet
+// (the entry is shown but does nothing). Fill the urls in once the pages exist.
+const WIKI_PAGES = [
+  { key: "presentation", label: "Présentation du serveur", url: null },
+  { key: "donjons", label: "Donjons", url: null },
+  { key: "avis-de-recherche", label: "Avis de recherche", url: null },
+  { key: "anomalies", label: "Anomalies", url: null },
+  { key: "boss-ultimes", label: "Boss Ultimes", url: null },
+  { key: "songe", label: "Songe", url: null },
+  { key: "forgemagie", label: "Forgemagie", url: null },
+];
+
+function initWikiMenu() {
+  const dropdown = document.getElementById("wikiDropdown");
+  const btn = document.getElementById("wikiBtn");
+  const menu = document.getElementById("wikiMenu");
+  if (!dropdown || !btn || !menu) return;
+
+  menu.innerHTML = "";
+  for (const page of WIKI_PAGES) {
+    const entry = document.createElement(page.url ? "a" : "button");
+    entry.className = "topbar-menu-item" + (page.url ? "" : " pending");
+    entry.setAttribute("role", "menuitem");
+    entry.textContent = page.label;
+    if (page.url) {
+      entry.href = page.url;
+      entry.target = "_blank";
+      entry.rel = "noopener";
+    } else {
+      entry.type = "button";
+      entry.title = "Page bientôt disponible";
+    }
+    menu.appendChild(entry);
+  }
+
+  // Opens on hover (CSS) and on click/tap (touch devices have no hover).
+  const setOpen = (open) => {
+    dropdown.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+  btn.addEventListener("click", (ev) => { ev.stopPropagation(); setOpen(!dropdown.classList.contains("open")); });
+  document.addEventListener("click", (ev) => { if (!dropdown.contains(ev.target)) setOpen(false); });
+  document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") setOpen(false); });
+}
+
 // ---------- Paperdoll ----------
 
 // Visual position of the 3x4 paperdoll grid (in-game equipment doll layout), independent
@@ -1415,10 +1462,26 @@ function renderPaperdoll() {
     root.appendChild(renderSlotEl(UI_SLOTS.find(s => s.id === slotId)));
   }
 
-  const label = document.createElement("div");
-  label.className = "paperdoll-section-label";
+  // Row between the grid (Familier, last cell) and the Dofus slots: section label on the left,
+  // the "Item PA-PM" shortcut as an icon button on the right (under the Familier slot).
+  const labelRow = document.createElement("div");
+  labelRow.className = "paperdoll-section-label paperdoll-section-row";
+  const label = document.createElement("span");
   label.textContent = "Dofus";
-  root.appendChild(label);
+  labelRow.appendChild(label);
+  const paPmBtn = document.createElement("button");
+  paPmBtn.type = "button";
+  paPmBtn.id = "paPmBtn";
+  paPmBtn.className = "paperdoll-papm-btn";
+  paPmBtn.title = "Item PA-PM";
+  paPmBtn.setAttribute("aria-label", "Item PA-PM");
+  const paPmImg = document.createElement("img");
+  paPmImg.src = "icons/ui/papm.png";
+  paPmImg.alt = "";
+  paPmBtn.appendChild(paPmImg);
+  paPmBtn.addEventListener("click", openPaPmPicker);
+  labelRow.appendChild(paPmBtn);
+  root.appendChild(labelRow);
 
   const dofusWrap = document.createElement("div");
   dofusWrap.className = "paperdoll-dofus";

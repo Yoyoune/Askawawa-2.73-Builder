@@ -1514,9 +1514,9 @@ function wikiFillText(el, text) {
 
 /** Appends `content` to `target`, turning inline markers into elements:
  *  {icon:path|alt|height} = small picture (alt and height optional),
- *  {c:white|blue|green|violet|text} = coloured text. */
+ *  {c:white|blue|green|violet|gold|text} = coloured text. */
 function wikiAppendInline(target, content) {
-  const re = /\{icon:([^}|]+)(?:\|([^}|]*))?(?:\|(\d+))?\}|\{c:(white|blue|green|violet)\|([^}]*)\}/g;
+  const re = /\{icon:([^}|]+)(?:\|([^}|]*))?(?:\|(\d+))?\}|\{c:(white|blue|green|violet|gold)\|([^}]*)\}/g;
   let last = 0, m;
   while ((m = re.exec(content))) {
     if (m.index > last) target.appendChild(document.createTextNode(content.slice(last, m.index)));
@@ -1574,8 +1574,9 @@ function renderWikiEntry(root, catKey, entry) {
 
   if (catKey === "donjon") {
     const two = document.createElement("div");
-    two.className = "wiki-two-col";
+    two.className = "wiki-two-col wiki-three-col";
     two.appendChild(makeCol(entry.name, entry.normal, "wiki-title-white"));
+    two.appendChild(makeCol("Succès", entry.succes, "wiki-title-gold"));
     two.appendChild(makeCol("Stasis", entry.stasis, "wiki-title-violet"));
     root.appendChild(two);
   } else {

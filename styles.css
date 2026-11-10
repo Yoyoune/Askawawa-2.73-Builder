@@ -198,6 +198,11 @@ body.wiki-mode .layout { display: none; }
 .wiki-c-blue { color: #4da3ff; }
 .wiki-c-green { color: #5fd068; }
 .wiki-c-violet { color: #b07cff; }
+.wiki-c-gold { color: #f2c14e; font-weight: 700; }
+.wiki-text-col h3.wiki-title-gold { color: #f2c14e; font-size: 21px; font-weight: 700; }
+/* Dungeon page: dungeon | Succès | Stasis. */
+.wiki-three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1000px) { .wiki-three-col { grid-template-columns: 1fr; } }
 .wiki-text-col h3.wiki-title-white { color: #ffffff; font-size: 21px; font-weight: 700; }
 .wiki-text-col h3.wiki-title-violet { color: #b07cff; font-size: 21px; font-weight: 700; }
 /* Line starting with a monster icon: icon, then text, vertically centred. */

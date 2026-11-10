@@ -3,7 +3,9 @@
                      {
                          "name":  "Crypte de Kardorim",
                          "level":  10,
-                         "monsterId":  4051
+                         "monsterId":  4051,
+                         "normal":  "## I. Famille de monstre : {c:blue|Chafers d’Incarnam}\n{icon:icons/monsters/4046.png|Chafer Débutant|34}Chafer Débutant : Dégâts mêlée\n{icon:icons/monsters/4048.png|Chafer Éclaireur|34}Chafer Éclaireur : Dégâts distance + poison\n{icon:icons/monsters/4047.png|Chafer Furtif|34}Chafer Furtif : Invisible + dégâts mêlée\n{icon:icons/monsters/4049.png|Chafer Piquier|34}Chafer Piquier : Dégâts mêlée + Boost\n{icon:icons/monsters/4050.png|Sergent Chafer|34}Sergent Chafer : Dégâts mêlée + Boost\n## II. Boss : {c:green|Kardorim}\nPrésentation : Dégâts mêlée + Boost PM + invocation du Kardorib\nMécanique : aucune",
+                         "stasis":  "Lorsqu’un monstre meurt, il laisse sur sa case une Stèle destructible.\nAu bout de 2 tours, si la Stèle n’a pas été détruite, le monstre est ressuscité.\nLes Stèles ne sont pas limitantes pour la fin du combat."
                      },
                      {
                          "name":  "Grange du Tournesol Affamé",

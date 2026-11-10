@@ -1475,7 +1475,7 @@ function wikiFillText(el, text) {
       list = null;
       const h = document.createElement("h4");
       h.className = "wiki-heading";
-      h.textContent = head[1];
+      wikiAppendInline(h, head[1]);
       el.appendChild(h);
       continue;
     }
@@ -1507,44 +1507,61 @@ function wikiFillText(el, text) {
       if (line.startsWith("=>")) target.className = "wiki-arrow";
       el.appendChild(target);
     }
-    // {icon:path|alt} anywhere in a line is a small inline picture.
-    // Optional third part = height in px ({icon:path|alt|44}).
-    const re = /\{icon:([^}|]+)(?:\|([^}|]*))?(?:\|(\d+))?\}/g;
-    let last = 0, m;
-    while ((m = re.exec(content))) {
-      if (m.index > last) target.appendChild(document.createTextNode(content.slice(last, m.index)));
+    if (target.tagName === "P" && /^\{icon:/.test(line)) target.classList.add("wiki-icon-line");
+    wikiAppendInline(target, content);
+  }
+}
+
+/** Appends `content` to `target`, turning inline markers into elements:
+ *  {icon:path|alt|height} = small picture (alt and height optional),
+ *  {c:white|blue|green|violet|text} = coloured text. */
+function wikiAppendInline(target, content) {
+  const re = /\{icon:([^}|]+)(?:\|([^}|]*))?(?:\|(\d+))?\}|\{c:(white|blue|green|violet)\|([^}]*)\}/g;
+  let last = 0, m;
+  while ((m = re.exec(content))) {
+    if (m.index > last) target.appendChild(document.createTextNode(content.slice(last, m.index)));
+    if (m[1]) {
       const ic = document.createElement("img");
       ic.className = "wiki-inline-icon";
       ic.src = m[1];
       ic.alt = m[2] || "";
       if (m[3]) ic.style.height = m[3] + "px";
       target.appendChild(ic);
-      last = m.index + m[0].length;
+    } else {
+      const s = document.createElement("span");
+      s.className = "wiki-c-" + m[4];
+      s.textContent = m[5];
+      target.appendChild(s);
     }
-    if (last < content.length) target.appendChild(document.createTextNode(content.slice(last)));
+    last = m.index + m[0].length;
   }
+  if (last < content.length) target.appendChild(document.createTextNode(content.slice(last)));
 }
 
 /** One entry's page: dungeons get two titled columns (normal / Stasis mode), other entries a single column. */
 function renderWikiEntry(root, catKey, entry) {
   document.title = `${entry.name} — Wiki Askawawa 2.73`;
-  const head = document.createElement("div");
-  head.className = "wiki-entry-head";
-  const img = document.createElement("img");
-  img.src = `icons/monsters/${entry.monsterId}.png`;
-  img.alt = "";
-  img.addEventListener("error", () => { img.style.display = "none"; });
-  head.appendChild(img);
-  const title = document.createElement("h2");
-  title.textContent = entry.name;
-  head.appendChild(title);
-  root.appendChild(head);
+  // Dungeon pages have no separate header: the left column's title is the dungeon name.
+  if (catKey !== "donjon") {
+    const head = document.createElement("div");
+    head.className = "wiki-entry-head";
+    const img = document.createElement("img");
+    img.src = `icons/monsters/${entry.monsterId}.png`;
+    img.alt = "";
+    img.addEventListener("error", () => { img.style.display = "none"; });
+    head.appendChild(img);
+    const title = document.createElement("h2");
+    title.textContent = entry.name;
+    head.appendChild(title);
+    root.appendChild(head);
+  }
 
-  const makeCol = (heading, text) => {
+  const makeCol = (heading, text, titleClass) => {
     const col = document.createElement("section");
     col.className = "wiki-text-col";
     if (heading) {
       const h3 = document.createElement("h3");
+      if (titleClass) h3.className = titleClass;
       h3.textContent = heading;
       col.appendChild(h3);
     }
@@ -1558,8 +1575,8 @@ function renderWikiEntry(root, catKey, entry) {
   if (catKey === "donjon") {
     const two = document.createElement("div");
     two.className = "wiki-two-col";
-    two.appendChild(makeCol("Donjon normal", entry.normal));
-    two.appendChild(makeCol("Mode Stasis actif", entry.stasis));
+    two.appendChild(makeCol(entry.name, entry.normal, "wiki-title-white"));
+    two.appendChild(makeCol("Stasis", entry.stasis, "wiki-title-violet"));
     root.appendChild(two);
   } else {
     const one = document.createElement("div");

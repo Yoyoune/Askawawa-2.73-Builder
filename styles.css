@@ -193,6 +193,16 @@ body.wiki-mode .layout { display: none; }
 .wiki-modal-text { font-size: 15px; min-height: 40px; }
 .wiki-modal-text p { margin: 0 0 10px; line-height: 1.55; color: var(--text); }
 .wiki-modal-text p:last-child { margin-bottom: 0; }
+/* Coloured text ({c:blue|...}) and dungeon column titles (white = dungeon, violet = Stasis). */
+.wiki-c-white { color: #ffffff; }
+.wiki-c-blue { color: #4da3ff; }
+.wiki-c-green { color: #5fd068; }
+.wiki-c-violet { color: #b07cff; }
+.wiki-text-col h3.wiki-title-white { color: #ffffff; font-size: 21px; font-weight: 700; }
+.wiki-text-col h3.wiki-title-violet { color: #b07cff; font-size: 21px; font-weight: 700; }
+/* Line starting with a monster icon: icon, then text, vertically centred. */
+.wiki-text-body p.wiki-icon-line { display: flex; align-items: center; gap: 10px; text-align: left; margin-bottom: 4px; }
+.wiki-text-body p.wiki-icon-line .wiki-inline-icon { margin: 0; flex-shrink: 0; }
 /* Inline icon / centered illustration inside wiki texts ({icon:...} / {figure:...}). */
 .wiki-inline-icon { height: 30px; width: auto; vertical-align: middle; margin: 0 2px; }
 .wiki-figure { margin: 0 0 10px; text-align: center; }

@@ -1171,5 +1171,55 @@
                                                "image":  "images/wiki/anomalie-zaap.webp",
                                                "alt":  "Fenêtre de zaap : onglet Anomalie"
                                            }
-               }
+               },
+    "ultimes":  [
+                    {
+                        "name":  "Boufette Royale",
+                        "monsterId":  3691
+                    },
+                    {
+                        "name":  "Tofu Céleste",
+                        "monsterId":  3489
+                    },
+                    {
+                        "name":  "Titan de Boue",
+                        "monsterId":  3861
+                    },
+                    {
+                        "name":  "Shenryx",
+                        "monsterId":  6690
+                    },
+                    {
+                        "name":  "Douleur",
+                        "monsterId":  6669
+                    },
+                    {
+                        "name":  "Kru\u0027Gor",
+                        "monsterId":  6823
+                    },
+                    {
+                        "name":  "Toross Mordal",
+                        "monsterId":  5174
+                    },
+                    {
+                        "name":  "Vil Smith",
+                        "monsterId":  3102
+                    },
+                    {
+                        "name":  "Calcidose",
+                        "monsterId":  6426
+                    },
+                    {
+                        "name":  "Anathar",
+                        "monsterId":  3771
+                    },
+                    {
+                        "name":  "Rubilax",
+                        "monsterId":  3766
+                    },
+                    {
+                        "name":  "Djaul",
+                        "monsterId":  5321
+                    }
+                ]
 }

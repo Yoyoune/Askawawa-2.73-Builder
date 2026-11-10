@@ -1411,6 +1411,11 @@ function wikiSlug(name) {
     .replace(/œ/g, "oe").replace(/æ/g, "ae").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
+/** Route slug of an entry: its own `slug` field when set (two entries can share a display name), else the name's slug. */
+function wikiEntrySlug(entry) {
+  return entry.slug || wikiSlug(entry.name);
+}
+
 // Which list of data/wiki.json each icon category reads.
 const WIKI_ENTRY_LISTS = {
   "donjon": d => d.dungeons,
@@ -1422,7 +1427,7 @@ const WIKI_ENTRY_LISTS = {
 function wikiIconButton(entry, catKey) {
   const btn = document.createElement("a");
   btn.className = "wiki-icon-btn";
-  btn.href = `#wiki/${catKey}/${wikiSlug(entry.name)}`;
+  btn.href = `#wiki/${catKey}/${wikiEntrySlug(entry)}`;
   btn.title = entry.name;
   const img = document.createElement("img");
   img.src = `icons/monsters/${entry.monsterId}.png`;
@@ -1664,7 +1669,7 @@ async function renderWikiPage(key, slug) {
 
   let modalEntry = null;
   if (slug) {
-    const entry = WIKI_ENTRY_LISTS[key](data).find(e => wikiSlug(e.name) === slug);
+    const entry = WIKI_ENTRY_LISTS[key](data).find(e => wikiEntrySlug(e) === slug);
     if (entry && !WIKI_MODAL_CATEGORIES.has(key)) { renderWikiEntry(root, key, entry); return; }
     if (!entry) return;
     modalEntry = entry; // window over the category's icon page, rendered below

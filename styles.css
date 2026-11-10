@@ -216,6 +216,8 @@ body.wiki-mode .layout { display: none; }
 .wiki-entry-modal-dj .browser-header h2 { display: none; }
 .wiki-entry-modal-dj .browser-header button { width: 34px; height: 34px; border-radius: 50%; background: var(--panel); border: 1px solid var(--border); color: var(--text); line-height: 1; }
 .wiki-entry-modal-dj .modal-body { padding: 0; }
+/* Labels at the start of a line (Mécanique ... :, Présentation :, Objectif :): bold + underlined. */
+.wiki-label { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 /* Indented sub-line under a monster line (icon 34px + 10px gap). */
 .wiki-text-body p.wiki-sub { padding-left: 44px; margin-top: -2px; font-size: 14px; opacity: 0.92; }
 /* Boss miniature to the right of the green name: in the heading (single boss) or at the end of the line (several bosses). */

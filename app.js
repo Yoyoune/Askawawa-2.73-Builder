@@ -1515,6 +1515,15 @@ function wikiFillText(el, text) {
       el.appendChild(target);
     }
     if (target.tagName === "P" && /^\{icon:/.test(line)) target.classList.add("wiki-icon-line");
+    // Labels "Mécanique ... :", "Présentation :" and "Objectif :" (up to the colon) are bold + underlined.
+    const lab = /^((?:M[ée]canique|Pr[ée]sentation|Objectif)[^:]*:)/.exec(content);
+    if (lab) {
+      const s = document.createElement("span");
+      s.className = "wiki-label";
+      s.textContent = lab[1];
+      target.appendChild(s);
+      content = content.slice(lab[1].length);
+    }
     wikiAppendInline(target, content);
   }
 }

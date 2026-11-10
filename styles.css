@@ -209,6 +209,9 @@ body.wiki-mode .layout { display: none; }
 /* Line starting with a monster icon: icon, then text, vertically centred. */
 .wiki-text-body p.wiki-icon-line { display: flex; align-items: center; gap: 10px; text-align: left; margin-bottom: 4px; }
 .wiki-text-body p.wiki-icon-line .wiki-inline-icon { margin: 0; flex-shrink: 0; }
+/* Boss miniature to the right of the green name: in the heading (single boss) or at the end of the line (several bosses). */
+.wiki-text-body h4.wiki-heading .wiki-inline-icon { margin: -6px 0 -6px 6px; vertical-align: middle; }
+.wiki-text-body p:not(.wiki-icon-line) .wiki-inline-icon { margin-left: 8px; }
 /* Inline icon / centered illustration inside wiki texts ({icon:...} / {figure:...}). */
 .wiki-inline-icon { height: 30px; width: auto; vertical-align: middle; margin: 0 2px; }
 .wiki-figure { margin: 0 0 10px; text-align: center; }

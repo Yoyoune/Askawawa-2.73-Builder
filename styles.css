@@ -201,7 +201,8 @@ body.wiki-mode .layout { display: none; }
 .wiki-c-gold { color: #f2c14e; font-weight: 700; }
 .wiki-text-col h3.wiki-title-gold { color: #f2c14e; font-size: 21px; font-weight: 700; }
 /* Dungeon page: dungeon | Succès | Stasis. */
-.wiki-three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* Left (dungeon) column is the widest: it holds the monsters and the boss mechanics. */
+.wiki-three-col { grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1fr); }
 @media (max-width: 1000px) { .wiki-three-col { grid-template-columns: 1fr; } }
 .wiki-text-col h3 { text-align: center; }
 .wiki-text-col h3.wiki-title-white { color: #ffffff; font-size: 21px; font-weight: 700; }
@@ -210,7 +211,7 @@ body.wiki-mode .layout { display: none; }
 .wiki-text-body p.wiki-icon-line { display: flex; align-items: center; gap: 10px; text-align: left; margin-bottom: 4px; }
 .wiki-text-body p.wiki-icon-line .wiki-inline-icon { margin: 0; flex-shrink: 0; }
 /* Dungeon window: the 3 columns float over the dungeon list (transparent frame, close button top right). */
-.wiki-entry-modal-dj { background: transparent; border: none; box-shadow: none; max-width: 1240px; width: 96vw; max-height: 92vh; }
+.modal.wiki-entry-modal-dj { background: transparent; border: none; box-shadow: none; max-width: 1800px; width: 100%; max-height: 100%; }
 .wiki-entry-modal-dj .browser-header { border-bottom: none; padding: 0 0 8px; justify-content: flex-end; }
 .wiki-entry-modal-dj .browser-header h2 { display: none; }
 .wiki-entry-modal-dj .browser-header button { width: 34px; height: 34px; border-radius: 50%; background: var(--panel); border: 1px solid var(--border); color: var(--text); line-height: 1; }

@@ -1561,35 +1561,41 @@ function renderWikiEntry(root, catKey, entry) {
     root.appendChild(head);
   }
 
-  const makeCol = (heading, text, titleClass) => {
-    const col = document.createElement("section");
-    col.className = "wiki-text-col";
-    if (heading) {
-      const h3 = document.createElement("h3");
-      if (titleClass) h3.className = titleClass;
-      h3.textContent = heading;
-      col.appendChild(h3);
-    }
-    const body = document.createElement("div");
-    body.className = "wiki-text-body";
-    wikiFillText(body, text);
-    col.appendChild(body);
-    return col;
-  };
-
   if (catKey === "donjon") {
-    const two = document.createElement("div");
-    two.className = "wiki-two-col wiki-three-col";
-    two.appendChild(makeCol(entry.name, entry.normal, "wiki-title-white"));
-    two.appendChild(makeCol("Succès", entry.succes, "wiki-title-gold"));
-    two.appendChild(makeCol("Stasis", entry.stasis, "wiki-title-violet"));
-    root.appendChild(two);
+    root.appendChild(wikiDungeonColumns(entry));
   } else {
     const one = document.createElement("div");
     one.className = "wiki-single-col";
-    one.appendChild(makeCol("", entry.text));
+    one.appendChild(wikiMakeCol("", entry.text));
     root.appendChild(one);
   }
+}
+
+/** One titled text column (grey panel). */
+function wikiMakeCol(heading, text, titleClass) {
+  const col = document.createElement("section");
+  col.className = "wiki-text-col";
+  if (heading) {
+    const h3 = document.createElement("h3");
+    if (titleClass) h3.className = titleClass;
+    h3.textContent = heading;
+    col.appendChild(h3);
+  }
+  const body = document.createElement("div");
+  body.className = "wiki-text-body";
+  wikiFillText(body, text);
+  col.appendChild(body);
+  return col;
+}
+
+/** The 3 columns of a dungeon: dungeon (white title) | Succès (gold) | Stasis (violet). */
+function wikiDungeonColumns(entry) {
+  const three = document.createElement("div");
+  three.className = "wiki-two-col wiki-three-col";
+  three.appendChild(wikiMakeCol(entry.name, entry.normal, "wiki-title-white"));
+  three.appendChild(wikiMakeCol("Succès", entry.succes, "wiki-title-gold"));
+  three.appendChild(wikiMakeCol("Stasis", entry.stasis, "wiki-title-violet"));
+  return three;
 }
 
 // Dungeon columns by teleporter level: 1-50, 60-100, 110-150, 160-190, 200.
@@ -1604,7 +1610,7 @@ function wikiDungeonColumn(level) {
 // Categories whose icons open the entry in a window over the icon page (like the item/set browsers)
 // instead of replacing the page. Route stays #wiki/<category>/<slug>, so the link is shareable and
 // closing the window goes back to #wiki/<category>.
-const WIKI_MODAL_CATEGORIES = new Set(["anomalie-temporelle"]);
+const WIKI_MODAL_CATEGORIES = new Set(["anomalie-temporelle", "donjon"]);
 
 function closeWikiEntryModal() {
   const ov = document.getElementById("wikiEntryOverlay");
@@ -1618,23 +1624,34 @@ function dismissWikiEntryModal() {
   else closeWikiEntryModal();
 }
 
-function openWikiEntryModal(entry) {
+function openWikiEntryModal(entry, catKey) {
+  const modal = document.getElementById("wikiEntryModal");
   const title = document.getElementById("wikiEntryTitle");
   const body = document.getElementById("wikiEntryBody");
-  if (!title || !body) return;
+  if (!modal || !title || !body) return;
   title.innerHTML = "";
-  const img = document.createElement("img");
-  img.className = "wiki-modal-icon";
-  img.src = `icons/monsters/${entry.monsterId}.png`;
-  img.alt = "";
-  img.addEventListener("error", () => { img.style.display = "none"; });
-  title.appendChild(img);
-  title.appendChild(document.createTextNode(entry.name));
   body.innerHTML = "";
-  const col = document.createElement("div");
-  col.className = "wiki-text-body wiki-modal-text";
-  wikiFillText(col, entry.text);
-  body.appendChild(col);
+  // Dungeons: big transparent window holding the 3 columns (the columns carry the titles).
+  const dj = catKey === "donjon";
+  modal.classList.toggle("wiki-entry-modal-dj", dj);
+  modal.classList.toggle("modal-xwide", dj);
+  modal.classList.toggle("modal-medium", !dj);
+  if (dj) {
+    body.appendChild(wikiDungeonColumns(entry));
+  } else {
+    const img = document.createElement("img");
+    img.className = "wiki-modal-icon";
+    img.src = `icons/monsters/${entry.monsterId}.png`;
+    img.alt = "";
+    img.addEventListener("error", () => { img.style.display = "none"; });
+    title.appendChild(img);
+    title.appendChild(document.createTextNode(entry.name));
+    const col = document.createElement("div");
+    col.className = "wiki-text-body wiki-modal-text";
+    wikiFillText(col, entry.text);
+    body.appendChild(col);
+  }
+  body.scrollTop = 0;
   document.title = `${entry.name} — Wiki Askawawa 2.73`;
   document.getElementById("wikiEntryOverlay").classList.remove("hidden");
 }
@@ -1642,8 +1659,10 @@ function openWikiEntryModal(entry) {
 async function renderWikiPage(key, slug) {
   const root = document.getElementById("wikiPage");
   if (!root) return;
+  // Opening/closing an entry window keeps the icon page underneath as it is (same scroll position).
+  const keepList = !!key && WIKI_MODAL_CATEGORIES.has(key) && root.dataset.listKey === key && root.childElementCount > 0;
   closeWikiEntryModal();
-  root.innerHTML = "";
+  if (!keepList) { root.innerHTML = ""; delete root.dataset.listKey; }
   if (!key) return;
   let data;
   try { data = await loadWikiData(); } catch (e) { console.error("wiki.json", e); return; }
@@ -1674,6 +1693,7 @@ async function renderWikiPage(key, slug) {
     if (!entry) return;
     modalEntry = entry; // window over the category's icon page, rendered below
   }
+  if (keepList) { if (modalEntry) openWikiEntryModal(modalEntry, key); return; }
 
   if (key === "donjon") {
     const grid = document.createElement("div");
@@ -1712,7 +1732,8 @@ async function renderWikiPage(key, slug) {
     root.appendChild(block);
   }
 
-  if (modalEntry) openWikiEntryModal(modalEntry);
+  if (WIKI_MODAL_CATEGORIES.has(key)) root.dataset.listKey = key;
+  if (modalEntry) openWikiEntryModal(modalEntry, key);
 }
 
 /** Shows the wiki page matching location.hash (#wiki/<key> or #wiki/<key>/<entry>), or the normal builder otherwise. */
@@ -1740,6 +1761,11 @@ function initWikiMenu() {
   const entryClose = document.getElementById("wikiEntryClose");
   const entryOverlay = document.getElementById("wikiEntryOverlay");
   if (entryClose) entryClose.addEventListener("click", dismissWikiEntryModal);
+  // Clicking the gaps around/between the dungeon columns closes the window too.
+  const entryBody = document.getElementById("wikiEntryBody");
+  if (entryBody) entryBody.addEventListener("click", (ev) => {
+    if (ev.target === entryBody || ev.target.classList.contains("wiki-three-col")) dismissWikiEntryModal();
+  });
   if (entryOverlay) entryOverlay.addEventListener("click", (ev) => {
     if (ev.target === entryOverlay) dismissWikiEntryModal();
   });

@@ -209,6 +209,12 @@ body.wiki-mode .layout { display: none; }
 /* Line starting with a monster icon: icon, then text, vertically centred. */
 .wiki-text-body p.wiki-icon-line { display: flex; align-items: center; gap: 10px; text-align: left; margin-bottom: 4px; }
 .wiki-text-body p.wiki-icon-line .wiki-inline-icon { margin: 0; flex-shrink: 0; }
+/* Dungeon window: the 3 columns float over the dungeon list (transparent frame, close button top right). */
+.wiki-entry-modal-dj { background: transparent; border: none; box-shadow: none; max-width: 1240px; width: 96vw; max-height: 92vh; }
+.wiki-entry-modal-dj .browser-header { border-bottom: none; padding: 0 0 8px; justify-content: flex-end; }
+.wiki-entry-modal-dj .browser-header h2 { display: none; }
+.wiki-entry-modal-dj .browser-header button { width: 34px; height: 34px; border-radius: 50%; background: var(--panel); border: 1px solid var(--border); color: var(--text); line-height: 1; }
+.wiki-entry-modal-dj .modal-body { padding: 0; }
 /* Boss miniature to the right of the green name: in the heading (single boss) or at the end of the line (several bosses). */
 .wiki-text-body h4.wiki-heading .wiki-inline-icon { margin: -6px 0 -6px 6px; vertical-align: middle; }
 .wiki-text-body p:not(.wiki-icon-line) .wiki-inline-icon { margin-left: 8px; }

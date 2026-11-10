@@ -75,7 +75,7 @@
                          "name":  "Grozilla et Grasmera Somnambules",
                          "level":  40,
                          "monsterId":  3295,
-                         "normal":  "## I. Famille de monstre : {c:blue|Monstres de Vulkania}\n## II. Boss\n{icon:icons/monsters/3295.png|Grozilla Somnambule|34}{c:green|Grozilla Somnambule}\n{icon:icons/monsters/3298.png|Grasmera Somnambule|34}{c:green|Grasmera Somnambule}",
+                         "normal":  "## I. Boss\n{icon:icons/monsters/3295.png|Grozilla Somnambule|34}{c:green|Grozilla Somnambule}\n{icon:icons/monsters/3298.png|Grasmera Somnambule|34}{c:green|Grasmera Somnambule}",
                          "succes":  ""
                      },
                      {
@@ -236,7 +236,7 @@
                          "name":  "Grozilla et Grasmera Epuisés",
                          "level":  90,
                          "monsterId":  3294,
-                         "normal":  "## I. Famille de monstre : {c:blue|Monstres de Vulkania}\n## II. Boss\n{icon:icons/monsters/3294.png|Grozilla Épuisé|34}{c:green|Grozilla Épuisé}\n{icon:icons/monsters/3297.png|Grasmera Épuisé|34}{c:green|Grasmera Épuisé}",
+                         "normal":  "## I. Boss\n{icon:icons/monsters/3294.png|Grozilla Épuisé|34}{c:green|Grozilla Épuisé}\n{icon:icons/monsters/3297.png|Grasmera Épuisé|34}{c:green|Grasmera Épuisé}",
                          "succes":  ""
                      },
                      {
@@ -474,7 +474,7 @@
                          "name":  "Grozilla et Grasmera Fatigués",
                          "level":  140,
                          "monsterId":  3293,
-                         "normal":  "## I. Famille de monstre : {c:blue|Monstres de Vulkania}\n## II. Boss\n{icon:icons/monsters/3293.png|Grozilla Fatigué|34}{c:green|Grozilla Fatigué}\n{icon:icons/monsters/3296.png|Grasmera Fatigué|34}{c:green|Grasmera Fatigué}",
+                         "normal":  "## I. Boss\n{icon:icons/monsters/3293.png|Grozilla Fatigué|34}{c:green|Grozilla Fatigué}\n{icon:icons/monsters/3296.png|Grasmera Fatigué|34}{c:green|Grasmera Fatigué}",
                          "succes":  ""
                      },
                      {
@@ -579,7 +579,7 @@
                          "name":  "Antre du Kralamoure Géant",
                          "level":  180,
                          "monsterId":  423,
-                         "normal":  "## I. Famille de monstre : {c:blue|Monstres des Tourbières}\n## II. Boss : {c:green|Kralamoure Géant}\n{icon:icons/monsters/423.png|Kralamoure Géant|34}",
+                         "normal":  "## I. Boss : {c:green|Kralamoure Géant}\n{icon:icons/monsters/423.png|Kralamoure Géant|34}",
                          "succes":  "{c:gold|Kralamoure Géant (Nomade)} : Les combattants alliés doivent utiliser tous leurs points de mouvement à chaque tour pendant toute la durée du combat. Perdre des points de mouvement en détaclant fait échouer le challenge.\n{c:gold|Kralamoure Géant (Blitzkrieg)} : Lorsqu’un ennemi est attaqué, il doit être achevé avant le début de son tour de jeu.\n{c:gold|Kralamoure Géant (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 40 tours.\n{c:gold|Kralamoure Géant (Spécial)} : Les combattants ne doivent pas terminer leur tour en ligne d’un allié."
                      },
                      {
@@ -663,7 +663,7 @@
                          "name":  "Grozilla et Grasmera",
                          "level":  190,
                          "monsterId":  3142,
-                         "normal":  "## I. Famille de monstre : {c:blue|Monstres de Vulkania}\n## II. Boss\n{icon:icons/monsters/3142.png|Grozilla|34}{c:green|Grozilla}\n{icon:icons/monsters/3143.png|Grasmera|34}{c:green|Grasmera}",
+                         "normal":  "## I. Boss\n{icon:icons/monsters/3142.png|Grozilla|34}{c:green|Grozilla}\n{icon:icons/monsters/3143.png|Grasmera|34}{c:green|Grasmera}",
                          "succes":  ""
                      },
                      {
@@ -887,14 +887,14 @@
                          "name":  "Caverne de Cire Momore",
                          "level":  200,
                          "monsterId":  7222,
-                         "normal":  "## I. Famille de monstre : {c:blue|Gardiens solitaires}\n## II. Boss : {c:green|Cire Momore}\n{icon:icons/monsters/7222.png|Cire Momore|34}",
+                         "normal":  "## I. Boss : {c:green|Cire Momore}\n{icon:icons/monsters/7222.png|Cire Momore|34}",
                          "succes":  ""
                      },
                      {
                          "name":  "Songe de Mériana",
                          "level":  200,
                          "monsterId":  3578,
-                         "normal":  "## I. Famille de monstre : {c:blue|Monstres de quête}\n## II. Boss : {c:green|Dark Vlad}\n{icon:icons/monsters/3578.png|Dark Vlad|34}",
+                         "normal":  "## I. Boss : {c:green|Dark Vlad}\n{icon:icons/monsters/3578.png|Dark Vlad|34}",
                          "succes":  ""
                      }
                  ],

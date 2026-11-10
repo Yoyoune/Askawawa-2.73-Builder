@@ -626,7 +626,7 @@
                          "name":  "Temple Maudit d\u0027Araknas",
                          "level":  180,
                          "monsterId":  1195,
-                         "normal":  "## I. Famille de monstre : {c:blue|Monstres de quête d’alignement}\n{icon:icons/monsters/3516.png|Shushu Bidou|34}Shushu Bidou\n{icon:icons/monsters/3518.png|Shushu Marreur|34}Shushu Marreur\n{icon:icons/monsters/3519.png|Shushu Picca|34}Shushu Picca\n{icon:icons/monsters/3517.png|Shushu Yneur|34}Shushu Yneur\n## II. Boss : {c:green|Qu’Tan} {icon:icons/monsters/1195.png|Qu’Tan|40}",
+                         "normal":  "## I. Famille de monstre : {c:blue|Shushu}\n{icon:icons/monsters/3516.png|Shushu Bidou|34}Shushu Bidou\n{icon:icons/monsters/3518.png|Shushu Marreur|34}Shushu Marreur\n{icon:icons/monsters/3519.png|Shushu Picca|34}Shushu Picca\n{icon:icons/monsters/3517.png|Shushu Yneur|34}Shushu Yneur\n## II. Boss : {c:green|Qu’Tan} {icon:icons/monsters/1195.png|Qu’Tan|40}",
                          "succes":  ""
                      },
                      {

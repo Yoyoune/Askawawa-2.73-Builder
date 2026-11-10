@@ -1510,6 +1510,8 @@ function wikiFillText(el, text) {
       list = null;
       target = document.createElement("p");
       if (line.startsWith("=>")) target.className = "wiki-arrow";
+      // ">> text" = indented sub-line (e.g. a monster's own mechanic under its icon line).
+      if (/^>>\s+/.test(line)) { target.className = "wiki-sub"; content = line.replace(/^>>\s+/, ""); }
       el.appendChild(target);
     }
     if (target.tagName === "P" && /^\{icon:/.test(line)) target.classList.add("wiki-icon-line");

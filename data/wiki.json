@@ -510,7 +510,7 @@
                          "level":  160,
                          "monsterId":  827,
                          "slug":  "centre-du-labyrinthe-du-minotoror-160",
-                         "normal":  "## I. Famille de monstre : {c:blue|Minos}\n{icon:icons/monsters/832.png|Déminoboule|34}Déminoboule\n{icon:icons/monsters/831.png|Mominotor|34}Mominotor\n{icon:icons/monsters/830.png|Scaratos|34}Scaratos\n{icon:icons/monsters/668.png|Gamino|34}Gamino\n## II. Boss : {c:green|Minotot}\n{icon:icons/monsters/827.png|Minotot|34}",
+                         "normal":  "## I. Famille de monstre : {c:blue|Minos}\n{icon:icons/monsters/832.png|Déminoboule|34}Déminoboule\n{icon:icons/monsters/831.png|Mominotor|34}Mominotor\n{icon:icons/monsters/830.png|Scaratos|34}Scaratos\n{icon:icons/monsters/668.png|Gamino|34}Gamino\n## II. Boss\n{icon:icons/monsters/827.png|Minotot|34}{c:green|Minotot}\n{icon:icons/monsters/121.png|Minotoror|34}{c:green|Minotoror}",
                          "succes":  "{c:gold|Minotot (Circulez)} : Ne pas tenter de retirer de PM aux adversaires pendant toute la durée du combat.\n{c:gold|Minotot (Premier)} : Minotot doit être achevé en premier.\n{c:gold|Minotot (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Minotot (Spécial)} : Aucun combattant allié ne doit subir l’effet du sort Destinos."
                      },
                      {

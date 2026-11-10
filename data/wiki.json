@@ -76,7 +76,7 @@
                          "level":  40,
                          "monsterId":  3295,
                          "normal":  "## I. Boss\n{icon:icons/monsters/3295.png|Grozilla Somnambule|34}{c:green|Grozilla Somnambule}\n{icon:icons/monsters/3298.png|Grasmera Somnambule|34}{c:green|Grasmera Somnambule}",
-                         "succes":  ""
+                         "succes":  "{c:gold|Grozilla et Grasmera Somnambules (Chrono)} : Vaincre tous les monstres en moins de 9 tours.\n{c:gold|Grozilla et Grasmera Somnambules (Statue)} : Les combattants alliés doivent finir leur tour sur la même case que celle où ils l’ont commencé, pendant toute la durée du combat.\n{c:gold|Grozilla et Grasmera Somnambules (Mains propres)} : Les personnages alliés doivent achever les ennemis sans leur occasionner de dommages directs. Les pièges, les glyphes, les poisons, les dommages de poussée, les renvois de dommages ainsi que les dommages infligés par des invocations peuvent être utilisés.\n{c:gold|Grozilla et Grasmera Somnambules (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Grozilla et Grasmera Somnambules (Spécial)} : Aucune invocation ennemie ne doit être achevée par un combattant allié."
                      },
                      {
                          "name":  "Donjon des Bworks",
@@ -118,7 +118,7 @@
                          "level":  50,
                          "monsterId":  1179,
                          "normal":  "## I. Famille de monstre : {c:blue|Monstres de Nowel}\n{icon:icons/monsters/899.png|Black tiwabbitus|34}Black tiwabbitus\n{icon:icons/monsters/849.png|Kipik|34}Kipik\n{icon:icons/monsters/896.png|Kitsou nakwatus|34}Kitsou nakwatus\n{icon:icons/monsters/901.png|Kwakus|34}Kwakus\n{icon:icons/monsters/868.png|Tofu enneigé|34}Tofu enneigé\n## II. Boss : {c:green|Sapik}\n{icon:icons/monsters/1179.png|Sapik|34}",
-                         "succes":  ""
+                         "succes":  "{c:gold|Sapik (Chrono)} : Vaincre tous les monstres en moins de 9 tours.\n{c:gold|Sapik (Hardi)} : Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d’un ennemi.\n{c:gold|Sapik (Blitzkrieg)} : Lorsqu’un ennemi est attaqué, il doit être achevé avant le début de son tour de jeu.\n{c:gold|Sapik (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Sapik (Spécial)} : À la fin du tour du Sapik, il ne doit pas y avoir plus d’un Kipik."
                      },
                      {
                          "name":  "Refuge Sylvestre",
@@ -160,7 +160,7 @@
                          "level":  60,
                          "monsterId":  5653,
                          "normal":  "## I. Famille de monstre : {c:blue|Waddicts}\n{icon:icons/monsters/5652.png|Twakeuf|34}Twakeuf\n{icon:icons/monsters/5690.png|Waccro|34}Waccro\n{icon:icons/monsters/5689.png|Wadnozéam|34}Wadnozéam\n{icon:icons/monsters/5692.png|Wadulant|34}Wadulant\n{icon:icons/monsters/5691.png|Warkaïk|34}Warkaïk\n## II. Boss : {c:green|Mawabouaino}\n{icon:icons/monsters/5653.png|Mawabouaino|34}",
-                         "succes":  ""
+                         "succes":  "{c:gold|Mawabouaino (Chrono)} : Vaincre tous les monstres en moins de 9 tours.\n{c:gold|Mawabouaino (Versatile)} : Les combattants alliés ne doivent utiliser qu’une seule fois une même action pendant leurs tours de jeu.\n{c:gold|Mawabouaino (Collant)} : Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d’un autre combattant allié.\n{c:gold|Mawabouaino (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Mawabouaino (Spécial)} : Tous les combattants doivent entrer dans l’état Chocomatose au moins une fois avant la fin du combat."
                      },
                      {
                          "name":  "Cale de l\u0027Arche d\u0027Otomaï",
@@ -237,7 +237,7 @@
                          "level":  90,
                          "monsterId":  3294,
                          "normal":  "## I. Boss\n{icon:icons/monsters/3294.png|Grozilla Épuisé|34}{c:green|Grozilla Épuisé}\n{icon:icons/monsters/3297.png|Grasmera Épuisé|34}{c:green|Grasmera Épuisé}",
-                         "succes":  ""
+                         "succes":  "{c:gold|Grozilla et Grasmera Épuisés (Chrono)} : Vaincre tous les monstres en moins de 9 tours.\n{c:gold|Grozilla et Grasmera Épuisés (Premier)} : Grasmera Épuisé doit être achevé en premier.\n{c:gold|Grozilla et Grasmera Épuisés (Collant)} : Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d’un autre combattant allié.\n{c:gold|Grozilla et Grasmera Épuisés (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Grozilla et Grasmera Épuisés (Spécial)} : Aucune invocation ennemie ne doit être achevée par un combattant allié."
                      },
                      {
                          "name":  "Antre du Dragon Cochon",
@@ -279,7 +279,7 @@
                          "level":  100,
                          "monsterId":  3306,
                          "normal":  "## I. Famille de monstre : {c:blue|Épouvantises}\n{icon:icons/monsters/3311.png|Chauffe-Soutrille|34}Chauffe-Soutrille\n{icon:icons/monsters/3310.png|Lanverne|34}Lanverne\n{icon:icons/monsters/3309.png|Champêtrouille|34}Champêtrouille\n{icon:icons/monsters/3308.png|Cauchemarakne|34}Cauchemarakne\n{icon:icons/monsters/3307.png|Dévhorreur|34}Dévhorreur\n## II. Boss : {c:green|Halouine}\n{icon:icons/monsters/3306.png|Halouine|34}",
-                         "succes":  ""
+                         "succes":  "{c:gold|Halouine (Chrono)} : Vaincre tous les monstres en moins de 9 tours.\n{c:gold|Halouine (Hardi)} : Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d’un ennemi.\n{c:gold|Halouine (Dernier)} : Halouine doit être achevé en dernier.\n{c:gold|Halouine (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Halouine (Spécial)} : Les combattants alliés ne doivent pas être déplacés."
                      },
                      {
                          "name":  "Théâtre de Dramak",
@@ -293,7 +293,7 @@
                          "level":  100,
                          "monsterId":  5819,
                          "normal":  "## I. Famille de monstre : {c:blue|Dragoss}\n{icon:icons/monsters/905.png|Dragoss Ardoise|34}Dragoss Ardoise\n{icon:icons/monsters/879.png|Dragoss Argile|34}Dragoss Argile\n{icon:icons/monsters/878.png|Dragoss Calcaire|34}Dragoss Calcaire\n{icon:icons/monsters/858.png|Dragoss Charbon|34}Dragoss Charbon\n{icon:icons/monsters/5820.png|Dragoss Protéiforme|34}Dragoss Protéiforme\n## II. Boss : {c:green|Kharnozor}\n{icon:icons/monsters/5819.png|Kharnozor|34}",
-                         "succes":  "{c:gold|Kharnozor (Dernier)} : Kharnozor doit être achevé en dernier.\n{c:gold|Kharnozor (Circulez)} : Ne pas tenter de retirer de PM aux adversaires pendant toute la durée du combat.\n{c:gold|Kharnozor (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Kharnozor (Spécial)} : {null}"
+                         "succes":  "{c:gold|Kharnozor (Dernier)} : Kharnozor doit être achevé en dernier.\n{c:gold|Kharnozor (Circulez)} : Ne pas tenter de retirer de PM aux adversaires pendant toute la durée du combat.\n{c:gold|Kharnozor (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Kharnozor (Spécial)} : « Les yeux aussi gros que le ventre »"
                      },
                      {
                          "name":  "Bibliothèque du Maître Corbac",
@@ -307,7 +307,7 @@
                          "level":  110,
                          "monsterId":  872,
                          "normal":  "## I. Famille de monstre : {c:blue|Monstres de Nowel}\n{icon:icons/monsters/845.png|Bonhomme de neige|34}Bonhomme de neige\n{icon:icons/monsters/867.png|Bouboule de neige|34}Bouboule de neige\n{icon:icons/monsters/2622.png|Croc gland de Nowel|34}Croc gland de Nowel\n{icon:icons/monsters/840.png|Kanigrou hivernal|34}Kanigrou hivernal\n{icon:icons/monsters/891.png|Mininuit|34}Mininuit\n## II. Boss : {c:green|Papa Nowel}\n{icon:icons/monsters/872.png|Papa Nowel|34}",
-                         "succes":  ""
+                         "succes":  "{c:gold|Papa Nowel (Chrono)} : Vaincre tous les monstres en moins de 9 tours.\n{c:gold|Papa Nowel (Premier)} : Papa Nowel doit être achevé en premier.\n{c:gold|Papa Nowel (Statue)} : Les combattants alliés doivent finir leur tour sur la même case que celle où ils l’ont commencé, pendant toute la durée du combat.\n{c:gold|Papa Nowel (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Papa Nowel (Spécial)} : Les alliés doivent achever le Demi Papa Nowel sans occasionner de dommages au Papa Nowel une fois qu’il entre dans l’état Séparé. Le challenge échoue si le Papa Nowel est achevé avant d’entrer dans cet état."
                      },
                      {
                          "name":  "Goulet du Rasboul",
@@ -412,7 +412,7 @@
                          "level":  130,
                          "monsterId":  5664,
                          "normal":  "## I. Famille de monstre : {c:blue|Croquants}\n{icon:icons/monsters/5680.png|Chocoskargo|34}Chocoskargo\n{icon:icons/monsters/5679.png|Glourson Guimauve|34}Glourson Guimauve\n{icon:icons/monsters/5677.png|Kakoalak|34}Kakoalak\n{icon:icons/monsters/5681.png|Kwakao|34}Kwakao\n{icon:icons/monsters/5678.png|Mansocolat|34}Mansocolat\n## II. Boss : {c:green|Croqueleur}\n{icon:icons/monsters/5664.png|Croqueleur|34}",
-                         "succes":  ""
+                         "succes":  "{c:gold|Croqueleur (Chrono)} : Vaincre tous les monstres en moins de 9 tours.\n{c:gold|Croqueleur (Circulez)} : Ne pas tenter de retirer de PM aux adversaires pendant toute la durée du combat.\n{c:gold|Croqueleur (Blitzkrieg)} : Lorsqu’un ennemi est attaqué, il doit être achevé avant le début de son tour de jeu.\n{c:gold|Croqueleur (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Croqueleur (Spécial)} : « J’accours, les croquants ! »"
                      },
                      {
                          "name":  "Caverne d\u0027El Piko",
@@ -475,7 +475,7 @@
                          "level":  140,
                          "monsterId":  3293,
                          "normal":  "## I. Boss\n{icon:icons/monsters/3293.png|Grozilla Fatigué|34}{c:green|Grozilla Fatigué}\n{icon:icons/monsters/3296.png|Grasmera Fatigué|34}{c:green|Grasmera Fatigué}",
-                         "succes":  ""
+                         "succes":  "{c:gold|Grozilla et Grasmera Fatigués (Chrono)} : Vaincre tous les monstres en moins de 9 tours.\n{c:gold|Grozilla et Grasmera Fatigués (Nomade)} : Les combattants alliés doivent utiliser tous leurs points de mouvement à chaque tour pendant toute la durée du combat. Perdre des points de mouvement en détaclant fait échouer le challenge.\n{c:gold|Grozilla et Grasmera Fatigués (Blitzkrieg)} : Lorsqu’un ennemi est attaqué, il doit être achevé avant le début de son tour de jeu.\n{c:gold|Grozilla et Grasmera Fatigués (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Grozilla et Grasmera Fatigués (Spécial)} : Aucune invocation ennemie ne doit être achevée par un combattant allié."
                      },
                      {
                          "name":  "Epave du Grolandais violent",
@@ -517,7 +517,7 @@
                          "level":  160,
                          "monsterId":  3556,
                          "normal":  "## I. Famille de monstre : {c:blue|Kanigs des Dents de Pierre}\n{icon:icons/monsters/3559.png|Félygiène|34}Félygiène\n{icon:icons/monsters/3560.png|Panthègros|34}Panthègros\n{icon:icons/monsters/3561.png|Kaniblou|34}Kaniblou\n{icon:icons/monsters/3562.png|Orfélin|34}Orfélin\n{icon:icons/monsters/3557.png|Kanihilan|34}Kanihilan\n## II. Boss : {c:green|Kanigroula}\n{icon:icons/monsters/3556.png|Kanigroula|34}",
-                         "succes":  "{c:gold|Kanigroula (Premier)} : Kanigroula doit être achevé en premier.\n{c:gold|Kanigroula (Hardi)} : Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d’un ennemi.\n{c:gold|Kanigroula (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Kanigroula (Spécial)} : {null}"
+                         "succes":  "{c:gold|Kanigroula (Premier)} : Kanigroula doit être achevé en premier.\n{c:gold|Kanigroula (Hardi)} : Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d’un ennemi.\n{c:gold|Kanigroula (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Kanigroula (Spécial)} : « Crocs à crocs »"
                      },
                      {
                          "name":  "Hypogée de l\u0027Obsidiantre",
@@ -608,7 +608,7 @@
                          "level":  180,
                          "monsterId":  1194,
                          "normal":  "## I. Famille de monstre : {c:blue|Monstres de Nowel}\n{icon:icons/monsters/839.png|Abominable yiti des neiges|34}Abominable yiti des neiges\n{icon:icons/monsters/906.png|Cadob’|34}Cadob’\n{icon:icons/monsters/869.png|Craqueleur des glaces|34}Craqueleur des glaces\n{icon:icons/monsters/3108.png|Peluche bouftou|34}Peluche bouftou\n{icon:icons/monsters/3107.png|Peluche tofu|34}Peluche tofu\n{icon:icons/monsters/3109.png|Peluche wabbit|34}Peluche wabbit\n## II. Boss : {c:green|Père Fwetar}\n{icon:icons/monsters/1194.png|Père Fwetar|34}",
-                         "succes":  ""
+                         "succes":  "{c:gold|Père Fwetar (Chrono)} : Vaincre tous les monstres en moins de 9 tours.\n{c:gold|Père Fwetar (Nomade)} : Les combattants alliés doivent utiliser tous leurs points de mouvement à chaque tour pendant toute la durée du combat. Perdre des points de mouvement en détaclant fait échouer le challenge.\n{c:gold|Père Fwetar (Hardi)} : Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d’un ennemi.\n{c:gold|Père Fwetar (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Père Fwetar (Spécial)} : Les alliés doivent achever au moins une marionnette du Père Fwetar avant d’achever ce dernier."
                      },
                      {
                          "name":  "Temple Maudit d\u0027Araknas",
@@ -643,7 +643,7 @@
                          "level":  190,
                          "monsterId":  3564,
                          "normal":  "## I. Famille de monstre : {c:blue|Obscuranti}\n{icon:icons/monsters/3568.png|Brutopak|34}Brutopak\n{icon:icons/monsters/3569.png|Caznoar|34}Caznoar\n{icon:icons/monsters/3566.png|Noctulule|34}Noctulule\n{icon:icons/monsters/3567.png|Panterreur|34}Panterreur\n{icon:icons/monsters/3570.png|Sombléro|34}Sombléro\n## II. Boss : {c:green|Ombre}\n{icon:icons/monsters/3564.png|Ombre|34}",
-                         "succes":  "{c:gold|Ombre (Premier)} : Ombre doit être achevé en premier.\n{c:gold|Ombre (Collant)} : Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d’un autre combattant allié.\n{c:gold|Ombre (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 26 tours.\n{c:gold|Ombre (Spécial)} : {null}"
+                         "succes":  "{c:gold|Ombre (Premier)} : Ombre doit être achevé en premier.\n{c:gold|Ombre (Collant)} : Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d’un autre combattant allié.\n{c:gold|Ombre (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 26 tours.\n{c:gold|Ombre (Spécial)} : « Jeux d’ombres »"
                      },
                      {
                          "name":  "Camp du Comte Razof",
@@ -664,7 +664,7 @@
                          "level":  190,
                          "monsterId":  3142,
                          "normal":  "## I. Boss\n{icon:icons/monsters/3142.png|Grozilla|34}{c:green|Grozilla}\n{icon:icons/monsters/3143.png|Grasmera|34}{c:green|Grasmera}",
-                         "succes":  ""
+                         "succes":  "{c:gold|Grozilla et Grasmera (Chrono)} : Vaincre tous les monstres en moins de 9 tours.\n{c:gold|Grozilla et Grasmera (Zombie)} : Utiliser exactement un point de mouvement par tour de jeu.\n{c:gold|Grozilla et Grasmera (Hardi)} : Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d’un ennemi.\n{c:gold|Grozilla et Grasmera (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 20 tours.\n{c:gold|Grozilla et Grasmera (Spécial)} : Aucune invocation ennemie ne doit être achevée par un combattant allié."
                      },
                      {
                          "name":  "Forgefroide de Missiz Frizz",
@@ -797,7 +797,7 @@
                          "level":  200,
                          "monsterId":  5666,
                          "normal":  "## I. Famille de monstre : {c:blue|Chocomanciens}\n{icon:icons/monsters/5672.png|Cabosseur|34}Cabosseur\n{icon:icons/monsters/5668.png|Chocoligarque|34}Chocoligarque\n{icon:icons/monsters/5670.png|Pralicienne|34}Pralicienne\n{icon:icons/monsters/5671.png|Températurge|34}Températurge\n{icon:icons/monsters/5669.png|Torréfactueur|34}Torréfactueur\n## II. Boss : {c:green|Prêtresse de Kao}\n{icon:icons/monsters/5666.png|Prêtresse de Kao|34}",
-                         "succes":  ""
+                         "succes":  "{c:gold|Prêtresse de Kao (Chrono)} : Vaincre tous les monstres en moins de 9 tours.\n{c:gold|Prêtresse de Kao (Premier)} : Prêtresse de Kao doit être achevé en premier.\n{c:gold|Prêtresse de Kao (Liberté)} : Ne pas tenter de retirer de PM ou de PO aux adversaires pendant toute la durée du combat.\n{c:gold|Prêtresse de Kao (Duo)} : Vaincre tous les monstres avec 2 personnages maximum et en moins de 40 tours.\n{c:gold|Prêtresse de Kao (Spécial)} : Aucun Éclats du Kao ne doit être sur le terrain lorsqu’un combattant ennemi est achevé."
                      },
                      {
                          "name":  "Belvédère d\u0027Ilyzaelle",

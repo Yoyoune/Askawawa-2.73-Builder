@@ -1448,9 +1448,12 @@ function wikiFillText(el, text) {
   if (!text) return;
   let list = null;
   let table = null;
+  let tableClass = "";
   for (const raw of String(text).split(/\n+/)) {
     const line = raw.trim();
     if (!line) continue;
+    // "{table:left}" right before a table = left-aligned, wrapping cells (long multi-line texts).
+    if (line === "{table:left}") { tableClass = " wiki-table-left"; continue; }
     // "| a | b" lines form a table (first row = header, bold blue).
     if (line.startsWith("|")) {
       list = null;
@@ -1458,7 +1461,7 @@ function wikiFillText(el, text) {
         const wrap = document.createElement("div");
         wrap.className = "wiki-table-wrap";
         table = document.createElement("table");
-        table.className = "wiki-table";
+        table.className = "wiki-table" + tableClass;
         wrap.appendChild(table);
         el.appendChild(wrap);
         table.header = true;
@@ -1467,7 +1470,13 @@ function wikiFillText(el, text) {
       const tr = document.createElement("tr");
       for (const c of cells) {
         const cell = document.createElement(table.header ? "th" : "td");
-        cell.textContent = c;
+        // "<br>" inside a cell = new line ; {c:colour|text} inline markup is allowed in cells.
+        for (const part of c.split(/\s*<br>\s*/)) {
+          const ln = document.createElement("div");
+          ln.className = "wiki-cell-line";
+          wikiAppendInline(ln, part);
+          cell.appendChild(ln);
+        }
         tr.appendChild(cell);
       }
       if (table.header) { const thead = document.createElement("thead"); thead.appendChild(tr); table.appendChild(thead); table.header = false; table.tbody = document.createElement("tbody"); table.appendChild(table.tbody); }
@@ -1475,6 +1484,7 @@ function wikiFillText(el, text) {
       continue;
     }
     table = null;
+    tableClass = "";
     // "## Title" = section heading (bold, red, larger).
     const head = /^##\s+(.*)$/.exec(line);
     if (head) {

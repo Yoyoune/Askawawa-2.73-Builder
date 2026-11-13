@@ -1941,3 +1941,10 @@ body.mobile-mode .set-card-header-actions button {
 body.mobile-mode .item-list { max-height: none; }
 body.mobile-mode .item-icon { width: 44px; height: 44px; }
 body.mobile-mode .equipped-tooltip { max-width: 90vw; }
+/* Left-aligned table ("{table:left}" before the rows): multi-line cells, first column bold, no forced no-wrap on the last column. */
+.wiki-table.wiki-table-left { width: 100%; min-width: 0; }
+.wiki-table.wiki-table-left th, .wiki-table.wiki-table-left td { text-align: left; vertical-align: top; }
+.wiki-table.wiki-table-left th:last-child, .wiki-table.wiki-table-left td:last-child { white-space: normal; }
+.wiki-table.wiki-table-left td:first-child { font-weight: 700; white-space: nowrap; }
+.wiki-table.wiki-table-left tbody tr:nth-child(even) td { background: rgba(255, 255, 255, 0.035); }
+.wiki-cell-line + .wiki-cell-line { margin-top: 2px; }

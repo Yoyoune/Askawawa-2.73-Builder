@@ -944,8 +944,9 @@
                          "name":  "Songe de Mériana",
                          "level":  200,
                          "monsterId":  3578,
-                         "normal":  "## I. Boss : {c:green|Dark Vlad} {icon:icons/monsters/3578.png|Dark Vlad|40}",
-                         "succes":  ""
+                         "normal":  "## I. Boss : {c:green|Dark Vlad} {icon:icons/monsters/3578.png|Dark Vlad|40}\nPrésentation : Dégâts distance + Malus Rés\nMécanique : Dark Vlad est invulnérable et invoque autant de Feux du Dark Vlad qu’il y a de joueurs. Une fois tous les feux éliminés, apparition de Hell Mina ensorcelée.\nInfliger des dégâts de poussée indirects au Dark Vlad en poussant Hell Mina ensorcelée sur lui permet de lever l’invulnérabilité pour 1 tour.",
+                         "succes":  "",
+                         "stasis":  "À chaque fois que le Dark Vlad est rendu vulnérable, il gagne :\n- 1 PM\n- 10 % dommages finaux"
                      }
                  ],
     "anomalies":  [

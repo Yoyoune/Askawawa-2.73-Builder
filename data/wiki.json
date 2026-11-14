@@ -937,8 +937,9 @@
                          "name":  "Caverne de Cire Momore",
                          "level":  200,
                          "monsterId":  7222,
-                         "normal":  "## I. Boss : {c:green|Cire Momore} {icon:icons/monsters/7222.png|Cire Momore|40}",
-                         "succes":  ""
+                         "normal":  "## I. Boss : {c:green|Cire Momore} {icon:icons/monsters/7222.png|Cire Momore|40}\nPrésentation : Dégâts distance + Attirance + RET PM + Protection\nMécanique : Cire Momore est Invulnérable et possède un seuil de PV à 80 %.\nPour pouvoir retirer l’invulnérabilité de Cire Momore pour le tour en cours, il faut être à 2 PO ou moins de lui pour déclencher Abîme Hurlant. Être dans la zone d’Abîme Hurlant retire 1 PM.\nCire Momore OS en début de tour tous les persos dans la zone Abîme Hurlant en se donnant un Boost.\nCire Momore OS tout le monde au bout de 15 tours.",
+                         "succes":  "",
+                         "stasis":  "À chaque fois qu’est levée l’invulnérabilité de Cire Momore, il gagne 5 % dommages finaux"
                      },
                      {
                          "name":  "Songe de Mériana",

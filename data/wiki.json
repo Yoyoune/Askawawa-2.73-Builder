@@ -1,4 +1,4 @@
-{
+﻿{
     "dungeons":  [
                      {
                          "name":  "Crypte de Kardorim",
@@ -1226,10 +1226,6 @@
                         "monsterId":  6823
                     },
                     {
-                        "name":  "Oropo",
-                        "monsterId":  5174
-                    },
-                    {
                         "name":  "Vil Smith",
                         "monsterId":  3102
                     },
@@ -1244,6 +1240,10 @@
                     {
                         "name":  "Rubilax",
                         "monsterId":  3766
+                    },
+                    {
+                        "name":  "Oropo",
+                        "monsterId":  5174
                     },
                     {
                         "name":  "Djaul",

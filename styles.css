@@ -1948,3 +1948,9 @@ body.mobile-mode .equipped-tooltip { max-width: 90vw; }
 .wiki-table.wiki-table-left td:first-child { font-weight: 700; white-space: nowrap; }
 .wiki-table.wiki-table-left tbody tr:nth-child(even) td { background: rgba(255, 255, 255, 0.035); }
 .wiki-cell-line + .wiki-cell-line { margin-top: 2px; }
+
+/* Boss Ultime: companion icons under the explanation text, and their spell window (class-spell cards). */
+.wiki-companion-grid { margin-top: 24px; }
+.wiki-companion-spells { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 16px; align-items: start; }
+@media (max-width: 500px) { .wiki-companion-spells { grid-template-columns: 1fr; } }
+.wiki-companion-spell { min-width: 0; }

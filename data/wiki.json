@@ -1199,8 +1199,28 @@
                                                "text":  "Toutes les 2h, 2 anomalies temporelles apparaissent sur des zones. Ces zones bénéficient d’un bonus xp et drop.\nLorsqu’une anomalie apparaît, il y a un gardien de cette anomalie. Afin d’affronter ce gardien, il faut se rendre sur un zaap et se téléporter sur la zone anomalie temporelle. À partir de là, un combat se lance pour un des 10 gardiens (aléatoirement). Remporter le combat contre ce gardien met fin à l’anomalie et en ouvre une nouvelle.",
                                                "image":  "images/wiki/anomalie-zaap.webp",
                                                "alt":  "Fenêtre de zaap : onglet Anomalie"
-                                           }
+                                           },
+                   "boss-ultime":  {
+                                       "text":  "Les Boss Ultimes sont des Boss où les personnages changent. En effet, sur chacune des cases de placement sont présents les apparences des Compagnons qui pourront être incarnés dans ce combat. Débuter le combat sur la case d’un compagnon vous fait incarner le compagnon pour le combat. Les statistiques du personnage sont conservées mais il y a un nouveau set de sorts pour le combat."
+                                   }
                },
+    "companions":  [
+                       { "name":  "Skale", "companionId":  2, "icon":  "icons/companions/2.png" },
+                       { "name":  "Karotz", "companionId":  79, "icon":  "icons/companions/79.png" },
+                       { "name":  "Laikteur", "companionId":  68, "icon":  "icons/companions/68.png" },
+                       { "name":  "Logram", "companionId":  90, "icon":  "icons/companions/90.png" },
+                       { "name":  "Grouillot", "companionId":  78, "icon":  "icons/companions/78.png" },
+                       { "name":  "Inferno", "companionId":  84, "icon":  "icons/companions/84.png" },
+                       { "name":  "Ougicle", "companionId":  83, "icon":  "icons/companions/83.png" },
+                       { "name":  "Gobeuf", "companionId":  67, "icon":  "icons/companions/67.png" },
+                       { "name":  "Kubitus", "companionId":  81, "icon":  "icons/companions/81.png" },
+                       { "name":  "Ténèbre", "companionId":  56, "icon":  "icons/companions/56.png" },
+                       { "name":  "Riktus ensorceleuse", "companionId":  64, "icon":  "icons/companions/64.png" },
+                       { "name":  "Manitou Zoth", "companionId":  74, "icon":  "icons/companions/74.png" },
+                       { "name":  "Éclaireur spectral", "companionId":  15, "icon":  "icons/companions/15.png" },
+                       { "name":  "Haku", "companionId":  93, "icon":  "icons/companions/93.png" },
+                       { "name":  "Turyé", "companionId":  94, "icon":  "icons/companions/94.png" }
+                   ],
     "ultimes":  [
                     {
                         "name":  "Boufette Royale",

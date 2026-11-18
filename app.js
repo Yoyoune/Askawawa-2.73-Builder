@@ -1421,7 +1421,7 @@ const WIKI_ENTRY_LISTS = {
   "donjon": d => d.dungeons,
   "anomalie-temporelle": d => d.anomalies,
   "avis-de-recherche": d => d.avis,
-  "boss-ultime": d => d.ultimes,
+  "boss-ultime": d => d.ultimes.concat(d.companions || []),
 };
 
 /** Icon button (a link): opens the entry's own wiki page, #wiki/<category>/<slug>. */
@@ -1431,7 +1431,7 @@ function wikiIconButton(entry, catKey) {
   btn.href = `#wiki/${catKey}/${wikiEntrySlug(entry)}`;
   btn.title = entry.name;
   const img = document.createElement("img");
-  img.src = `icons/monsters/${entry.monsterId}.png`;
+  img.src = entry.icon || `icons/monsters/${entry.monsterId}.png`;
   img.alt = "";
   img.addEventListener("error", () => { img.style.visibility = "hidden"; });
   btn.appendChild(img);
@@ -1646,6 +1646,33 @@ function dismissWikiEntryModal() {
   else closeWikiEntryModal();
 }
 
+// Companions of the Boss Ultime page (data/companions.json: every companion with the spells it gets when incarnated).
+let wikiCompanions = null;
+async function loadWikiCompanions() {
+  if (!wikiCompanions) wikiCompanions = await fetch("data/companions.json").then(r => r.json());
+  return wikiCompanions;
+}
+
+/** One companion spell, shown like a class spell card; the grade tabs (1/2/3) are clickable here. */
+function wikiCompanionSpellCard(spell) {
+  const wrap = document.createElement("div");
+  wrap.className = "wiki-companion-spell";
+  const draw = (level) => {
+    const grade = pickGradeForLevel(spell, level);
+    // "débloqué Nv." only makes sense for class spells: companions get every spell at once.
+    const card = renderSpellVariantCard({ ...spell, obtainLevel: grade ? grade.minPlayerLevel : spell.obtainLevel }, level);
+    wrap.innerHTML = "";
+    wrap.appendChild(card);
+    card.querySelectorAll(".spell-card-grade").forEach((tab, i) => {
+      if (!spell.grades[i]) return;
+      tab.style.cursor = "pointer";
+      tab.addEventListener("click", () => draw(spell.grades[i].minPlayerLevel));
+    });
+  };
+  draw(200);
+  return wrap;
+}
+
 function openWikiEntryModal(entry, catKey) {
   const modal = document.getElementById("wikiEntryModal");
   const title = document.getElementById("wikiEntryTitle");
@@ -1655,10 +1682,26 @@ function openWikiEntryModal(entry, catKey) {
   body.innerHTML = "";
   // Dungeons: big transparent window holding the 3 columns (the columns carry the titles).
   const dj = catKey === "donjon";
+  const companion = !!entry.companionId;
   modal.classList.toggle("wiki-entry-modal-dj", dj);
-  modal.classList.toggle("modal-xwide", dj);
-  modal.classList.toggle("modal-medium", !dj);
-  if (dj) {
+  modal.classList.toggle("modal-xwide", dj || companion);
+  modal.classList.toggle("modal-medium", !dj && !companion);
+  if (companion) {
+    const img = document.createElement("img");
+    img.className = "wiki-modal-icon";
+    img.src = entry.icon;
+    img.alt = "";
+    title.appendChild(img);
+    title.appendChild(document.createTextNode(entry.name));
+    const grid = document.createElement("div");
+    grid.className = "wiki-companion-spells";
+    body.appendChild(grid);
+    loadWikiCompanions().then(list => {
+      const comp = list.find(c => c.id === entry.companionId);
+      if (!comp) { grid.innerHTML = '<div class="stat-empty">Aucun sort trouvé.</div>'; return; }
+      for (const sp of comp.spells) grid.appendChild(wikiCompanionSpellCard(sp));
+    }).catch(e => console.error("companions.json", e));
+  } else if (dj) {
     body.appendChild(wikiDungeonColumns(entry));
   } else {
     const img = document.createElement("img");
@@ -1731,7 +1774,8 @@ async function renderWikiPage(key, slug) {
   } else {
     const grid = document.createElement("div");
     grid.className = "wiki-icon-grid";
-    for (const e of WIKI_ENTRY_LISTS[key](data)) grid.appendChild(wikiIconButton(e, key));
+    // Boss Ultime: the 10 bosses here, the companions get their own grid under the text (below).
+    for (const e of (key === "boss-ultime" ? data.ultimes : WIKI_ENTRY_LISTS[key](data))) grid.appendChild(wikiIconButton(e, key));
     root.appendChild(grid);
   }
 
@@ -1752,6 +1796,14 @@ async function renderWikiPage(key, slug) {
       block.appendChild(fig);
     }
     root.appendChild(block);
+  }
+
+  // Boss Ultime: one icon per incarnable companion under the explanation text; each opens its spell list.
+  if (key === "boss-ultime" && data.companions && data.companions.length) {
+    const cgrid = document.createElement("div");
+    cgrid.className = "wiki-icon-grid wiki-companion-grid";
+    for (const c of data.companions) cgrid.appendChild(wikiIconButton(c, key));
+    root.appendChild(cgrid);
   }
 
   if (WIKI_MODAL_CATEGORIES.has(key)) root.dataset.listKey = key;

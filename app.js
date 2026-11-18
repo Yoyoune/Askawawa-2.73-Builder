@@ -1687,7 +1687,7 @@ function wikiCompanionSpellCard(spell) {
   const draw = (level) => {
     const grade = pickGradeForLevel(spell, level);
     // "débloqué Nv." only makes sense for class spells: companions get every spell at once.
-    const card = renderSpellVariantCard({ ...spell, obtainLevel: grade ? grade.minPlayerLevel : spell.obtainLevel }, level);
+    const card = renderSpellVariantCard({ ...spell, obtainLevel: grade ? grade.minPlayerLevel : spell.obtainLevel }, level, { healIntelligence: true });
     wrap.innerHTML = "";
     wrap.appendChild(card);
     card.querySelectorAll(".spell-card-grade").forEach((tab, i) => {
@@ -2869,7 +2869,7 @@ function effectLineIcon(label) {
   // Raw effect labels carry their own sign ("- Initiative", "- Tacle") - strip it so
   // lookups match the unsigned keys in STAT_ICON_SVG/EMOJI_FALLBACK (e.g. "Initiative").
   label = stripSign(label || "");
-  const isDamage = label.startsWith("(dommages") || label.startsWith("(vol") || label.startsWith("Dommages ");
+  const isDamage = label.startsWith("(dommages") || label.startsWith("(vol") || label.startsWith("(soins") || label.startsWith("Dommages ");
   if (isDamage) {
     for (const [element, characteristic] of Object.entries(ELEMENT_TO_CHARACTERISTIC)) {
       if (label.includes(element)) return statIcon(characteristic);
@@ -3124,8 +3124,11 @@ function simulateDamageLine(effect, element, combinedStats, isCritical, opts) {
  * every other roll in this panel, a "PV rendus" line's critical value is the exact same
  * formula as its normal value, just with no separate weapon crit bonus added first.
  */
-function simulateHealLine(effect, combinedStats) {
-  const intelligence = combinedStats.get("Intelligence") || 0;
+function simulateHealLine(effect, combinedStats, element, simOpts) {
+  // Elemental heal ("(soins Feu)") scales with its element's characteristic (Eniripsa rule); everything else - and companions, whose
+  // spells are not in the Eniripsa list server-side - scales with Intelligence.
+  const elementStat = element && element !== "Neutre" && !(simOpts && simOpts.healIntelligence) ? DAMAGE_ELEMENT_CHARACTERISTIC[element] : null;
+  const intelligence = combinedStats.get(elementStat || "Intelligence") || 0;
   const healBonus = combinedStats.get("Soins") || 0;
   function apply(roll) {
     return Math.max(0, Math.floor(roll * (100 + intelligence) / 100 + healBonus));
@@ -3160,7 +3163,7 @@ function damageRollLines(effects, criticalEffects) {
       let kind;
       if (isPoussee) kind = "poussee";
       else if (e.label.includes("vol")) kind = "vol";
-      else if (e.label.includes("PV rendus")) kind = "regen"; // flat HP return, not tied to an element
+      else if (e.label.includes("PV rendus") || e.label.includes("soins")) kind = "regen"; // heal: flat "PV rendus", or elemental "(soins Feu)" (element kept: it picks the characteristic)
       else kind = "dommages";
       // Effect_DamageBestElement (id 2822, plain "(dommages)" label, no fixed element) -
       // e.g. Flamiche/Foudroiement/Marteau de Moon - resolved to a concrete element from
@@ -3256,9 +3259,9 @@ function computeWeaponDamageSimulation(weapon, masteryEnabled) {
     // "Dommages Poussée" is a flat effect, not a stat-scaled roll - show as-is. "PV rendus"
     // goes through the CalculateHeal formula (see simulateHealLine), not the damage formula.
     const flat = kind === "poussee";
-    const normal = kind === "regen" ? simulateHealLine(effect, combined)
+    const normal = kind === "regen" ? simulateHealLine(effect, combined, element)
       : flat ? base : simulateDamageLine(effect, element, combined, false, opts);
-    const critical = kind === "regen" ? simulateHealLine(critEffect, combined)
+    const critical = kind === "regen" ? simulateHealLine(critEffect, combined, critElement)
       : flat ? baseCritical : simulateDamageLine(critEffect, critElement, combined, true, opts);
     return { effect, critEffect, element, kind, critElement, critKind, base, baseCritical, normal, critical };
   });
@@ -3283,7 +3286,7 @@ function computeWeaponDamageSimulation(weapon, masteryEnabled) {
  * the panel can skip the critical column entirely instead of showing a misleading
  * "critical" value that's really just the normal roll plus the player's crit stats.
  */
-function computeSpellGradeDamageSimulation(grade) {
+function computeSpellGradeDamageSimulation(grade, simOpts) {
   const combined = computeCombinedStats(equipped, rollOverrides, forgemagie, parchotage, getCharLevel(), characteristicPoints, prestige);
   const hasCritVariant = (grade.criticalEffects || []).length > 0;
   const critRate = Math.min(100, Math.max(0, (grade.criticalHitProbability || 0) + (combined.get("% Critique") || 0)));
@@ -3295,9 +3298,9 @@ function computeSpellGradeDamageSimulation(grade) {
     // "Dommages Poussée" is a flat effect, not a stat-scaled roll - show as-is. "PV rendus"
     // goes through the CalculateHeal formula (see simulateHealLine), not the damage formula.
     const flat = kind === "poussee";
-    const normal = kind === "regen" ? simulateHealLine(effect, combined)
+    const normal = kind === "regen" ? simulateHealLine(effect, combined, element, simOpts)
       : flat ? base : simulateDamageLine(effect, element, combined, false, opts);
-    const critical = kind === "regen" ? simulateHealLine(critEffect, combined)
+    const critical = kind === "regen" ? simulateHealLine(critEffect, combined, critElement, simOpts)
       : flat ? baseCritical : simulateDamageLine(critEffect, critElement, combined, true, opts);
     return { effect, critEffect, element, kind, critElement, critKind, base, baseCritical, normal, critical };
   });
@@ -3314,7 +3317,7 @@ function damageLineHtml(line, key) {
   const v = line[key];
   // Always render the label span (even empty) so it reserves a fixed column width -
   // the icon/value must line up whether or not this particular line says "Vol".
-  const kindLabel = `<span class="damage-kind-label">${kind === "vol" ? "Vol" : ""}</span>`;
+  const kindLabel = `<span class="damage-kind-label">${kind === "vol" ? "Vol" : (kind === "regen" && /soins/.test(srcEffect.label) ? "Soin" : "")}</span>`;
   let valueText = `${v.min} à ${v.max}`;
   let regainNote = "";
   if (kind === "regen" || kind === "poussee") {
@@ -5487,7 +5490,7 @@ function zoneLineHtml(zone) {
   return `<div class="spell-card-zone"><span class="spell-card-zone-label">Zone d'effet :</span><img class="spell-card-zone-icon" src="icons/areas/${escapeHtml(zone.icon)}.png" alt=""><span>${escapeHtml(zone.text)}</span></div>`;
 }
 
-function renderSpellVariantCard(spell, level) {
+function renderSpellVariantCard(spell, level, simOpts) {
   const grade = pickGradeForLevel(spell, level);
   const card = document.createElement("div");
   card.className = "spell-card";
@@ -5496,7 +5499,7 @@ function renderSpellVariantCard(spell, level) {
     return card;
   }
 
-  const sim = computeSpellGradeDamageSimulation(grade);
+  const sim = computeSpellGradeDamageSimulation(grade, simOpts);
   // "Repousse de X case(s)" is already represented as the computed "Dommages Poussée"
   // damage-panel line (see pushDamageLine) - showing the raw effect too would be redundant.
   const nonDamageEffects = (grade.effects || []).filter(e => !isWeaponEffect(e.label) && e.effectId !== 5);

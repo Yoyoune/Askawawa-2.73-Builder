@@ -1620,6 +1620,33 @@ function wikiDungeonColumns(entry) {
   return three;
 }
 
+// Boss Ultime window: the companions available on the placement cells, by element (entry.lineup = names per element).
+const WIKI_LINEUP_ELEMENTS = [["eau", "Eau"], ["feu", "Feu"], ["air", "Air"], ["terre", "Terre"], ["multi", "Multi"]];
+const WIKI_ROMAN = ["I", "II", "III", "IV", "V"];
+
+/** Wiki text of the "Compagnons" column: one section per element (I to V), each companion with its miniature. */
+function wikiLineupText(entry) {
+  const lines = [];
+  WIKI_LINEUP_ELEMENTS.forEach(([key, label], i) => {
+    lines.push(`## ${WIKI_ROMAN[i]}. Compagnon {c:blue|${label}}`);
+    for (const name of (entry.lineup && entry.lineup[key]) || []) {
+      const comp = ((wikiData && wikiData.companions) || []).find(c => c.name === name);
+      lines.push(comp ? `{icon:${comp.icon}|${name}|34}${name}` : name);
+    }
+  });
+  return lines.join("\n");
+}
+
+/** The 3 columns of a Boss Ultime: Compagnons | dungeon (teleporter name) | Stasis (violet). */
+function wikiUltimeColumns(entry) {
+  const three = document.createElement("div");
+  three.className = "wiki-two-col wiki-three-col wiki-ultime-cols";
+  three.appendChild(wikiMakeCol("Compagnons", wikiLineupText(entry), "wiki-title-white"));
+  three.appendChild(wikiMakeCol(entry.dungeon || entry.name, entry.normal, "wiki-title-white"));
+  three.appendChild(wikiMakeCol("Stasis", entry.stasis, "wiki-title-violet"));
+  return three;
+}
+
 // Dungeon columns by teleporter level: 1-50, 60-100, 110-150, 160-190, 200.
 function wikiDungeonColumn(level) {
   if (level <= 50) return 0;
@@ -1681,7 +1708,8 @@ function openWikiEntryModal(entry, catKey) {
   title.innerHTML = "";
   body.innerHTML = "";
   // Dungeons: big transparent window holding the 3 columns (the columns carry the titles).
-  const dj = catKey === "donjon";
+  const ultime = !!entry.lineup; // Boss Ultime: same big transparent 3-column window as a dungeon
+  const dj = catKey === "donjon" || ultime;
   const companion = !!entry.companionId;
   modal.classList.toggle("wiki-entry-modal-dj", dj);
   modal.classList.toggle("modal-xwide", dj || companion);
@@ -1702,7 +1730,7 @@ function openWikiEntryModal(entry, catKey) {
       for (const sp of comp.spells) grid.appendChild(wikiCompanionSpellCard(sp));
     }).catch(e => console.error("companions.json", e));
   } else if (dj) {
-    body.appendChild(wikiDungeonColumns(entry));
+    body.appendChild(ultime ? wikiUltimeColumns(entry) : wikiDungeonColumns(entry));
   } else {
     const img = document.createElement("img");
     img.className = "wiki-modal-icon";

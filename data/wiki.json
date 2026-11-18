@@ -1205,70 +1205,406 @@
                                    }
                },
     "companions":  [
-                       { "name":  "Skale", "companionId":  2, "icon":  "icons/companions/2.png" },
-                       { "name":  "Karotz", "companionId":  79, "icon":  "icons/companions/79.png" },
-                       { "name":  "Laikteur", "companionId":  68, "icon":  "icons/companions/68.png" },
-                       { "name":  "Logram", "companionId":  90, "icon":  "icons/companions/90.png" },
-                       { "name":  "Grouillot", "companionId":  78, "icon":  "icons/companions/78.png" },
-                       { "name":  "Inferno", "companionId":  84, "icon":  "icons/companions/84.png" },
-                       { "name":  "Ougicle", "companionId":  83, "icon":  "icons/companions/83.png" },
-                       { "name":  "Gobeuf", "companionId":  67, "icon":  "icons/companions/67.png" },
-                       { "name":  "Kubitus", "companionId":  81, "icon":  "icons/companions/81.png" },
-                       { "name":  "Ténèbre", "companionId":  56, "icon":  "icons/companions/56.png" },
-                       { "name":  "Riktus ensorceleuse", "companionId":  64, "icon":  "icons/companions/64.png" },
-                       { "name":  "Manitou Zoth", "companionId":  74, "icon":  "icons/companions/74.png" },
-                       { "name":  "Éclaireur spectral", "companionId":  15, "icon":  "icons/companions/15.png" },
-                       { "name":  "Haku", "companionId":  93, "icon":  "icons/companions/93.png" },
-                       { "name":  "Turyé", "companionId":  94, "icon":  "icons/companions/94.png" }
+                       {
+                           "name":  "Skale",
+                           "companionId":  2,
+                           "icon":  "icons/companions/2.png"
+                       },
+                       {
+                           "name":  "Karotz",
+                           "companionId":  79,
+                           "icon":  "icons/companions/79.png"
+                       },
+                       {
+                           "name":  "Laikteur",
+                           "companionId":  68,
+                           "icon":  "icons/companions/68.png"
+                       },
+                       {
+                           "name":  "Logram",
+                           "companionId":  90,
+                           "icon":  "icons/companions/90.png"
+                       },
+                       {
+                           "name":  "Grouillot",
+                           "companionId":  78,
+                           "icon":  "icons/companions/78.png"
+                       },
+                       {
+                           "name":  "Inferno",
+                           "companionId":  84,
+                           "icon":  "icons/companions/84.png"
+                       },
+                       {
+                           "name":  "Ougicle",
+                           "companionId":  83,
+                           "icon":  "icons/companions/83.png"
+                       },
+                       {
+                           "name":  "Gobeuf",
+                           "companionId":  67,
+                           "icon":  "icons/companions/67.png"
+                       },
+                       {
+                           "name":  "Kubitus",
+                           "companionId":  81,
+                           "icon":  "icons/companions/81.png"
+                       },
+                       {
+                           "name":  "Ténèbre",
+                           "companionId":  56,
+                           "icon":  "icons/companions/56.png"
+                       },
+                       {
+                           "name":  "Riktus ensorceleuse",
+                           "companionId":  64,
+                           "icon":  "icons/companions/64.png"
+                       },
+                       {
+                           "name":  "Manitou Zoth",
+                           "companionId":  74,
+                           "icon":  "icons/companions/74.png"
+                       },
+                       {
+                           "name":  "Éclaireur spectral",
+                           "companionId":  15,
+                           "icon":  "icons/companions/15.png"
+                       },
+                       {
+                           "name":  "Haku",
+                           "companionId":  93,
+                           "icon":  "icons/companions/93.png"
+                       },
+                       {
+                           "name":  "Turyé",
+                           "companionId":  94,
+                           "icon":  "icons/companions/94.png"
+                       }
                    ],
     "ultimes":  [
                     {
                         "name":  "Boufette Royale",
-                        "monsterId":  3691
+                        "monsterId":  3691,
+                        "dungeon":  "Prairie de la Boufette Royale",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Karotz",
+                                                   "Laikteur"
+                                               ],
+                                       "feu":  [
+                                                   "Logram",
+                                                   "Inferno"
+                                               ],
+                                       "air":  [
+                                                   "Ougicle",
+                                                   "Gobeuf"
+                                               ],
+                                       "terre":  [
+                                                     "Riktus ensorceleuse",
+                                                     "Manitou Zoth"
+                                                 ],
+                                       "multi":  [
+                                                     "Haku",
+                                                     "Turyé"
+                                                 ]
+                                   }
                     },
                     {
                         "name":  "Tofu Céleste",
-                        "monsterId":  3489
+                        "monsterId":  3489,
+                        "dungeon":  "Temple du Tofu Céleste",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Skale",
+                                                   "Laikteur"
+                                               ],
+                                       "feu":  [
+                                                   "Grouillot",
+                                                   "Inferno"
+                                               ],
+                                       "air":  [
+                                                   "Ougicle",
+                                                   "Kubitus"
+                                               ],
+                                       "terre":  [
+                                                     "Riktus ensorceleuse",
+                                                     "Ténèbre"
+                                                 ],
+                                       "multi":  [
+                                                     "Turyé",
+                                                     "Éclaireur spectral"
+                                                 ]
+                                   }
                     },
                     {
                         "name":  "Titan de Boue",
-                        "monsterId":  3861
+                        "monsterId":  3861,
+                        "dungeon":  "Marécage du Titan de Boue",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Karotz",
+                                                   "Laikteur"
+                                               ],
+                                       "feu":  [
+                                                   "Grouillot",
+                                                   "Logram"
+                                               ],
+                                       "air":  [
+                                                   "Ougicle",
+                                                   "Kubitus"
+                                               ],
+                                       "terre":  [
+                                                     "Ténèbre",
+                                                     "Manitou Zoth"
+                                                 ],
+                                       "multi":  [
+                                                     "Haku",
+                                                     "Turyé"
+                                                 ]
+                                   }
                     },
                     {
                         "name":  "Shenryx",
-                        "monsterId":  6690
+                        "monsterId":  6690,
+                        "dungeon":  "Dôme aqueux de Shenryx",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Skale",
+                                                   "Karotz"
+                                               ],
+                                       "feu":  [
+                                                   "Logram",
+                                                   "Inferno"
+                                               ],
+                                       "air":  [
+                                                   "Kubitus",
+                                                   "Gobeuf"
+                                               ],
+                                       "terre":  [
+                                                     "Riktus ensorceleuse",
+                                                     "Manitou Zoth"
+                                                 ],
+                                       "multi":  [
+                                                     "Turyé",
+                                                     "Éclaireur spectral"
+                                                 ]
+                                   }
                     },
                     {
                         "name":  "Douleur",
-                        "monsterId":  6669
+                        "monsterId":  6669,
+                        "dungeon":  "Solstice de Douleur",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Skale",
+                                                   "Karotz"
+                                               ],
+                                       "feu":  [
+                                                   "Grouillot",
+                                                   "Logram"
+                                               ],
+                                       "air":  [
+                                                   "Ougicle",
+                                                   "Gobeuf"
+                                               ],
+                                       "terre":  [
+                                                     "Riktus ensorceleuse",
+                                                     "Manitou Zoth"
+                                                 ],
+                                       "multi":  [
+                                                     "Haku",
+                                                     "Éclaireur spectral"
+                                                 ]
+                                   }
                     },
                     {
                         "name":  "Kru\u0027Gor",
-                        "monsterId":  6823
+                        "monsterId":  6823,
+                        "dungeon":  "Navire de Kru\u0027Gor",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Karotz",
+                                                   "Laikteur"
+                                               ],
+                                       "feu":  [
+                                                   "Grouillot",
+                                                   "Inferno"
+                                               ],
+                                       "air":  [
+                                                   "Kubitus",
+                                                   "Gobeuf"
+                                               ],
+                                       "terre":  [
+                                                     "Riktus ensorceleuse",
+                                                     "Ténèbre"
+                                                 ],
+                                       "multi":  [
+                                                     "Haku",
+                                                     "Turyé"
+                                                 ]
+                                   }
                     },
                     {
                         "name":  "Vil Smith",
-                        "monsterId":  3102
+                        "monsterId":  3102,
+                        "dungeon":  "Sous-marin de Vil Smith",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Skale",
+                                                   "Laikteur"
+                                               ],
+                                       "feu":  [
+                                                   "Logram",
+                                                   "Inferno"
+                                               ],
+                                       "air":  [
+                                                   "Ougicle",
+                                                   "Gobeuf"
+                                               ],
+                                       "terre":  [
+                                                     "Ténèbre",
+                                                     "Manitou Zoth"
+                                                 ],
+                                       "multi":  [
+                                                     "Turyé",
+                                                     "Éclaireur spectral"
+                                                 ]
+                                   }
                     },
                     {
                         "name":  "Calcidose",
-                        "monsterId":  6426
+                        "monsterId":  6426,
+                        "dungeon":  "Création de Calcidose",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Skale",
+                                                   "Karotz"
+                                               ],
+                                       "feu":  [
+                                                   "Grouillot",
+                                                   "Inferno"
+                                               ],
+                                       "air":  [
+                                                   "Ougicle",
+                                                   "Kubitus"
+                                               ],
+                                       "terre":  [
+                                                     "Riktus ensorceleuse",
+                                                     "Ténèbre"
+                                                 ],
+                                       "multi":  [
+                                                     "Haku",
+                                                     "Éclaireur spectral"
+                                                 ]
+                                   }
                     },
                     {
                         "name":  "Anathar",
-                        "monsterId":  3771
+                        "monsterId":  3771,
+                        "dungeon":  "Chaîne d\u0027Anathar",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Skale",
+                                                   "Laikteur"
+                                               ],
+                                       "feu":  [
+                                                   "Grouillot",
+                                                   "Logram"
+                                               ],
+                                       "air":  [
+                                                   "Ougicle",
+                                                   "Gobeuf"
+                                               ],
+                                       "terre":  [
+                                                     "Ténèbre",
+                                                     "Manitou Zoth"
+                                                 ],
+                                       "multi":  [
+                                                     "Éclaireur spectral",
+                                                     "Turyé"
+                                                 ]
+                                   }
                     },
                     {
                         "name":  "Rubilax",
-                        "monsterId":  3766
+                        "monsterId":  3766,
+                        "dungeon":  "Forge de Rubilax",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Skale",
+                                                   "Laikteur"
+                                               ],
+                                       "feu":  [
+                                                   "Grouillot",
+                                                   "Inferno"
+                                               ],
+                                       "air":  [
+                                                   "Kubitus",
+                                                   "Gobeuf"
+                                               ],
+                                       "terre":  [
+                                                     "Riktus ensorceleuse",
+                                                     "Manitou Zoth"
+                                                 ],
+                                       "multi":  [
+                                                     "Haku",
+                                                     "Éclaireur spectral"
+                                                 ]
+                                   }
                     },
                     {
                         "name":  "Oropo",
-                        "monsterId":  5174
+                        "monsterId":  5174,
+                        "dungeon":  "Terrain de jeu d\u0027Oropo",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Karotz",
+                                                   "Laikteur"
+                                               ],
+                                       "feu":  [
+                                                   "Logram",
+                                                   "Inferno"
+                                               ],
+                                       "air":  [
+                                                   "Kubitus",
+                                                   "Gobeuf"
+                                               ],
+                                       "terre":  [
+                                                     "Ténèbre",
+                                                     "Manitou Zoth"
+                                                 ],
+                                       "multi":  [
+                                                     "Éclaireur spectral",
+                                                     "Haku"
+                                                 ]
+                                   }
                     },
                     {
                         "name":  "Djaul",
-                        "monsterId":  5321
+                        "monsterId":  5321,
+                        "dungeon":  "Terraformation de Djaul",
+                        "lineup":  {
+                                       "eau":  [
+                                                   "Skale",
+                                                   "Karotz"
+                                               ],
+                                       "feu":  [
+                                                   "Grouillot",
+                                                   "Logram"
+                                               ],
+                                       "air":  [
+                                                   "Ougicle",
+                                                   "Kubitus"
+                                               ],
+                                       "terre":  [
+                                                     "Riktus ensorceleuse",
+                                                     "Ténèbre"
+                                                 ],
+                                       "multi":  [
+                                                     "Haku",
+                                                     "Turyé"
+                                                 ]
+                                   }
                     }
                 ]
 }

@@ -1954,3 +1954,6 @@ body.mobile-mode .equipped-tooltip { max-width: 90vw; }
 .wiki-companion-spells { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 16px; align-items: start; }
 @media (max-width: 500px) { .wiki-companion-spells { grid-template-columns: 1fr; } }
 .wiki-companion-spell { min-width: 0; }
+/* Boss Ultime window: narrow companion list | dungeon text | Stasis. */
+.wiki-ultime-cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) minmax(0, 1fr); }
+@media (max-width: 1000px) { .wiki-ultime-cols { grid-template-columns: 1fr; } }

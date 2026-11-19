@@ -1522,7 +1522,11 @@ function wikiFillText(el, text) {
       target = document.createElement("p");
       if (line.startsWith("=>")) target.className = "wiki-arrow";
       // ">> text" = indented sub-line (e.g. a monster's own mechanic under its icon line).
-      if (/^>>\s+/.test(line)) { target.className = "wiki-sub"; content = line.replace(/^>>\s+/, ""); }
+      if (/^>>\s+/.test(line)) {
+        target.className = "wiki-sub"; content = line.replace(/^>>\s+/, "");
+        // ">> - text" = bullet under a sub-line (further indented, smaller text).
+        if (/^-\s+/.test(content)) { target.className = "wiki-sub wiki-sub-bullet"; content = content.replace(/^-\s+/, ""); }
+      }
       el.appendChild(target);
     }
     if (target.tagName === "P" && /^\{icon:/.test(line)) target.classList.add("wiki-icon-line");

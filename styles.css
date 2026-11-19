@@ -1957,3 +1957,6 @@ body.mobile-mode .equipped-tooltip { max-width: 90vw; }
 /* Boss Ultime window: narrow companion list | dungeon text | Stasis. */
 .wiki-ultime-cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) minmax(0, 1fr); }
 @media (max-width: 1000px) { .wiki-ultime-cols { grid-template-columns: 1fr; } }
+/* Bullet under a sub-line (">> - text"): indented further, smaller font, dot in the margin. */
+.wiki-text-body p.wiki-sub-bullet { position: relative; padding-left: 64px; font-size: 13px; margin-top: -4px; margin-bottom: 4px; }
+.wiki-text-body p.wiki-sub-bullet::before { content: "•"; position: absolute; left: 50px; }

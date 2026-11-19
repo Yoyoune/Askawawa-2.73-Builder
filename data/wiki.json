@@ -1130,22 +1130,22 @@
                  {
                      "name":  "Glourdorak",
                      "monsterId":  3373,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Jardins d\u0027Hiver}\nGlourdorak perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Jardins d\u0027Hiver}\nGlourdorak perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Debuff + RET PM\nMécanique : Invulnérable. Tous les tours, Glourdorak pose un état Fonso Cacnoob sur un joueur aléatoire. Si le joueur termine son tour au CAC de Glourdorak, alors Glourdorak perd son Invulnérabilité pour 1 tour.\nGlourdorak tue toutes les invocations et applique un Debuff au T5"
                  },
                  {
                      "name":  "Grand Kongoku",
                      "monsterId":  4028,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Salles des Embruns}\nGrand Kongoku perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Salles des Embruns}\nGrand Kongoku perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Téléportation\nMécanique : Invoque la Cocolune en début de combat, ce qui le fait passer en Mode Super Singe.\nLa Cocolune, en début de tour, met Pacifiste tous les personnages dans sa ligne de vue et les attire de 10 cases. Elle donne également un Boost au Grand Kongoku s’il est dans sa ligne de vue"
                  },
                  {
                      "name":  "Guerrier du K.O.",
                      "monsterId":  4016,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Mont Torrideau}\nGuerrier du K.O. perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Mont Torrideau}\nGuerrier du K.O. perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Protection\nMécanique : Le Guerrier du K.O. peut OS de nombreuses manières :\n- OS tous les joueurs alignés en ligne ou en diagonale d’un monstre qui subit des dégâts\n- OS à distance sur son sort de dégâts si le personnage a \u003c 50 % de PV\n- OS si un joueur ayant reçu l’état Massacre à Retardement a un ennemi dans les 6 cases autour de lui à la fin de son tour"
                  },
                  {
                      "name":  "Hin",
                      "monsterId":  3848,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Jour présent}\nHin perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Jour présent}\nHin perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + RET PM + Poussée\nMécanique : OS à partir du T2, en début de tour, tous les personnages situés à ≥ 10 PO de lui + Poison PM"
                  },
                  {
                      "name":  "Hyperscampe",
@@ -1155,22 +1155,22 @@
                  {
                      "name":  "Katigrou",
                      "monsterId":  2903,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt des pins perdus}\nKatigrou perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt des pins perdus}\nKatigrou perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Téléportation\nMécanique : Vole 1 PA à tous les ennemis à son corps-à-corps en début de tour"
                  },
                  {
                      "name":  "Mekamouth",
                      "monsterId":  3401,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Remparts à vent}\nMekamouth perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Remparts à vent}\nMekamouth perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Glyphe Soin / Boost / Rés / Poison\nMécanique : Invulnérable. Il devient Vulnérable s’il finit son tour dans le glyphe Surtension. Retire 2 PA pour toute la durée du combat + Poison PM."
                  },
                  {
                      "name":  "Monsieur Pingouin",
                      "monsterId":  2902,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Lac gelé}\nMonsieur Pingouin perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Lac gelé}\nMonsieur Pingouin perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Soin + Protection + Interception de dégâts\nMécanique : Met un malus de 100 PM au T1"
                  },
                  {
                      "name":  "Musha L\u0027Oni",
                      "monsterId":  552,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Baie de Cania}\nMusha L\u0027Oni perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Baie de Cania}\nMusha L\u0027Oni perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + RET PO + Échange de position\nMécanique : Dévoile les invisibles en début de tour"
                  },
                  {
                      "name":  "Naganita",

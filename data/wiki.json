@@ -1095,27 +1095,27 @@
                  {
                      "name":  "Dremoan",
                      "monsterId":  2908,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt pétrifiée}\nDremoan perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt pétrifiée}\nDremoan perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Poison + Résurrection + RET PM\nMécanique : Tous les 3 tours, se soigne et gagne 100 dommages (3 procs maximum). Tue les personnages dans une zone cercle 3 à sa mort"
                  },
                  {
                      "name":  "Fantômayte",
                      "monsterId":  2904,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Berceau d\u0027Alma}\nFantômayte perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Berceau d\u0027Alma}\nFantômayte perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Téléportation + Invocation\nMécanique : Renvoie les dégâts pendant 3 tours et applique un malus de 100 Puissance aux personnages qui sont déplacés"
                  },
                  {
                      "name":  "Flasho",
                      "monsterId":  2909,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Crocs de verre}\nFlasho perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Crocs de verre}\nFlasho perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Dégâts mêlée\nMécanique : Gagne des bonus sur effets subis :\n- 2 PM si RET PM / Poussée\n- 300 dommages si RET PA\n- Esquive les dégâts mêlée en reculant"
                  },
                  {
                      "name":  "Fouduglen l\u0027Écureuil",
                      "monsterId":  463,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Cité d\u0027Astrub}\nFouduglen l\u0027Écureuil perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Cité d\u0027Astrub}\nFouduglen l\u0027Écureuil perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Invisible\nMécanique : aucune"
                  },
                  {
                      "name":  "Frakacia Leukocytine",
                      "monsterId":  460,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt d\u0027Astrub}\nFrakacia Leukocytine perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt d\u0027Astrub}\nFrakacia Leukocytine perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Debuff + Pacifiste\nMécanique : RET 2 PA et réduction des dommages distance pour tout le combat"
                  },
                  {
                      "name":  "Gein",
@@ -1125,7 +1125,7 @@
                  {
                      "name":  "Glandaf l\u0027Aigri",
                      "monsterId":  5081,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Tronc de l\u0027arbre Hakam}\nGlandaf l\u0027Aigri perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Tronc de l\u0027arbre Hakam}\nGlandaf l\u0027Aigri perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Poussée + RET PA\nMécanique : Donne un Boost de 2 PM à ses alliés et RET 2 PM aux ennemis en début de tour en zone cercle 2"
                  },
                  {
                      "name":  "Glourdorak",

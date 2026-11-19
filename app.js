@@ -1485,6 +1485,16 @@ function wikiFillText(el, text) {
     }
     table = null;
     tableClass = "";
+    // "### Title" = big bold sub-heading under a section (colour given by {c:...|} inside), e.g. the subarea name of a wanted notice.
+    const sub3 = /^###\s+(.*)$/.exec(line);
+    if (sub3) {
+      list = null;
+      const h = document.createElement("h5");
+      h.className = "wiki-subheading";
+      wikiAppendInline(h, sub3[1]);
+      el.appendChild(h);
+      continue;
+    }
     // "## Title" = section heading (bold, red, larger).
     const head = /^##\s+(.*)$/.exec(line);
     if (head) {

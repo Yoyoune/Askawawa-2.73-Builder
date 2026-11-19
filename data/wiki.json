@@ -1050,12 +1050,12 @@
                  {
                      "name":  "Ambi Guman",
                      "monsterId":  3525,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Champ des Ingalsse}\nAmbi Guman perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Champ des Ingalsse}\nAmbi Guman perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + RET PM\nMécanique : Invocation d’Exi Guman en début de combat\nAmbi Guman donne un Boost en Puissance / PO à ses alliés sur dommages subis"
                  },
                  {
                      "name":  "Anatak Diskedor",
                      "monsterId":  4017,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Dents de Pierre}\nAnatak Diskedor perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Dents de Pierre}\nAnatak Diskedor perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Dégâts mêlée (État Foudroyé)\nMécanique : Anatak gagne des bonus selon un cycle :\n- Charge 1 : 500 Puissance\n- Charge 2 : 1000 Puissance + 10 % Critique\n- Charge 3 : État Bretteur céleste\n- Charge 4 : Retire l’état Foudroyé des joueurs\nEn état Bretteur céleste, Anatak OS en mêlée les joueurs dans l’état Foudroyé et gagne un effet -100 PM sur un sort"
                  },
                  {
                      "name":  "Atcham",
@@ -1065,12 +1065,12 @@
                  {
                      "name":  "Bouflouth",
                      "monsterId":  2901,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Champs de glace}\nBouflouth perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Champs de glace}\nBouflouth perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Boost + Invocation\nMécanique : Gagne 1 PM sur poussée + OS en mêlée à partir du T6"
                  },
                  {
                      "name":  "Brumen Tinctorias",
                      "monsterId":  464,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Désolation de Sidimote}\nBrumen Tinctorias perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Désolation de Sidimote}\nBrumen Tinctorias perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Boost + Soin\nMécanique : aucune"
                  },
                  {
                      "name":  "Chevalier de Glace",
@@ -1090,7 +1090,7 @@
                  {
                      "name":  "Dragodingo",
                      "monsterId":  4275,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Territoire des Dragodindes Sauvages}\nDragodingo perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Territoire des Dragodindes Sauvages}\nDragodingo perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + plusieurs effets différents selon l’humeur\nMécanique : À chaque début de tour, gagne un état aléatoire parmi 3 qui lui confère un Boost différent et modifie ses sorts"
                  },
                  {
                      "name":  "Dremoan",

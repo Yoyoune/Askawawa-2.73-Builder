@@ -1040,12 +1040,12 @@
                  {
                      "name":  "Aermyne \u0027Braco\u0027 Scalptaras",
                      "monsterId":  446,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt de Kaliptus}\nAermyne \u0027Braco\u0027 Scalptaras apparaît toujours seule\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt de Kaliptus}\nAermyne \u0027Braco\u0027 Scalptaras apparaît toujours seule\n## II. Principe du combat\nPrésentation : Dégâts distance + Mêlée\nMécanique : Gagne 4 PA à chaque tentative de RET PA et 4 PM à chaque tentative de RET PM"
                  },
                  {
                      "name":  "Ali Grothor",
                      "monsterId":  3524,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Tourbière nauséabonde}\nAli Grothor perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Tourbière nauséabonde}\nAli Grothor perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée\nMécanique : Ali Grothor est Invulnérable 2 tours sur 3\nIl peut poser sur un joueur, avec ses sorts, l’état Grillade qui implique :\n- Si Ali Grothor débute son tour dans un rayon de 2 cases d’un joueur dans l’état Grillade, il perd son Invulnérabilité\n- Le joueur subit plus de dommages\n- En début de tour, le joueur inflige des dégâts dans une zone cercle 2\nAli Grothor gagne 1 PM à chaque tentative de RET PO"
                  },
                  {
                      "name":  "Ambi Guman",

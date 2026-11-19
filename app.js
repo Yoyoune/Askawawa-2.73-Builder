@@ -1673,7 +1673,7 @@ function wikiDungeonColumn(level) {
 // Categories whose icons open the entry in a window over the icon page (like the item/set browsers)
 // instead of replacing the page. Route stays #wiki/<category>/<slug>, so the link is shareable and
 // closing the window goes back to #wiki/<category>.
-const WIKI_MODAL_CATEGORIES = new Set(["anomalie-temporelle", "donjon", "boss-ultime"]);
+const WIKI_MODAL_CATEGORIES = new Set(["anomalie-temporelle", "donjon", "boss-ultime", "avis-de-recherche"]);
 
 function closeWikiEntryModal() {
   const ov = document.getElementById("wikiEntryOverlay");

@@ -1080,7 +1080,7 @@
                  {
                      "name":  "Culbutœuf",
                      "monsterId":  3402,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Tour de la Clepsydre}\nCulbutœuf perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Poison + Boost + RET PM\nMécanique : Réduit les dégâts mêlée. Malus 2 PM et 50 % Rés à chaque Téléportation / Échange de position. Début du combat : -2 PM infini"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Tour de la Clepsydre}\nCulbutœuf perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Poison + Boost + RET PM\nMécanique : Réduit les dégâts mêlée. Malus 50 % Rés à chaque Téléportation / Échange de position. Début du combat : -2 PM infini"
                  },
                  {
                      "name":  "Docteur Eggob",

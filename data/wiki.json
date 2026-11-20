@@ -1130,7 +1130,7 @@
                  {
                      "name":  "Glourdorak",
                      "monsterId":  3373,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Jardins d\u0027Hiver}\nGlourdorak perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Debuff + RET PM\nMécanique : Invulnérable. Tous les tours, Glourdorak pose un état Fonso Cacnoob sur un joueur aléatoire. Si le joueur termine son tour au CAC de Glourdorak, alors Glourdorak perd son Invulnérabilité pour 1 tour.\nGlourdorak tue toutes les invocations et applique un Debuff au T5"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Jardins d\u0027Hiver}\nGlourdorak perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Debuff + RET PM\nMécanique : Invulnérable. Tous les tours, Glourdorak pose un état Fonso Cacnoob sur un joueur aléatoire. Si le joueur termine son tour au CAC de Glourdorak, alors Glourdorak perd son Invulnérabilité pour 1 tour.\nGlourdorak tue toutes les invocations et applique un Debuff au T5\nOS tout le monde au T10"
                  },
                  {
                      "name":  "Grand Kongoku",

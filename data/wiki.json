@@ -1120,7 +1120,7 @@
                  {
                      "name":  "Gein",
                      "monsterId":  3761,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Hauts Ténébreux}\nGein apparaît toujours seul\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Hauts Ténébreux}\nGein apparaît toujours seul\n## II. Principe du combat\nPrésentation : Dégâts distance\nMécanique : Gein est Invulnérable et Invisible. En fin de tour, il se téléporte et redevient Invisible.\nChaque invocation posée par un joueur est automatiquement remplacée par un Feu Funèbre :\n- Frapper un Feu Funèbre révèle Gein et lui retire son Invulnérabilité pour 1 tour s’il est dans une zone cercle 2 autour du Feu\n- Si Gein est à côté d’un Feu Funèbre, celui-ci change d’apparence\nOS tout le monde au T10"
                  },
                  {
                      "name":  "Glandaf l\u0027Aigri",
@@ -1150,7 +1150,7 @@
                  {
                      "name":  "Hyperscampe",
                      "monsterId":  3533,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Salles des Embruns}\nHyperscampe perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Salles des Embruns}\nHyperscampe perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Attirance + Téléportation\nMécanique : aucune\nOS tout le monde au T10"
                  },
                  {
                      "name":  "Katigrou",

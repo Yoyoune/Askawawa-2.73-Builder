@@ -1060,7 +1060,7 @@
                  {
                      "name":  "Atcham",
                      "monsterId":  4329,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Temple de Kerubim}\nAtcham perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Temple de Kerubim}\nAtcham perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée\nMécanique : Fou invoque en début de combat Chi et Mi. Le principe du combat est un pierre-feuille-ciseaux. À chaque début de tour de Fou, les joueurs récupèrent aléatoirement un état Pierre – Feuille – Ciseau.\nOn ne peut donc frapper que celui des 3 sur lequel on l’emporte au Chi-Fou-Mi, sous peine de subir un renvoi de dégâts + Pacifiste.\nOS tout le monde au T10"
                  },
                  {
                      "name":  "Bouflouth",
@@ -1075,17 +1075,17 @@
                  {
                      "name":  "Chevalier de Glace",
                      "monsterId":  3403,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Bastion des froides légions}\nChevalier de Glace perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Bastion des froides légions}\nChevalier de Glace perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Téléportation + Boost\nMécanique : Devient Invulnérable 2 tours sur RET PA/PM ou Poussée. Les DoPou OS."
                  },
                  {
                      "name":  "Culbutœuf",
                      "monsterId":  3402,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Tour de la Clepsydre}\nCulbutœuf perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Tour de la Clepsydre}\nCulbutœuf perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Poison + Boost + RET PM\nMécanique : Réduit les dégâts mêlée. Malus 2 PM et 50 % Rés à chaque Téléportation / Échange de position"
                  },
                  {
                      "name":  "Docteur Eggob",
                      "monsterId":  3400,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt enneigée}\nDocteur Eggob perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt enneigée}\nDocteur Eggob perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Boost + Poison\nMécanique : 2 invocations : le Gobus instable met un malus en explosant et l’œuf de la Mort OS en cercle 4"
                  },
                  {
                      "name":  "Dragodingo",
@@ -1225,7 +1225,7 @@
                  {
                      "name":  "Vashkiwi",
                      "monsterId":  5074,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Île du Minotoror}\nVashkiwi perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Île du Minotoror}\nVashkiwi perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Boost + Protection + RET PA\nMécanique : Poison de zone en début de tour\nTous les 2 tours, Vashkiwi invoque une Fontaine Laiteuse qui pose un glyphe"
                  },
                  {
                      "name":  "Vengeuse Masquée",
@@ -1245,7 +1245,7 @@
                  {
                      "name":  "YeCh\u0027Ti",
                      "monsterId":  2906,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Crevasse Perge}\nYeCh\u0027Ti perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Téléportation + OS mêlée + Invocation\nMécanique : Invulnérable. Il perd son Invulnérabilité pour 1 tour à chaque fois qu’il OS une entité ennemie en mêlée"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Crevasse Perge}\nYeCh\u0027Ti perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Téléportation + OS mêlée + Invocation\nMécanique : Invulnérable. Il perd son Invulnérabilité pour 1 tour à chaque fois qu’il OS une entité ennemie en mêlée\nOS tout le monde au T10"
                  },
                  {
                      "name":  "Zatoïshwan",

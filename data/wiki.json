@@ -1175,42 +1175,42 @@
                  {
                      "name":  "Naganita",
                      "monsterId":  4027,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Île de Kartonpath}\nNaganita perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Île de Kartonpath}\nNaganita perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Soin\nMécanique : En début de tour, tous les personnages à ≥ 3 PO d’elle sont Pacifiste. Si le personnage est déjà Pacifiste, cela le retire."
                  },
                  {
                      "name":  "Ogivol Scalarcin",
                      "monsterId":  462,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Bordure de Brâkmar}\nOgivol Scalarcin perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Bordure de Brâkmar}\nOgivol Scalarcin perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Invisible + Double\nMécanique : Esquive les coups en mêlée"
                  },
                  {
                      "name":  "Padgref Demoël",
                      "monsterId":  459,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Bois de Litneg}\nPadgref Demoël apparaît toujours seul\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Bois de Litneg}\nPadgref Demoël apparaît toujours seul\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Échange de position + Attirance\nMécanique : Se donne un Boost sur dommages subis"
                  },
                  {
                      "name":  "Pantèroz",
                      "monsterId":  3762,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Ruelles des Eaux-Suaires}\nPantèroz apparaît toujours seul\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Ruelles des Eaux-Suaires}\nPantèroz apparaît toujours seul\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Dégâts distance\nMécanique : Réduit les dommages distance. En début de tour, met Silencieux en zone cercle 2 et OS les invocations dans la même zone"
                  },
                  {
                      "name":  "Predagob",
                      "monsterId":  4834,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Nimotopia}\nPredagob perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Nimotopia}\nPredagob perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + RET PA\nMécanique : Se met Invisible à chaque début de tour. Perd des dommages finaux pour chaque ennemi à son corps-à-corps au début de ses tours"
                  },
                  {
                      "name":  "Psikopompe",
                      "monsterId":  3413,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Tannerie Écarlate}\nPsikopompe perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Tannerie Écarlate}\nPsikopompe perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + RET PA + Renvoi de dommages + Boost\nMécanique : Invulnérable. Retrait de son Invulnérabilité sur RET PM. L’état Sentence OS si la cible se fait soigner"
                  },
                  {
                      "name":  "Sam Sagaz",
                      "monsterId":  4266,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Prairies d\u0027Astrub}\nSam Sagaz perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Prairies d\u0027Astrub}\nSam Sagaz perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Invocation\nMécanique : Invulnérable. Il faut éliminer Bolesh sur une case adjacente à Sam Sagaz"
                  },
                  {
                      "name":  "Simbadas",
                      "monsterId":  4814,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Route des Roulottes}\nSimbadas perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Route des Roulottes}\nSimbadas perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Téléportation + Poison\nMécanique : Simbadas retire 10 PO à tout le monde. À chaque joueur qui meurt, Simbadas gagne 4 PM et 400 Puissance"
                  },
                  {
                      "name":  "Tournade",

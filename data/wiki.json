@@ -1215,12 +1215,12 @@
                  {
                      "name":  "Tournade",
                      "monsterId":  4618,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Dunes des ossements}\nTournade perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Dunes des ossements}\nTournade perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Dégâts mêlée + Pacifiste (zone cercle 2 au CAC)\nMécanique : aucune"
                  },
                  {
                      "name":  "Trukipik",
                      "monsterId":  4240,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Jungle Interdite}\nTrukipik perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Jungle Interdite}\nTrukipik perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée\nMécanique : Tous les joueurs à ≥ 3 PO en début de tour de Trukipik sont Pacifiste"
                  },
                  {
                      "name":  "Vashkiwi",
@@ -1230,27 +1230,27 @@
                  {
                      "name":  "Vengeuse Masquée",
                      "monsterId":  2905,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Larmes d\u0027Ouronigride}\nVengeuse Masquée perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Larmes d\u0027Ouronigride}\nVengeuse Masquée perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Dégâts mêlée + Boost\nMécanique : Gagne 50 % sur RET PO"
                  },
                  {
                      "name":  "Viti Glourson",
                      "monsterId":  2910,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Ruche des Gloursons}\nViti Glourson perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Ruche des Gloursons}\nViti Glourson perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Soin + RET PA/PM + Boost\nMécanique : À chaque dommage élémentaire subi, Viti Glourson gagne 30 % de Rés dans l’élément pour 2 tours. À chaque Debuff subi, il perd 30 % de Rés dans tous les éléments"
                  },
                  {
                      "name":  "Voldelor",
                      "monsterId":  3668,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Retraite des Éternels}\nVoldelor perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Retraite des Éternels}\nVoldelor perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Résurrection\nMécanique : À chaque tour global, le 1er joueur infligeant des dégâts à Voldelor récupère la Marque des Mangelors qui change les effets de ses sorts sur cette cible (donc un OS sur Armada Cadavra)"
                  },
                  {
                      "name":  "YeCh\u0027Ti",
                      "monsterId":  2906,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Crevasse Perge}\nYeCh\u0027Ti perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Crevasse Perge}\nYeCh\u0027Ti perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts mêlée + Téléportation + OS mêlée + Invocation\nMécanique : Invulnérable. Il perd son Invulnérabilité pour 1 tour à chaque fois qu’il OS une entité ennemie en mêlée"
                  },
                  {
                      "name":  "Zatoïshwan",
                      "monsterId":  555,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Feudala}\nZatoïshwan perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Feudala}\nZatoïshwan perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + RET PO/PA + Poussée + Boost\nMécanique : Réduit faiblement les dégâts mêlée"
                  }
              ],
     "pages":  {

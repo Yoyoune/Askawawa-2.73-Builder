@@ -1080,12 +1080,12 @@
                  {
                      "name":  "Culbutœuf",
                      "monsterId":  3402,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Tour de la Clepsydre}\nCulbutœuf perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Poison + Boost + RET PM\nMécanique : Réduit les dégâts mêlée. Malus 2 PM et 50 % Rés à chaque Téléportation / Échange de position"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Tour de la Clepsydre}\nCulbutœuf perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Poison + Boost + RET PM\nMécanique : Réduit les dégâts mêlée. Malus 2 PM et 50 % Rés à chaque Téléportation / Échange de position. Début du combat : -2 PM infini"
                  },
                  {
                      "name":  "Docteur Eggob",
                      "monsterId":  3400,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt enneigée}\nDocteur Eggob perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Boost + Poison\nMécanique : 2 invocations : le Gobus instable met un malus en explosant et l’œuf de la Mort OS en cercle 4"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Forêt enneigée}\nDocteur Eggob perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Dégâts distance + Boost + Poison\nMécanique : aucune"
                  },
                  {
                      "name":  "Dragodingo",

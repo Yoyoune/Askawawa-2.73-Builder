@@ -1225,7 +1225,7 @@
                  {
                      "name":  "Vashkiwi",
                      "monsterId":  5074,
-                     "text":  "## I. Zone d’apparition\n### {c:blue|Île du Minotoror}\nVashkiwi perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Boost + Protection + RET PA\nMécanique : Poison de zone en début de tour\nTous les 2 tours, Vashkiwi invoque une Fontaine Laiteuse qui pose un glyphe"
+                     "text":  "## I. Zone d’apparition\n### {c:blue|Île du Minotoror}\nVashkiwi perd de la Vitalité et de la Puissance pour chaque monstre qui l’accompagne\n## II. Principe du combat\nPrésentation : Boost + Protection + RET PA\nMécanique : Poison de zone en début de tour + Invoque des Fontaines Laiteuses qui durent 2 tours et posent un glyphe de dégâts"
                  },
                  {
                      "name":  "Vengeuse Masquée",

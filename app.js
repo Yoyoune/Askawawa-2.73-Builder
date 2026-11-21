@@ -1541,7 +1541,7 @@ function wikiFillText(el, text) {
     }
     if (target.tagName === "P" && /^\{icon:/.test(line)) target.classList.add("wiki-icon-line");
     // Labels "Mécanique ... :", "Présentation :", "Objectif :" and "Invocation Ashi-Magari :" (up to the colon) are bold + underlined.
-    const lab = /^((?:(?:\d+\S*\s+)?[Mm][ée]canique[^:]*|Pr[ée]sentation[^:]*|Objectif|G[ée]n[ée]ralit[ée]s|Donjon à vagues|Particularité[^:]*|Invocation Ashi-Magari)\s*:)/.exec(content);
+    const lab = /^((?:(?:\d+\S*\s+)?[Mm][ée]canique[^:]*|Pr[ée]sentation[^:]*|Objectif|G[ée]n[ée]ralit[ée]s|Donjon à vagues|Particularité[^:]*|Auroraire Xelorium|Invocation Ashi-Magari)\s*:)/.exec(content);
     if (lab) {
       const s = document.createElement("span");
       s.className = "wiki-label";

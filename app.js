@@ -1466,7 +1466,12 @@ function wikiFillText(el, text) {
         el.appendChild(wrap);
         table.header = true;
       }
-      const cells = line.replace(/^\|\s*/, "").split(/\s+\|\s+|\s+\|$/).map(c => c.trim());
+      // A line starting with "| |" has an EMPTY first cell (e.g. the top-left corner of a double-entry table).
+      let rowText = line.replace(/^\|\s*/, "");
+      const emptyFirst = rowText.startsWith("|");
+      if (emptyFirst) rowText = rowText.replace(/^\|\s*/, "");
+      const cells = rowText.split(/\s+\|\s+|\s+\|$/).map(c => c.trim());
+      if (emptyFirst) cells.unshift("");
       const tr = document.createElement("tr");
       for (const c of cells) {
         const cell = document.createElement(table.header ? "th" : "td");

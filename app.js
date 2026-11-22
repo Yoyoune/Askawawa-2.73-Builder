@@ -1544,7 +1544,8 @@ function wikiFillText(el, text) {
       }
       el.appendChild(target);
     }
-    if (target.tagName === "P" && /^\{icon:/.test(line)) target.classList.add("wiki-icon-line");
+    // (a ">> {icon:...}Name" sub-line keeps its indent and also gets the miniature layout)
+    if (target.tagName === "P" && /^\{icon:/.test(content)) target.classList.add("wiki-icon-line");
     // Labels "Mécanique ... :", "Présentation :", "Objectif :" and "Invocation Ashi-Magari :" (up to the colon) are bold + underlined.
     const lab = /^((?:(?:\d+\S*\s+)?[Mm][ée]canique[^:]*|Pr[ée]sentation[^:]*|Objectif|G[ée]n[ée]ralit[ée]s|Donjon à vagues|Particularité[^:]*|Auroraire Xelorium|Invocation Ashi-Magari)\s*:)/.exec(content);
     if (lab) {

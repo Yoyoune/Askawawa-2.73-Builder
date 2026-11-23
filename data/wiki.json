@@ -1461,7 +1461,8 @@
                                                      "Turyé",
                                                      "Éclaireur spectral"
                                                  ]
-                                   }
+                                   },
+                        "normal":  "## I. Acteurs du combat\n{icon:icons/monsters/3489.png|Tofu Céleste|34}Tofu Céleste : Dégâts mêlée + Malus Puissance\n\u003e\u003e En début de tour : Attire ou repousse de 5 cases chaque joueur\n\u003e\u003e En fin de tour : Pose un poison Air durée infinie à tous les personnages\n{icon:icons/monsters/382.png|Bébé Tofu Royal|34}Bébé Tofu Royal : Dégâts mêlée + RET PA + Malus Vitalité\n{icon:icons/monsters/2781.png|Bouftou Céleste|34}Bouftou Céleste : Malus Vitalité + Retrait d’Invulnérabilité + Soin\n## II. Principe du combat\nLe Tofu Céleste est Invulnérable. À chaque début de tour du Tofu Céleste, invocation d’autant de Bébés Tofus Royaux qu’il y a de personnages en combat.\nAu début du 1er tour du 1er personnage, invocation du Bouftou Céleste contrôlable. C’est lui qui peut retirer l’Invulnérabilité du Tofu Céleste."
                     },
                     {
                         "name":  "Titan de Boue",

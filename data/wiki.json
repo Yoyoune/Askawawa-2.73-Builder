@@ -1433,7 +1433,8 @@
                                                      "Haku",
                                                      "Turyé"
                                                  ]
-                                   }
+                                   },
+                        "normal":  "## I. Acteurs du combat\n{icon:icons/monsters/3691.png|Boufette Royale|34}Boufette Royale : 4 PV, et 0 PM. Insoignable et ne peut pas récupérer de bouclier\n{icon:icons/monsters/3772.png|Boufrog|34}Boufrog : Dans sa phase active, il inflige des dégâts mêlée en vol de vie\n{icon:icons/monsters/6939.png|Abomination de Boufrog|34}Abomination de Boufrog : Dégâts mêlée en vol de vie\n## II. Principe du combat\nIl faut défendre la Boufette Royale du méchant Boufrog.\nSi la Boufette Royale meurt ou que tous les personnages meurent : le combat est perdu\nSi le Boufrog meurt : le combat est gagné\nEn début de combat, apparaît le Boufrog Invulnérable et sans ses PM. À chaque début de tour, des Abominations de Boufrog sont invoquées et vont attaquer la Boufette Royale.\nLes Abominations attaquent uniquement en mêlée et infligent 1 point de dégât par attaque à la Boufette Royale\nAu début du T5, le Boufrog perd son Invulnérabilité et regagne ses PM.\nLa Boufette Royale récupère alors tous ses PV.\nEn début de tour du Boufrog, lorsqu’il est passé dans sa phase active, la Boufette Royale perd 1 PV."
                     },
                     {
                         "name":  "Tofu Céleste",

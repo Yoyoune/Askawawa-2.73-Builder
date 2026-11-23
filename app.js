@@ -1663,7 +1663,7 @@ function wikiUltimeColumns(entry) {
   three.className = "wiki-two-col wiki-three-col wiki-ultime-cols";
   three.appendChild(wikiMakeCol("Compagnons", wikiLineupText(entry), "wiki-title-white"));
   three.appendChild(wikiMakeCol(entry.dungeon || entry.name, entry.normal, "wiki-title-white"));
-  three.appendChild(wikiMakeCol("Stasis", entry.stasis, "wiki-title-violet"));
+  // Boss Ultime fights have no Stasis version : only the 2 columns (Compagnons | dungeon).
   return three;
 }
 

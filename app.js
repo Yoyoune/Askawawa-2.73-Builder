@@ -5577,7 +5577,8 @@ const SERENADE_SPELL_ID = 2138; // variant of Epee Opaline : its 6 grades = the 
 let bellaphoneData = null;
 
 async function loadBellaphoneData() {
-  if (!bellaphoneData) bellaphoneData = await fetch("data/bellaphone.json").then(r => r.json());
+  // versioned URL : a browser/CDN cached copy of the older file (without allies/enemies) must never be reused
+  if (!bellaphoneData) bellaphoneData = await fetch("data/bellaphone.json?v=20261124b", { cache: "no-cache" }).then(r => r.json());
   return bellaphoneData;
 }
 

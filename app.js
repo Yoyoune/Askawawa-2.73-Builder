@@ -5511,6 +5511,8 @@ function zoneLineHtml(zone) {
 }
 
 function renderSpellVariantCard(spell, level, simOpts) {
+  // Serenade (Bellaphone) : effects hidden behind the 6 Bellaura icons (one grade per colour)
+  if (spell.id === SERENADE_SPELL_ID && spell.grades && spell.grades.length === 6) return renderSerenadeCard(spell, level);
   const grade = pickGradeForLevel(spell, level);
   const card = document.createElement("div");
   card.className = "spell-card";
@@ -5567,6 +5569,120 @@ function renderSpellVariantCard(spell, level, simOpts) {
   return card;
 }
 
+// ---------- Bellaphone : Bellaura (6 colours) ----------
+
+// The 6 Bellaura colour sub-spells (14790-14795, data/bellaphone.json, exported by ItemExporter). Icons = the 6 Stasis Dofus, in the order of the Dofus.
+const BELLAURA_ICON_ORDER = ["pourpre", "emeraude", "turquoise", "ebene", "ivoire", "ocre"];
+const SERENADE_SPELL_ID = 2138; // variant of Epee Opaline : its 6 grades = the effects of the 6 Bellaura (grade n = serenadeGrade n)
+let bellaphoneData = null;
+
+async function loadBellaphoneData() {
+  if (!bellaphoneData) bellaphoneData = await fetch("data/bellaphone.json").then(r => r.json());
+  return bellaphoneData;
+}
+
+/** The 6 Bellaura of data/bellaphone.json sorted in the Dofus icon order. */
+function bellauraSorted(data) {
+  return BELLAURA_ICON_ORDER.map(k => data.bellauras.find(b => b.key === k)).filter(Boolean);
+}
+
+/** One round icon button (a Stasis Dofus) for a Bellaura. */
+function bellauraButton(b, extraClass) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "bellaura-btn" + (extraClass ? " " + extraClass : "");
+  btn.title = b.spell.name;
+  btn.setAttribute("aria-label", b.spell.name);
+  const img = document.createElement("img");
+  img.src = `icons/spells/${b.spell.iconId}.png`;
+  img.alt = "";
+  btn.appendChild(img);
+  return btn;
+}
+
+/** Serenade : the spell itself shows no effect line ; 6 Bellaura icons (right of the name) open the effects of the grade of the matching colour. */
+function renderSerenadeCard(spell, level) {
+  const base = spell.grades[0];
+  const head = renderSpellVariantCard({ ...spell, grades: [base] }, level);
+  // no damage / effect section on the closed spell : only the description, the zone and the parameters
+  head.querySelectorAll(".damage-toggle-row, .damage-content").forEach(e => e.remove());
+  const eff = head.querySelector(".spell-card-effects");
+  if (eff) { if (eff.previousElementSibling && eff.previousElementSibling.tagName === "HR") eff.previousElementSibling.remove(); eff.remove(); }
+
+  const bar = document.createElement("div");
+  bar.className = "bellaura-btn-row bellaura-btn-row-inline";
+  head.querySelector(".spell-card-header").appendChild(bar);
+
+  const detail = document.createElement("div");
+  detail.className = "bellaura-detail hidden";
+  head.appendChild(detail);
+
+  loadBellaphoneData().then(data => {
+    const buttons = [];
+    for (const b of bellauraSorted(data)) {
+      const btn = bellauraButton(b, "bellaura-btn-small");
+      btn.addEventListener("click", () => {
+        const open = !btn.classList.contains("active");
+        buttons.forEach(x => x.classList.remove("active"));
+        detail.innerHTML = "";
+        if (!open) { detail.classList.add("hidden"); return; }
+        btn.classList.add("active");
+        const g = spell.grades[b.serenadeGrade - 1] || base;
+        const title = document.createElement("div");
+        title.className = "bellaura-detail-title";
+        title.textContent = `${spell.name} — ${b.spell.name}`;
+        const card = renderSpellVariantCard({ ...spell, grades: [g] }, level);
+        // only the effects of that grade : drop the header, the description/zone and the parameters
+        card.querySelectorAll(".spell-card-header, .spell-card-top, .spell-card-params, hr").forEach(e => e.remove());
+        detail.append(title, card);
+        detail.classList.remove("hidden");
+      });
+      buttons.push(btn);
+      bar.appendChild(btn);
+    }
+  }).catch(e => console.error("bellaphone.json", e));
+  return head;
+}
+
+/** Bellaphone class page : a row of 6 Bellaura icons ; a click shows that Bellaura's effects under the row. */
+function renderBellauraPanel() {
+  const panel = document.createElement("div");
+  panel.className = "bellaura-panel";
+  const top = document.createElement("div");
+  top.className = "bellaura-panel-top";
+  const label = document.createElement("span");
+  label.className = "bellaura-panel-label";
+  label.textContent = "Bellaura";
+  const bar = document.createElement("div");
+  bar.className = "bellaura-btn-row";
+  top.append(label, bar);
+  const detail = document.createElement("div");
+  detail.className = "bellaura-detail hidden";
+  panel.append(top, detail);
+
+  loadBellaphoneData().then(data => {
+    const buttons = [];
+    for (const b of bellauraSorted(data)) {
+      const btn = bellauraButton(b);
+      btn.addEventListener("click", () => {
+        const open = !btn.classList.contains("active");
+        buttons.forEach(x => x.classList.remove("active"));
+        detail.innerHTML = "";
+        if (!open) { detail.classList.add("hidden"); return; }
+        btn.classList.add("active");
+        const card = renderSpellVariantCard(b.spell, getCharLevel());
+        // a Bellaura is a glyph buff, not a cast : no level / PA / range / cumul parameters, just its effects
+        card.querySelectorAll(".spell-card-params, .spell-card-level, hr").forEach(e => e.remove());
+        detail.appendChild(card);
+        detail.classList.remove("hidden");
+      });
+      buttons.push(btn);
+      bar.appendChild(btn);
+    }
+  }).catch(e => console.error("bellaphone.json", e));
+  return panel;
+}
+
 function openClassSpells(breedId) {
   const breed = BREEDS.find(b => b.id === breedId);
   if (!breed) return;
@@ -5575,6 +5691,9 @@ function openClassSpells(breedId) {
   const body = document.getElementById("classSpellsModalBody");
   body.innerHTML = "";
   const level = getCharLevel();
+
+  // Bellaphone (breed 21) : the Bellaura icons come first, inside the frame
+  if (breed.id === 21) body.appendChild(renderBellauraPanel());
 
   for (const spell of breed.spells) {
     const row = document.createElement("div");

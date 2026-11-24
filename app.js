@@ -5672,7 +5672,16 @@ function renderBellauraPanel() {
         btn.classList.add("active");
         const card = renderSpellVariantCard(b.spell, getCharLevel());
         // a Bellaura is a glyph buff, not a cast : no level / PA / range / cumul parameters, just its effects
-        card.querySelectorAll(".spell-card-params, .spell-card-level, hr").forEach(e => e.remove());
+        card.querySelectorAll(".spell-card-params, .spell-card-level, .spell-card-effects, hr").forEach(e => e.remove());
+        // all the effects, in 2 columns : left = allies of the Bellaphone, right = enemies
+        const sideHtml = (title, cls, effects, texts) => {
+          const lines = (effects || []).map(effectLineHtml).concat((texts || []).map(t => specialSpellLineHtml("", t)));
+          return `<div class="bellaura-side"><div class="bellaura-side-title ${cls}">${title}</div><div class="effects-col">${lines.join("") || '<span class="stat-empty">Aucun effet</span>'}</div></div>`;
+        };
+        const sides = document.createElement("div");
+        sides.className = "bellaura-sides";
+        sides.innerHTML = sideHtml("Alliés", "bellaura-side-ally", b.allies, b.alliesText) + sideHtml("Ennemis", "bellaura-side-enemy", b.enemies, b.enemiesText);
+        card.appendChild(sides);
         detail.appendChild(card);
         detail.classList.remove("hidden");
       });

@@ -1980,3 +1980,9 @@ body.mobile-mode .equipped-tooltip { max-width: 90vw; }
 .bellaura-detail .spell-card { background: transparent; border: none; padding: 4px 0 0; }
 .bellaura-panel .bellaura-detail { padding-top: 10px; border-top: 1px solid var(--border); }
 .spell-card > .bellaura-detail { padding-top: 10px; border-top: 1px solid var(--border); }
+/* Bellaura effects : allies (left) | enemies (right) */
+.bellaura-sides { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 12px; }
+@media (max-width: 700px) { .bellaura-sides { grid-template-columns: 1fr; } }
+.bellaura-side-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+.bellaura-side-ally { color: var(--positive); }
+.bellaura-side-enemy { color: #e5484d; }
